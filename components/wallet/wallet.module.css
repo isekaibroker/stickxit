@@ -1,0 +1,660 @@
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(2 4 4 / 78%);
+  backdrop-filter: blur(14px);
+  animation: backdropIn 160ms ease-out;
+}
+
+.modal {
+  position: relative;
+  width: min(100%, 520px);
+  max-height: min(760px, calc(100dvh - 40px));
+  overflow: auto;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 90% 0%, rgb(140 255 0 / 11%), transparent 34%),
+    linear-gradient(155deg, #141817, #090b0b 60%);
+  box-shadow: 0 30px 90px rgb(0 0 0 / 70%);
+  color: #f7f9f8;
+  animation: modalIn 180ms ease-out;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 26px 18px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 9px;
+  color: #8cff00;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.modalTitle,
+.panelTitle,
+.gateTitle {
+  margin: 0;
+  color: #fff;
+  font-weight: 760;
+  letter-spacing: -.035em;
+}
+
+.modalTitle {
+  font-size: clamp(24px, 5vw, 32px);
+}
+
+.modalSubtitle,
+.gateCopy,
+.smallPrint {
+  color: #9ba5a1;
+  line-height: 1.55;
+}
+
+.modalSubtitle {
+  margin: 9px 0 0;
+  font-size: 14px;
+}
+
+.iconButton {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 4%);
+  color: #b9c1be;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.iconButton:hover {
+  border-color: rgb(140 255 0 / 45%);
+  color: #8cff00;
+  transform: translateY(-1px);
+}
+
+.networkStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 26px 18px;
+  padding: 12px 14px;
+  border: 1px solid rgb(140 255 0 / 18%);
+  border-radius: 14px;
+  background: rgb(140 255 0 / 5%);
+  color: #b5bdb9;
+  font-size: 12px;
+}
+
+.networkName {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #edf4f0;
+  font-weight: 700;
+}
+
+.networkDot,
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #8cff00;
+  box-shadow: 0 0 12px rgb(140 255 0 / 75%);
+}
+
+.walletList {
+  display: grid;
+  gap: 10px;
+  padding: 0 26px 24px;
+}
+
+.walletOption {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 13px;
+  padding: 14px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 3%);
+  color: #f7f9f8;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.localOption {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 13px;
+  padding: 15px;
+  border: 1px solid rgb(140 255 0 / 35%);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgb(140 255 0 / 12%), rgb(138 92 246 / 8%));
+  color: #f7f9f8;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.localOption:hover {
+  border-color: rgb(140 255 0 / 70%);
+  background: linear-gradient(135deg, rgb(140 255 0 / 17%), rgb(138 92 246 / 10%));
+  transform: translateY(-1px);
+}
+
+.localOption:disabled {
+  cursor: wait;
+  opacity: .58;
+}
+
+.walletDivider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #69716e;
+  font-size: 9px;
+  font-weight: 760;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.walletDivider::before,
+.walletDivider::after {
+  height: 1px;
+  flex: 1;
+  background: rgb(255 255 255 / 8%);
+  content: "";
+}
+
+.walletOption:hover {
+  border-color: rgb(140 255 0 / 45%);
+  background: rgb(140 255 0 / 5%);
+  transform: translateY(-1px);
+}
+
+.walletOption:disabled,
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  cursor: wait;
+  opacity: .58;
+  transform: none;
+}
+
+.walletGlyph {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 13px;
+  background: linear-gradient(145deg, #262d2a, #121514);
+  color: #8cff00;
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.walletText {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.walletText strong {
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.walletText span {
+  color: #8b9591;
+  font-size: 11px;
+}
+
+.walletArrow {
+  margin-left: auto;
+  color: #77817d;
+}
+
+.emptyWallets {
+  display: grid;
+  justify-items: center;
+  padding: 28px 18px;
+  border: 1px dashed rgb(255 255 255 / 13%);
+  border-radius: 18px;
+  color: #9ba5a1;
+  text-align: center;
+}
+
+.emptyWallets svg {
+  margin-bottom: 12px;
+  color: #8cff00;
+}
+
+.emptyWallets strong {
+  margin-bottom: 5px;
+  color: #f5f8f6;
+}
+
+.emptyWallets p {
+  max-width: 310px;
+  margin: 0 0 17px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.modalFooter {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  padding: 17px 26px 22px;
+  border-top: 1px solid rgb(255 255 255 / 8%);
+  color: #77817d;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.errorBox,
+.noticeBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0 26px 18px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.errorBox {
+  border: 1px solid rgb(255 100 100 / 24%);
+  background: rgb(255 75 75 / 8%);
+  color: #ffb5b5;
+}
+
+.noticeBox {
+  border: 1px solid rgb(140 255 0 / 18%);
+  background: rgb(140 255 0 / 5%);
+  color: #cbd4d0;
+}
+
+.inlineDismiss {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.primaryButton,
+.secondaryButton,
+.dangerButton,
+.connectButton {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 0 15px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 780;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, filter 160ms ease;
+}
+
+.primaryButton,
+.connectButton {
+  border: 1px solid #8cff00;
+  background: #8cff00;
+  color: #071004;
+  box-shadow: 0 8px 24px rgb(140 255 0 / 13%);
+}
+
+.primaryButton:hover,
+.connectButton:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.secondaryButton {
+  border: 1px solid rgb(255 255 255 / 13%);
+  background: rgb(255 255 255 / 4%);
+  color: #e9efec;
+}
+
+.secondaryButton:hover {
+  border-color: rgb(140 255 0 / 38%);
+  transform: translateY(-1px);
+}
+
+.dangerButton {
+  border: 1px solid rgb(255 110 110 / 16%);
+  background: rgb(255 80 80 / 5%);
+  color: #d99;
+}
+
+.panel {
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 100% 0%, rgb(138 92 246 / 10%), transparent 34%),
+    #0d100f;
+  color: #f5f8f6;
+  box-shadow: 0 18px 60px rgb(0 0 0 / 24%);
+}
+
+.panelMain {
+  padding: 22px;
+}
+
+.panelHeader,
+.accountRow,
+.statusRow,
+.actionRow {
+  display: flex;
+  align-items: center;
+}
+
+.panelHeader {
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 19px;
+}
+
+.panelTitle {
+  font-size: 17px;
+}
+
+.statusPill,
+.chainPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.statusPill {
+  padding: 7px 10px;
+  background: rgb(140 255 0 / 8%);
+  color: #a9ff43;
+}
+
+.chainPill {
+  padding: 6px 9px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  color: #aab4b0;
+}
+
+.chainWrong {
+  border-color: rgb(255 192 70 / 22%);
+  background: rgb(255 192 70 / 7%);
+  color: #ffd47b;
+}
+
+.accountRow {
+  gap: 13px;
+  padding: 14px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 3%);
+}
+
+.accountIdenticon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #a9ff43 0 12%, transparent 13%),
+    conic-gradient(from 35deg, #8cff00, #8a5cf6, #1d2924, #8cff00);
+  box-shadow: inset 0 0 0 4px #151a18;
+  color: transparent;
+}
+
+.accountMeta {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.accountMeta strong {
+  font-size: 14px;
+}
+
+.accountMeta span {
+  overflow: hidden;
+  color: #818b87;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copyButton {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  margin-left: auto;
+  place-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 5%);
+  color: #89938f;
+  cursor: pointer;
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.statusCard {
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 14px;
+  background: #0a0d0c;
+}
+
+.statusCardLabel {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 7px;
+  color: #747f7a;
+  font-size: 10px;
+  font-weight: 760;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.statusCard strong {
+  display: block;
+  overflow: hidden;
+  color: #edf3f0;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.statusGood {
+  color: #a9ff43 !important;
+}
+
+.statusMuted {
+  color: #a1aaa6 !important;
+}
+
+.panelNote {
+  margin: 12px 0 0;
+  color: #737d79;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.actionRow {
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.panelError {
+  margin: 12px 0 0;
+  color: #ffadad;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.connectState {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding: 22px;
+}
+
+.connectState p {
+  max-width: 430px;
+  margin: 0 0 4px;
+  color: #8d9793;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.compact .panelMain {
+  padding: 14px;
+}
+
+.compact .statusGrid,
+.compact .panelNote,
+.compact .panelHeader {
+  display: none;
+}
+
+.compact .accountRow {
+  padding: 8px;
+  border: 0;
+  background: transparent;
+}
+
+.compact .accountIdenticon {
+  width: 34px;
+  height: 34px;
+}
+
+.compact .actionRow {
+  margin-top: 8px;
+}
+
+.gate {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  padding: 30px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(140 255 0 / 8%), transparent 45%),
+    #0b0e0d;
+  color: #f6f8f7;
+  text-align: center;
+}
+
+.gateInner {
+  display: grid;
+  max-width: 430px;
+  justify-items: center;
+}
+
+.gateIcon {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 17px;
+  place-items: center;
+  border: 1px solid rgb(140 255 0 / 20%);
+  border-radius: 18px;
+  background: rgb(140 255 0 / 7%);
+  color: #8cff00;
+}
+
+.gateTitle {
+  font-size: 23px;
+}
+
+.gateCopy {
+  margin: 9px 0 20px;
+  font-size: 13px;
+}
+
+.gateActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+}
+
+.spinner {
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+}
+
+@media (max-width: 520px) {
+  .modalBackdrop { padding: 10px; }
+  .modal { border-radius: 21px; }
+  .modalHeader { padding: 21px 19px 15px; }
+  .networkStrip { margin-inline: 19px; }
+  .walletList { padding-inline: 19px; }
+  .modalFooter { padding-inline: 19px; }
+  .errorBox,
+  .noticeBox { margin-inline: 19px; }
+  .statusGrid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modalBackdrop,
+  .modal,
+  .spinner { animation: none; }
+}
