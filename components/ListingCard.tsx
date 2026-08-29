@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import type { Listing } from "@/lib/mock-data";
 import { ProductArt } from "./ProductArt";

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowRight, ArrowUpRight, MapPin, Megaphone } from "lucide-react";
 import { useState } from "react";
 import { ProductArt } from "@/components/ProductArt";

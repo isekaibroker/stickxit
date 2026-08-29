@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowRight, FolderKanban, Megaphone, QrCode, Search, SlidersHorizontal, X } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { listings } from "@/lib/mock-data";

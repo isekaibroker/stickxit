@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { BadgeCheck, Check, Copy, ImagePlus, LoaderCircle, Plus, ShieldCheck, Trash2, Wallet } from "lucide-react";

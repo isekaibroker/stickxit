@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowLeft, Image as ImageIcon, Layers3, MapPin, QrCode, ShieldCheck } from "lucide-react";
 import { useMemo, useState, type CSSProperties } from "react";
 import { ProductArt } from "@/components/ProductArt";

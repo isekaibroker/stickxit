@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, CheckCircle2, LoaderCircle, ShieldCheck, Upload, Wallet } from "lucide-react";
 import { useWallet } from "@/components/wallet/WalletProvider";

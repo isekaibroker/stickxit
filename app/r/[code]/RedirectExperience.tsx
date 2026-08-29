@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/AppLink";
 import { ArrowRight, CircleAlert, LoaderCircle, QrCode } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { findSavedCampaignByShortCode, recordCampaignScan, type SavedCampaign } from "@/lib/app-storage";
