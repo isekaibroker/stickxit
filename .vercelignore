@@ -1,0 +1,11 @@
+.git
+.next
+.output
+.vercel
+.vinext
+.wrangler
+coverage
+dist
+node_modules
+outputs
+work
