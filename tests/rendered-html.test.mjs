@@ -71,6 +71,9 @@ test("public Broker gallery is limited to eighteen approved rarity-free controls
   assert.doesNotMatch(html, /Broker #0308/i);
   assert.doesNotMatch(html, /(?:\/isekai\/gallery\/|%2Fisekai%2Fgallery%2F)0197\.png/i);
   assert.doesNotMatch(html, /(?:\/isekai\/gallery\/|%2Fisekai%2Fgallery%2F)0308\.png/i);
+  assert.match(html, /20% of platform fees/i);
+  assert.match(html, /holder allocation/i);
+  assert.doesNotMatch(html, /local demo|local workspace|local preview|browser-only simulation/i);
 });
 
 test("marketplace exposes the advertiser campaign entry point", async () => {

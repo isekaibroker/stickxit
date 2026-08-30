@@ -32,7 +32,7 @@ const heroSpots = [
 ];
 
 const steps = [
-  { no: "01", title: "Open your workspace", copy: "Start instantly in the local demo, or connect an installed EVM wallet when you want to test wallet access.", icon: BadgeCheck },
+  { no: "01", title: "Verify your Broker", copy: "Connect the holding wallet and verify an eligible Isekai Broker to unlock host tools.", icon: BadgeCheck },
   { no: "02", title: "List your item", copy: "Upload an everyday item and draw the areas available for stickers.", icon: Upload },
   { no: "03", title: "Advertiser books", copy: "A brand chooses a spot, previews its creative, and starts a campaign.", icon: MousePointer2 },
   { no: "04", title: "Place and earn", copy: "Install the sticker, upload proof, and track verified QR activity.", icon: Banknote },
@@ -91,7 +91,7 @@ export default function Home() {
           <div><span>01</span><strong>4,444</strong><small>Isekai Brokers</small></div>
           <div><span>02</span><strong>0%</strong><small>Broker platform fee</small></div>
           <div><span>03</span><strong>6</strong><small>Example surfaces</small></div>
-          <div><span>04</span><strong>LOCAL</strong><small>Workspace ready</small></div>
+          <div><span>04</span><strong>20%</strong><small>Holder fee allocation</small></div>
         </section>
 
         <section id="how-it-works" className="content-section how-section">
@@ -104,7 +104,7 @@ export default function Home() {
         </section>
 
         <section className="content-section marketplace-preview">
-          <SectionHeading eyebrow="Local marketplace" title={<>Find your next <em>placement.</em></>} copy="Use the six built-in examples immediately, or create a local listing with your own photo and find it here." action={<Link className="text-link" href="/marketplace">Open marketplace <ArrowRight size={16} /></Link>} />
+          <SectionHeading eyebrow="Placement marketplace" title={<>Find your next <em>placement.</em></>} copy="Explore six surface templates now. Verified Broker hosts can publish approved items and mapped sticker spots for advertisers." action={<Link className="text-link" href="/marketplace">Open marketplace <ArrowRight size={16} /></Link>} />
           <div className="listing-grid">{listings.map((listing) => <ListingCard listing={listing} key={listing.slug} />)}</div>
         </section>
 
@@ -112,11 +112,12 @@ export default function Home() {
           <div className="broker-story-copy">
             <span className="section-kicker purple">Genesis membership</span>
             <h2>Your Broker is<br />your <em>license.</em></h2>
-            <p>Isekai Brokers are the founding membership cards of Stickxit. Utility scales by character and rarity, from three mapped spots for a Commun Human to ten for Ultra-Rare and Legendary Brokers.</p>
+            <p>Isekai Brokers are the utility access licenses of Stickxit. Ownership unlocks host tools, listing capacity, zero-fee eligible Broker listings, and participation in the allocation of 20% of platform fees to eligible holders.</p>
             <ul>
               <li><Check size={15} /> Activate Broker access</li>
               <li><Check size={15} /> Map 3–10 spots per item</li>
               <li><Check size={15} /> List with no platform fee</li>
+              <li><Check size={15} /> Qualify for the 20% holder allocation</li>
             </ul>
             <Link className="button button-purple" href="/isekai-brokers">Explore Isekai Brokers <ArrowRight size={17} /></Link>
           </div>
@@ -130,8 +131,8 @@ export default function Home() {
 
         <section className="content-section advertiser-section">
           <div className="analytics-panel launch-panel">
-            <div className="panel-header"><div><small>Campaign preparation</small><strong>Build your first campaign</strong></div><span className="status-live status-building"><i /> Local mode</span></div>
-            <div className="analytics-metrics launch-steps"><div><span>01</span><strong>Choose</strong><small>Start with a surface template.</small></div><div><span>02</span><strong>Upload</strong><small>Add your artwork locally.</small></div><div><span>03</span><strong>Prepare</strong><small>Review the campaign before wallet authorization.</small></div></div>
+            <div className="panel-header"><div><small>Campaign preparation</small><strong>Build your first campaign</strong></div><span className="status-live status-building"><i /> Campaign builder</span></div>
+            <div className="analytics-metrics launch-steps"><div><span>01</span><strong>Choose</strong><small>Start with a surface template.</small></div><div><span>02</span><strong>Upload</strong><small>Add your campaign artwork.</small></div><div><span>03</span><strong>Prepare</strong><small>Review the campaign before wallet authorization.</small></div></div>
             <div className="empty-analytics"><QrCode size={30} /><div><strong>No invented campaign results</strong><p>Scan activity will appear only after real QR events are recorded.</p></div></div>
           </div>
           <div className="advertiser-copy">

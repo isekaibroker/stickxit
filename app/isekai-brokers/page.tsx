@@ -6,7 +6,7 @@ import styles from "./isekai.module.css";
 
 export const metadata: Metadata = {
   title: "Isekai Brokers",
-  description: "Explore Isekai Brokers and activate wallet access with a configured contract balance check or an honest local preview.",
+  description: "Explore Isekai Brokers, the utility NFT collection that unlocks Stickxit host tools, listing capacity, and holder fee allocations.",
 };
 
 export default function IsekaiBrokersPage() {

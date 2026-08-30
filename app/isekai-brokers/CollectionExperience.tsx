@@ -2,132 +2,32 @@
 
 import Link from "@/components/AppLink";
 import Image from "next/image";
-import {
-  ArrowRight,
-  BadgeCheck,
-  Check,
-  CircleAlert,
-  LoaderCircle,
-  Minus,
-  Network,
-  ShieldCheck,
-  Sparkles,
-  Wallet,
-} from "lucide-react";
+import { ArrowRight, BadgeCheck, Check, ShieldCheck, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { useWallet } from "@/components/wallet/WalletProvider";
 import { publicBrokerGallery, type PublicBrokerGalleryItem } from "@/lib/public-broker-gallery";
 import styles from "./isekai.module.css";
 
-type WalletAction = "connect" | "switch" | "verify" | "activate" | "disconnect";
 const galleryBrokers = publicBrokerGallery.slice(0, 18);
 
 function brokerLabel(broker: PublicBrokerGalleryItem) {
   return `Broker #${broker.id}`;
 }
 
-function shortAddress(address: string | null | undefined) {
-  return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "Not connected";
-}
-
-function chainName(chainId: number | string | null | undefined) {
-  if (!chainId) return "Not detected";
-  const normalized = Number(chainId);
-  if (normalized === 1) return "Ethereum";
-  if (normalized === 137) return "Polygon";
-  if (normalized === 8453) return "Base";
-  if (normalized === 11155111) return "Sepolia";
-  return `Chain ${chainId}`;
-}
-
 export function CollectionExperience() {
   const [selected, setSelected] = useState<PublicBrokerGalleryItem>(galleryBrokers[0]);
-  const [pending, setPending] = useState<WalletAction | null>(null);
-  const [walletError, setWalletError] = useState("");
-  const {
-    address,
-    chainId,
-    isConnected: connected,
-    isCorrectChain: correctChain,
-    chainConfigured,
-    collectionAddress,
-    ownership,
-    license,
-    error: providerError,
-    targetChain,
-    startLocalSession,
-    isLocalSession,
-    disconnect,
-    switchToConfiguredChain: switchNetwork,
-    refreshOwnership,
-    activateLicense,
-  } = useWallet();
-
-  const balance = Number(ownership.balance ?? 0);
-  const previewMode = isLocalSession || !chainConfigured || !collectionAddress;
-  const networkReady = previewMode || correctChain;
-  const ownershipVerified = connected && correctChain && ownership.status === "owned" && balance > 0;
-  const verificationReady = previewMode || ownershipVerified;
-  const licenseActive = Boolean(license);
-
-  async function runWalletAction(action: WalletAction, operation: () => void | Promise<void>) {
-    setWalletError("");
-    setPending(action);
-    try {
-      await operation();
-    } catch (error) {
-      setWalletError(error instanceof Error ? error.message : "The wallet request was not completed.");
-    } finally {
-      setPending(null);
-    }
-  }
-
-  function renderPrimaryAction() {
-    if (!connected) {
-      return (
-        <button className={styles.stakeButton} type="button" disabled={pending !== null} onClick={() => void runWalletAction("connect", startLocalSession)}>
-          {pending === "connect" ? <LoaderCircle className={styles.spin} size={17} /> : <Wallet size={17} />}
-          {pending === "connect" ? "Opening workspace..." : "Enter local demo"}
-        </button>
-      );
-    }
-    if (!previewMode && !correctChain) {
-      return (
-        <button className={styles.stakeButton} type="button" disabled={pending !== null} onClick={() => void runWalletAction("switch", switchNetwork)}>
-          {pending === "switch" ? <LoaderCircle className={styles.spin} size={17} /> : <Network size={17} />}
-          {pending === "switch" ? "Switching network..." : "Switch to supported network"}
-        </button>
-      );
-    }
-    if (!previewMode && !ownershipVerified) {
-      if (ownership.status === "checking") {
-        return <button className={`${styles.stakeButton} ${styles.disabledAction}`} type="button" disabled><LoaderCircle className={styles.spin} size={17} /> Checking contract balance...</button>;
-      }
-      return <button className={`${styles.stakeButton} ${styles.disabledAction}`} type="button" disabled={pending !== null} onClick={() => void runWalletAction("verify", async () => { await refreshOwnership(); })}>{pending === "verify" ? <LoaderCircle className={styles.spin} size={17} /> : <BadgeCheck size={17} />} {pending === "verify" ? "Checking contract balance..." : "Recheck Broker balance"}</button>;
-    }
-    if (!licenseActive) {
-      return (
-        <button className={styles.stakeButton} type="button" disabled={pending !== null} onClick={() => void runWalletAction("activate", async () => { await activateLicense(); })}>
-          {pending === "activate" ? <LoaderCircle className={styles.spin} size={17} /> : <ShieldCheck size={17} />}
-          {pending === "activate" ? "Waiting for wallet..." : previewMode ? "Activate local preview" : "Sign license activation"}
-        </button>
-      );
-    }
-    return <Link className={styles.stakeButton} href="/broker">Enter Broker HQ <ArrowRight size={17} /></Link>;
-  }
 
   return (
     <>
       <section className={styles.hero}>
         <div>
-          <p className={styles.kicker}><Sparkles size={14} /> The membership layer</p>
-          <h1>Meet your<br /><em>market maker.</em></h1>
-          <p className={styles.lede}>Explore every Broker workflow locally in your browser. A wallet and configured collection contract can be connected later for on-chain verification.</p>
+          <p className={styles.kicker}><Sparkles size={14} /> Isekai Brokers · Genesis access collection</p>
+          <h1>Own the license<br /><em>behind Stickxit.</em></h1>
+          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
           <div className={styles.heroActions}>
             <Link className={styles.primary} href="/launchpad">Become a Broker <ArrowRight size={17} /></Link>
-            <a className={styles.secondary} href="#collection">Browse public gallery</a>
+            <a className={styles.secondary} href="#utility">Explore NFT utility</a>
           </div>
-          <p className={styles.demo}><span /> Non-custodial access - no NFT is staked, transferred, or approved.</p>
+          <p className={styles.custodyNote}><span /> Your NFT stays in your wallet—access never requires transferring or approving it.</p>
         </div>
         <div className={styles.heroCard}>
           <Image src="/isekai/gallery/0889.png" alt="Golden ram chancellor Isekai Broker artwork" width={1000} height={1000} priority />
@@ -136,29 +36,37 @@ export function CollectionExperience() {
         </div>
       </section>
 
-      <section className={styles.stats} aria-label="Collection statistics">
-        <div><strong>4,444</strong><span>Original brokers</span></div>
-        <div><strong>18</strong><span>Featured portraits</span></div>
-        <div><strong>ERC-721</strong><span>Contract balance check</span></div>
-        <div><strong>0</strong><span>NFT transfers required</span></div>
+      <section className={styles.stats} aria-label="Collection utility statistics">
+        <div><strong>4,444</strong><span>Genesis Brokers</span></div>
+        <div><strong>3–10</strong><span>Sticker spots per item</span></div>
+        <div><strong>0%</strong><span>Fee on eligible Broker listings</span></div>
+        <div><strong>20%</strong><span>Platform fees allocated to holders</span></div>
       </section>
 
-      <section className={styles.utility} aria-labelledby="utility-title">
+      <section className={styles.utility} id="utility" aria-labelledby="utility-title">
         <div className={styles.sectionHead}>
-          <div><p className={styles.kicker}>Broker utility</p><h2 id="utility-title">One license, practical local tools</h2></div>
-          <p className={styles.utilityIntro}>The public gallery keeps collection classifications private while showing what the Broker workspace can do.</p>
+          <div><p className={styles.kicker}>NFT utility</p><h2 id="utility-title">One Broker. A real marketplace role.</h2></div>
+          <p className={styles.utilityIntro}>A Broker is more than collection artwork. Wallet ownership unlocks the tools that let hosts turn approved items into measurable advertising space.</p>
         </div>
         <div className={styles.utilityGrid}>
-          <article className={styles.utilityCard}><span>Mapped surfaces</span><strong>3–10<small> spots / item</small></strong><p>Define realistic sticker-safe regions on every listed object.</p></article>
-          <article className={styles.utilityCard}><span>Local inventory</span><strong>1–2<small> items</small></strong><p>Prepare and manage item listings directly from the Broker workspace.</p></article>
-          <article className={styles.utilityCard}><span>Broker listings</span><strong>0%<small> platform fee</small></strong><p>Broker-enabled item listings do not add a Stickxit platform fee.</p></article>
-          <article className={styles.utilityCard}><span>Workspace access</span><strong>Local<small> or wallet</small></strong><p>Use the browser-only workspace now or verify a configured collection later.</p></article>
+          <article className={styles.utilityCard}><span>Broker HQ access</span><strong>Verify<small> ownership</small></strong><p>Connect the holding wallet to access listing, placement, campaign, and performance tools.</p></article>
+          <article className={styles.utilityCard}><span>Real inventory</span><strong>1–2<small> items</small></strong><p>List approved physical items and map realistic sticker-safe regions for advertisers.</p></article>
+          <article className={styles.utilityCard}><span>License capacity</span><strong>3–10<small> spots / item</small></strong><p>Each Broker defines how many items and sticker placements its holder can operate.</p></article>
+          <article className={styles.utilityCard}><span>Holder allocation</span><strong>20%<small> of platform fees</small></strong><p>Twenty percent of platform fees collected by Stickxit is allocated to eligible Isekai Broker holders.</p></article>
         </div>
+        <article className={styles.feeDisclosure} id="holder-allocation">
+          <BadgeCheck size={24} />
+          <div>
+            <strong>The holder allocation</strong>
+            <p>20% of platform fees collected by Stickxit is reserved for eligible Isekai Broker holders. Distribution timing, wallet eligibility, claim rules, and excluded fees will be defined in the published Holder Rewards Terms. Allocations depend on marketplace activity and are not guaranteed.</p>
+          </div>
+        </article>
       </section>
 
       <section className={styles.collection} id="collection" aria-labelledby="collection-title">
         <div className={styles.sectionHead}>
-          <div><p className={styles.kicker}>Collection artwork</p><h2 id="collection-title">Browse Broker portraits</h2></div>
+          <div><p className={styles.kicker}>The Genesis collection</p><h2 id="collection-title">Meet the Isekai Brokers</h2></div>
+          <p className={styles.utilityIntro}>Distinct characters. One shared role: powering the people who host real-world advertising space on Stickxit.</p>
         </div>
 
         <div className={styles.collectionLayout}>
@@ -173,7 +81,7 @@ export function CollectionExperience() {
             ))}
           </div>
 
-          <aside className={styles.detail} aria-label="Broker artwork preview and wallet access">
+          <aside className={styles.detail} aria-label="Broker artwork preview and NFT utility">
             <div className={styles.detailImage}><Image src={selected.image} alt={`${selected.character} artwork preview`} width={1000} height={1000} /></div>
             <div className={styles.detailTitle}><h3>{brokerLabel(selected)}</h3><p>{selected.character}</p></div>
             <dl className={styles.traits}>
@@ -182,23 +90,18 @@ export function CollectionExperience() {
               <div><dt>Background</dt><dd>{selected.background}</dd></div>
             </dl>
 
-            <p className={`${styles.modeNotice} ${previewMode ? styles.localMode : ""}`}>
-              <strong>{previewMode ? "Local preview" : "On-chain verification"}</strong>
-              <span>{previewMode ? "Contract and chain verification is not fully configured. Portrait selection is only an artwork preview." : "The connected wallet balance is checked against the configured collection contract. Portrait selection does not claim token ownership."}</span>
-            </p>
-
-            <ol className={styles.activationSteps} aria-label="Broker license activation steps">
-              <li className={connected ? styles.stepComplete : styles.stepCurrent}><Wallet size={15} /><span><strong>{isLocalSession ? "Local workspace" : "Connect wallet"}</strong><small>{isLocalSession ? "Browser-only simulation" : shortAddress(address)}</small></span>{connected && <Check size={14} />}</li>
-              <li className={connected && networkReady ? previewMode ? styles.stepSkipped : styles.stepComplete : connected ? styles.stepCurrent : ""}><Network size={15} /><span><strong>{previewMode ? "Local preview mode" : "Supported network"}</strong><small>{previewMode ? "No target chain enforced" : correctChain ? targetChain.chainName : chainName(chainId)}</small></span>{connected && networkReady && (previewMode ? <Minus size={14} /> : <Check size={14} />)}</li>
-              <li className={connected && verificationReady ? previewMode ? styles.stepSkipped : styles.stepComplete : connected && networkReady ? styles.stepCurrent : ""}><BadgeCheck size={15} /><span><strong>Contract balance check</strong><small>{previewMode ? "Unavailable in local preview" : ownershipVerified ? `${balance} Broker${balance === 1 ? "" : "s"} found by contract` : ownership.status === "checking" ? "Reading collection balance..." : "Collection balance required"}</small></span>{connected && verificationReady && (previewMode ? <Minus size={14} /> : <Check size={14} />)}</li>
-              <li className={licenseActive ? styles.stepComplete : connected && networkReady && verificationReady ? styles.stepCurrent : ""}><ShieldCheck size={15} /><span><strong>Activate access</strong><small>{licenseActive ? "Saved on this device" : "Sign a wallet message"}</small></span>{licenseActive && <Check size={14} />}</li>
-            </ol>
-
-            <div className={`${styles.license} ${licenseActive ? styles.licenseActive : ""}`}><ShieldCheck size={22} /><span><strong>{previewMode ? "Local Preview" : "Broker License"} {licenseActive ? "Active" : "Inactive"}</strong><small>{licenseActive ? previewMode ? "Preview access is saved on this device" : "Contract-gated marketplace access unlocked" : "Complete the wallet steps to unlock access"}</small></span></div>
-            {renderPrimaryAction()}
-            {connected && <button className={styles.disconnectButton} type="button" disabled={pending !== null} onClick={() => void runWalletAction("disconnect", disconnect)}>{isLocalSession ? "Exit local demo" : `Disconnect ${shortAddress(address)}`}</button>}
-            {(walletError || providerError) && <p className={styles.walletError} role="alert"><CircleAlert size={14} /> {walletError || providerError}</p>}
-            <p className={styles.simulation}>{previewMode ? "Local preview access is saved only in this browser on this device." : "Activation is stored locally after the contract balance check and wallet message."}</p>
+            <div className={styles.utilityLicense}>
+              <p className={styles.kicker}><ShieldCheck size={14} /> Broker utility</p>
+              <h4>A marketplace license in your wallet</h4>
+              <ul>
+                <li><Check size={14} /> Unlock Broker HQ after ownership verification</li>
+                <li><Check size={14} /> Operate within the Broker’s item and spot allowance</li>
+                <li><Check size={14} /> Pay 0% platform fees on eligible Broker listings</li>
+                <li><Check size={14} /> Qualify for the holder allocation when eligibility rules are met</li>
+              </ul>
+              <Link className={styles.stakeButton} href="/launchpad">Become a Broker <ArrowRight size={17} /></Link>
+              <a className={styles.termsLink} href="#holder-allocation">Review holder allocation details</a>
+            </div>
           </aside>
         </div>
       </section>
