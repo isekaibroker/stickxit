@@ -11,7 +11,7 @@ Stickxit is a complete local prototype for a distributed physical advertising ma
 - Multiple local Isekai Brokers per wallet, with tier-specific item and spot limits tracked independently
 - Searchable marketplace combining six built-in surfaces with user-created listings
 - Listing builder with uploaded photos, custom placement regions, pricing, and tier limits
-- Item-specific, physically usable sticker regions with surface guidance for laptops, PCs, cars, toolboxes, skateboards, and helmets
+- Item-specific, physically usable sticker regions with surface guidance for laptops, PCs, cars, cordless drills, skateboards, and helmets
 - Campaign builder that preserves the selected item, spot, and artwork transform from the marketplace
 - Marketplace campaign creation with custom artwork uploads and an adjustable 3D live mockup
 - Drag, keyboard, position, scale, and rotation controls constrained to the selected sticker region

@@ -141,7 +141,7 @@ export function InteractivePlacementMockup({
         onPointerLeave={() => setViewAngle(-4)}
       >
         <div className={styles.mockupDevice}>
-          <ProductArt listing={listing} large />
+          <ProductArt listing={listing} large showExampleStickers={false} />
           <div
             ref={spotRef}
             className={styles.designatedSpot}

@@ -19,8 +19,8 @@ export type Listing = {
   title: string;
   city: string;
   country: string;
-  category: "Laptop" | "PC" | "Car" | "Toolbox" | "Skateboard" | "Helmet";
-  visual: "laptop" | "pc" | "car" | "toolbox" | "skateboard" | "helmet";
+  category: "Laptop" | "PC" | "Car" | "Toolbox" | "Drill" | "Skateboard" | "Helmet";
+  visual: "laptop" | "pc" | "car" | "toolbox" | "drill" | "skateboard" | "helmet";
   totalSpots: number;
   visibility: "High" | "Medium";
   use: string;
@@ -54,11 +54,10 @@ const carSpots: Spot[] = [
   { id: "D", name: "Rear bumper band", x: .82, y: .62, width: .12, height: .07, physicalSize: '10 × 3"', surface: "Smooth painted bumper", description: "A narrow removable-vinyl band clear of lights, exhaust, sensors, and plate areas.", rotation: -1 },
 ];
 
-const toolboxSpots: Spot[] = [
-  { id: "A", name: "Upper-left case panel", x: .20, y: .40, width: .17, height: .12, physicalSize: '4 × 3"', surface: "Flat hard-case shell", description: "A flat recessed panel that avoids the handle, ribs, latches, and hinges." },
-  { id: "B", name: "Upper-right case panel", x: .40, y: .40, width: .15, height: .12, physicalSize: '4 × 3"', surface: "Flat hard-case shell", description: "A compact hard-shell placement inside the molded reinforcement ribs." },
-  { id: "C", name: "Lower-left case panel", x: .20, y: .56, width: .17, height: .12, physicalSize: '4 × 3"', surface: "Flat hard-case shell", description: "A lower face panel with clearance from the raised outer frame." },
-  { id: "D", name: "Lower-right case panel", x: .40, y: .56, width: .15, height: .12, physicalSize: '4 × 3"', surface: "Flat hard-case shell", description: "A lower-right panel reserved for durable removable vinyl." },
+const drillSpots: Spot[] = [
+  { id: "A", name: "Motor housing panel", x: .51, y: .18, width: .15, height: .11, physicalSize: '2 × 2"', surface: "Smooth drill housing", description: "A compact removable-vinyl placement on the broad motor cover, clear of vents and the selector.", rotation: -1 },
+  { id: "B", name: "Grip side panel", x: .50, y: .49, width: .10, height: .13, physicalSize: '1.5 × 2.5"', surface: "Molded grip side", description: "A narrow flexible-vinyl placement on the smooth grip inset, away from the trigger and grip seam.", rotation: 0 },
+  { id: "C", name: "Battery side panel", x: .45, y: .80, width: .19, height: .10, physicalSize: '2.5 × 1.5"', surface: "Smooth battery shell", description: "A landscape decal on the flat battery face, clear of the release latch and base edge.", rotation: 0 },
 ];
 
 const skateboardSpots: Spot[] = [
@@ -78,7 +77,7 @@ export const listings: Listing[] = [
   { slug: "macbook-pro-m2-montreal", title: "Silver Laptop", city: "Montreal", country: "CA", category: "Laptop", visual: "laptop", totalSpots: laptopSpots.length, visibility: "High", use: "Work, school, cafés", spots: laptopSpots },
   { slug: "custom-gaming-pc-toronto", title: "Custom Gaming PC", city: "Toronto", country: "CA", category: "PC", visual: "pc", totalSpots: pcSpots.length, visibility: "High", use: "Gaming events, streams", spots: pcSpots },
   { slug: "bmw-330i-montreal", title: "Graphite Sedan", city: "Montreal", country: "CA", category: "Car", visual: "car", totalSpots: carSpots.length, visibility: "High", use: "City driving, commuting", spots: carSpots },
-  { slug: "pro-toolbox-calgary", title: "Pro Toolbox", city: "Calgary", country: "CA", category: "Toolbox", visual: "toolbox", totalSpots: toolboxSpots.length, visibility: "Medium", use: "Job sites, workshops", spots: toolboxSpots },
+  { slug: "cordless-drill-calgary", title: "Cordless Drill", city: "Calgary", country: "CA", category: "Drill", visual: "drill", totalSpots: drillSpots.length, visibility: "Medium", use: "Job sites, service calls", spots: drillSpots },
   { slug: "street-deck-montreal", title: "Street Skateboard", city: "Montreal", country: "CA", category: "Skateboard", visual: "skateboard", totalSpots: skateboardSpots.length, visibility: "Medium", use: "Campus, skate parks", spots: skateboardSpots },
   { slug: "rider-helmet-ottawa", title: "Rider Helmet", city: "Ottawa", country: "CA", category: "Helmet", visual: "helmet", totalSpots: helmetSpots.length, visibility: "High", use: "Daily rides, meetups", spots: helmetSpots },
 ];

@@ -44,7 +44,7 @@ test("server-renders primary product routes", async () => {
     "/item/macbook-pro-m2-montreal",
     "/item/custom-gaming-pc-toronto",
     "/item/bmw-330i-montreal",
-    "/item/pro-toolbox-calgary",
+    "/item/cordless-drill-calgary",
     "/item/street-deck-montreal",
     "/item/rider-helmet-ottawa",
     "/r/LOCAL1",
@@ -91,7 +91,7 @@ test("marketplace ships a realistic photo for every example surface", async () =
     "silver-laptop.webp",
     "gaming-pc.webp",
     "graphite-sedan.webp",
-    "pro-toolbox.webp",
+    "cordless-drill.webp",
     "street-skateboard.webp",
     "rider-helmet.webp",
   ];
@@ -102,6 +102,25 @@ test("marketplace ships a realistic photo for every example surface", async () =
     assert.ok((await stat(file)).size > 20_000, `${asset} should contain an optimized product photo`);
     assert.match(css, new RegExp(`/marketplace/${asset.replace(".", "\\.")}`));
   }
+});
+
+test("marketplace examples display Isekai portrait stickers without polluting the campaign editor", async () => {
+  const stickerAssets = ["0001", "0002", "0010", "0016", "0339", "1366", "0003", "0490", "0985", "0028", "0753", "0183", "0319", "1347", "0034", "0412"];
+  for (const token of stickerAssets) {
+    const file = new URL(`../public/marketplace/stickers/${token}.webp`, import.meta.url);
+    assert.ok((await stat(file)).size > 4_000, `${token}.webp should contain an optimized Isekai sticker portrait`);
+  }
+
+  const marketplaceResponse = await render("/marketplace");
+  assert.equal(marketplaceResponse.status, 200);
+  const marketplaceHtml = await marketplaceResponse.text();
+  assert.equal((marketplaceHtml.match(/data-example-sticker="true"/g) ?? []).length, 16);
+  assert.match(marketplaceHtml, /Cordless Drill/i);
+  assert.doesNotMatch(marketplaceHtml, /Pro Toolbox/i);
+
+  const campaignResponse = await render("/campaigns/new?item=cordless-drill-calgary&spot=A");
+  assert.equal(campaignResponse.status, 200);
+  assert.doesNotMatch(await campaignResponse.text(), /data-example-sticker="true"/i);
 });
 
 test("primary navigation no longer exposes the removed Advertise route", async () => {
