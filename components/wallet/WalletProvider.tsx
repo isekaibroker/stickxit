@@ -537,7 +537,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
 
     if (!chainConfigured || !configuredCollectionAddress) {
-      setError("Broker access will activate after the official network and collection contract are published.");
+      setError("Broker access will activate after the Robinhood Chain collection contract is published.");
       setStatus("error");
       return null;
     }

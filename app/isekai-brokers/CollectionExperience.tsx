@@ -20,11 +20,11 @@ export function CollectionExperience() {
     <>
       <section className={styles.hero}>
         <div>
-          <p className={styles.kicker}><Sparkles size={14} /> Isekai Brokers · Genesis access collection</p>
+          <p className={styles.kicker}><Sparkles size={14} /> Isekai Brokers · Genesis on Robinhood Chain</p>
           <h1>Own the license<br /><em>behind Stickxit.</em></h1>
-          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
+          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation. The Genesis collection is planned to mint on Robinhood Chain.</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primary} href="/launchpad">Launch Mint: TBA <ArrowRight size={17} /></Link>
+            <Link className={styles.primary} href="/launchpad">Mint on Robinhood Chain <ArrowRight size={17} /></Link>
             <a className={styles.secondary} href="#utility">Explore NFT utility</a>
           </div>
           <p className={styles.custodyNote}><span /> Your NFT stays in your wallet. Access never requires transferring or approving it.</p>
@@ -99,7 +99,7 @@ export function CollectionExperience() {
                 <li><Check size={14} /> Pay 0% platform fees on eligible Broker listings</li>
                 <li><Check size={14} /> Qualify for the holder allocation when eligibility rules are met</li>
               </ul>
-              <Link className={styles.stakeButton} href="/launchpad">View mint status <ArrowRight size={17} /></Link>
+              <Link className={styles.stakeButton} href="/launchpad">View Robinhood Chain mint status <ArrowRight size={17} /></Link>
               <a className={styles.termsLink} href="#holder-allocation">Review holder allocation details</a>
             </div>
           </aside>

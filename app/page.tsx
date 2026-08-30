@@ -22,7 +22,7 @@ import { brokers, listings } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: { absolute: "Stickxit | Turn what you own into ad space" },
-  description: "A marketplace for real-world sticker placements, powered by Isekai Brokers.",
+  description: "A marketplace for real-world sticker placements, powered by Isekai Brokers. The Genesis collection is planned to mint on Robinhood Chain.",
 };
 
 const heroSpots = [
@@ -77,10 +77,10 @@ export default function Home() {
           <div className="hero-copy">
             <div className="eyebrow"><span /> Physical media, reimagined</div>
             <h1 id="hero-title">Turn anything<br />you own into<br /><em>ad space.</em></h1>
-            <p className="hero-lede">Activate Isekai Broker access, list your everyday item, and let brands request sticker placements that people can actually see.</p>
+            <p className="hero-lede">Activate Isekai Broker access, list your everyday item, and let brands request sticker placements that people can actually see. The Genesis collection is planned to mint on Robinhood Chain.</p>
             <div className="hero-actions">
               <Link className="button button-primary" href="/marketplace">Explore marketplace <span>↗</span></Link>
-              <Link className="button button-secondary" href="/launchpad">Launch Mint: TBA</Link>
+              <Link className="button button-secondary" href="/launchpad">Robinhood Chain Mint</Link>
             </div>
             <p className="sample-note"><span /> Interactive sample: hover or focus a spot</p>
           </div>

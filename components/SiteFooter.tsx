@@ -12,9 +12,10 @@ export function SiteFooter() {
         <Link href="/marketplace">Marketplace</Link>
         <Link href="/isekai-brokers">Isekai Brokers</Link>
         <Link href="/broker">Broker HQ</Link>
-        <Link href="/launchpad">Launch Mint: TBA</Link>
+        <Link href="/launchpad">Mint on Robinhood Chain</Link>
+        <a href="https://x.com/isekaibrokers" target="_blank" rel="noopener noreferrer">Follow on X</a>
       </nav>
-      <small>© 2026 Stickxit. Pre-launch experience; examples are clearly labeled.</small>
+      <small>© 2026 Stickxit. Pre-launch experience; examples are clearly labeled. Isekai Brokers is independent and is not affiliated with, endorsed by, or sponsored by Robinhood.</small>
     </footer>
   );
 }

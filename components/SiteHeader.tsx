@@ -18,7 +18,7 @@ export function Brand() {
 const navItems = [
   { href: "/marketplace", label: "Marketplace" },
   { href: "/isekai-brokers", label: "Isekai Brokers" },
-  { href: "/launchpad", label: "Launch Mint: TBA" },
+  { href: "/launchpad", label: "Mint on Robinhood Chain" },
   { href: "/broker", label: "Broker HQ" },
 ];
 

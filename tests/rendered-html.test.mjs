@@ -25,8 +25,12 @@ test("server-renders the Stickxit product homepage", async () => {
   assert.match(html, /<title>Stickxit[^<]*<\/title>/i);
   assert.match(html, /property="og:image" content="http:\/\/localhost:3000\/og\.png"/i);
   assert.match(html, /name="twitter:card" content="summary_large_image"/i);
+  assert.match(html, /name="twitter:site" content="@isekaibrokers"/i);
+  assert.match(html, /name="twitter:creator" content="@isekaibrokers"/i);
   assert.match(html, /Turn what you own into ad space/i);
   assert.match(html, /Isekai Brokers/i);
+  assert.match(html, /Robinhood Chain/i);
+  assert.match(html, /href="https:\/\/x\.com\/isekaibrokers"/i);
   assert.match(html, /Explore marketplace/i);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
 });
@@ -178,16 +182,39 @@ test("launchpad is a non-transactional TBA page with no local demo mint", async 
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /Launch Mint: TBA/i);
-  assert.match(html, /Mint details are TBA/i);
+  assert.match(html, /Robinhood Chain Mint: TBA/i);
+  assert.match(html, /Robinhood Chain mainnet is live/i);
+  assert.match(html, /Robinhood Chain confirmed\. Mint details are TBA/i);
+  assert.match(html, /Isekai Brokers is independent and is not affiliated with, endorsed by, or sponsored by Robinhood/i);
+  assert.match(html, /href="https:\/\/x\.com\/isekaibrokers"/i);
+  assert.match(html, /<dt>Network<\/dt>\s*<dd>Robinhood Chain<\/dd>/i);
+  for (const label of ["Mint price", "Launch date", "Contract address", "Allowlist"]) {
+    assert.match(html, new RegExp(`<dt>${label}</dt>\\s*<dd>TBA</dd>`, "i"));
+  }
   assert.doesNotMatch(html, /Create (?:another )?demo Broker|Demo utility tier|Build your local Broker|browser-only Broker record|Wallet options/i);
 
   const primaryNav = html.match(/<nav[^>]*class="[^"]*nav-links[^"]*"[^>]*>[\s\S]*?<\/nav>/i)?.[0];
   assert.ok(primaryNav, "primary navigation should be present in server-rendered HTML");
-  assert.match(primaryNav, /href="\/launchpad"[^>]*>Launch Mint: TBA<\/a>/i);
+  assert.match(primaryNav, /href="\/launchpad"[^>]*>Mint on Robinhood Chain<\/a>/i);
 
   const source = await readFile(new URL("../app/launchpad/LaunchpadExperience.tsx", import.meta.url), "utf8");
   assert.doesNotMatch(source, /saveLocalBroker|createDemoBroker|startLocalSession|WalletConnectModal|useWallet/);
+});
+
+test("Robinhood Chain configuration is ready while the collection contract stays unset", async () => {
+  const configSource = await readFile(new URL("../lib/web3/config.ts", import.meta.url), "utf8");
+  assert.match(configSource, /4663:\s*\{/);
+  assert.match(configSource, /chainName:\s*["']Robinhood Chain["']/);
+  assert.match(configSource, /https:\/\/rpc\.mainnet\.chain\.robinhood\.com/);
+  assert.match(configSource, /https:\/\/robinhoodchain\.blockscout\.com/);
+
+  const envExample = await readFile(new URL("../.env.example", import.meta.url), "utf8");
+  assert.match(envExample, /^NEXT_PUBLIC_SITE_URL=https:\/\/stickxit\.com$/m);
+  assert.match(envExample, /^NEXT_PUBLIC_CHAIN_ID=4663$/m);
+  assert.match(envExample, /^NEXT_PUBLIC_CHAIN_NAME=Robinhood Chain$/m);
+  assert.match(envExample, /^NEXT_PUBLIC_CHAIN_RPC_URLS=https:\/\/rpc\.mainnet\.chain\.robinhood\.com$/m);
+  assert.match(envExample, /^NEXT_PUBLIC_CHAIN_EXPLORER_URLS=https:\/\/robinhoodchain\.blockscout\.com$/m);
+  assert.match(envExample, /^NEXT_PUBLIC_ISEKAI_COLLECTION_ADDRESS=$/m);
 });
 
 test("user-facing source contains no long dash characters", async () => {

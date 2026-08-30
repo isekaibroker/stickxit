@@ -97,7 +97,7 @@ export function WalletConnectModal({
             <span className={styles.networkDot} />
             {chainConfigured
               ? `${targetChain.chainName} / Chain ${targetChain.id}`
-              : "Any EVM network"}
+              : "Robinhood Chain activation pending"}
           </span>
         </div>
 

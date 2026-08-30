@@ -1,6 +1,12 @@
 import type { ChainConfig, HexString } from "./types";
 
 const KNOWN_CHAINS: Record<number, Omit<ChainConfig, "id" | "chainId">> = {
+  4663: {
+    chainName: "Robinhood Chain",
+    nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+    rpcUrls: ["https://rpc.mainnet.chain.robinhood.com"],
+    blockExplorerUrls: ["https://robinhoodchain.blockscout.com"],
+  },
   1: {
     chainName: "Ethereum",
     nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
@@ -85,7 +91,7 @@ export function getConfiguredChain(): ChainConfig {
     chainId: toChainHex(id),
     chainName: explicitId
       ? process.env.NEXT_PUBLIC_CHAIN_NAME || known?.chainName || `Chain ${id}`
-      : "Any EVM network",
+      : "Robinhood Chain activation pending",
     nativeCurrency: {
       name:
         process.env.NEXT_PUBLIC_NATIVE_CURRENCY_NAME

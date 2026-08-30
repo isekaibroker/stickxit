@@ -6,7 +6,7 @@ import styles from "./isekai.module.css";
 
 export const metadata: Metadata = {
   title: "Isekai Brokers",
-  description: "Explore Isekai Brokers, the utility NFT collection that unlocks Stickxit host tools, listing capacity, and holder fee allocations.",
+  description: "Explore Isekai Brokers, the Stickxit utility NFT collection planned to mint on Robinhood Chain. Mint date, price, contract, and allowlist details remain TBA.",
 };
 
 export default function IsekaiBrokersPage() {

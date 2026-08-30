@@ -30,6 +30,7 @@ function chainName(chainId: number | string | null | undefined) {
   const normalized = Number(chainId);
   if (normalized === 1) return "Ethereum";
   if (normalized === 137) return "Polygon";
+  if (normalized === 4663) return "Robinhood Chain";
   if (normalized === 8453) return "Base";
   if (normalized === 11155111) return "Sepolia";
   return `Chain ${chainId}`;
@@ -97,7 +98,7 @@ export function BrokerDashboard() {
       return <button type="button" onClick={() => setWalletModalOpen(true)}><Wallet size={17} /> Connect wallet</button>;
     }
     if (!verificationConfigured) {
-      return <Link href="/launchpad"><LockKeyhole size={17} /> Mint status: TBA</Link>;
+      return <Link href="/launchpad"><LockKeyhole size={17} /> Robinhood Chain mint: TBA</Link>;
     }
     if (!correctChain) {
       return <button type="button" disabled={pending !== null} onClick={() => void runWalletAction("switch", switchNetwork)}>{pending === "switch" ? <LoaderCircle className={styles.spin} size={17} /> : <Network size={17} />} {pending === "switch" ? "Switching..." : "Switch network"}</button>;
@@ -114,7 +115,7 @@ export function BrokerDashboard() {
   const accessStatus = !connected
     ? "Wallet required"
     : !verificationConfigured
-      ? "Launch configuration pending"
+      ? "Robinhood Chain collection setup pending"
       : !correctChain
         ? "Network switch required"
         : !ownershipVerified
@@ -138,7 +139,7 @@ export function BrokerDashboard() {
 
     <section className={`${styles.accountBar} ${accessReady ? styles.accountActive : ""}`} aria-label="Connected wallet status">
       <div><Wallet size={17} /><span><small>Wallet</small><strong>{shortAddress(address)}</strong></span></div>
-      <div><Network size={17} /><span><small>Network</small><strong className={connected && verificationConfigured && !correctChain ? styles.warning : ""}>{!verificationConfigured ? "Configuration pending" : correctChain ? targetChain.chainName : chainName(chainId)}</strong></span></div>
+      <div><Network size={17} /><span><small>Network</small><strong className={connected && verificationConfigured && !correctChain ? styles.warning : ""}>{!verificationConfigured ? "Robinhood Chain setup pending" : correctChain ? targetChain.chainName : chainName(chainId)}</strong></span></div>
       <div><BadgeCheck size={17} /><span><small>Contract balance</small><strong>{!verificationConfigured ? "Not configured" : ownershipVerified ? `${balance} Broker${balance === 1 ? "" : "s"}` : "Not verified"}</strong></span></div>
       <div><ShieldCheck size={17} /><span><small>Broker access</small><strong>{accessReady ? "Active" : "Inactive"}</strong></span></div>
       <span className={styles.accessPill}>{accessReady ? <><Check size={13} /> Access unlocked</> : <><LockKeyhole size={13} /> Actions locked</>}</span>
@@ -151,7 +152,7 @@ export function BrokerDashboard() {
         <LockKeyhole size={22} />
         <div>
           <strong id="access-notice-title">Broker tools remain locked until ownership can be verified</strong>
-          <p>{verificationConfigured ? "Connect on the supported network, verify the collection balance, and sign the access message." : "The official network and collection contract will be published with the mint details."}</p>
+          <p>{verificationConfigured ? "Connect on Robinhood Chain, verify the collection balance, and sign the access message." : "The Robinhood Chain collection contract will be published with the mint details."}</p>
         </div>
         <Link href="/launchpad">View mint status <ArrowUpRight size={15} /></Link>
       </section>
@@ -169,7 +170,7 @@ export function BrokerDashboard() {
         <header><div><p className={styles.eyebrow}>Getting started</p><h2 id="attention-title">Launch checklist</h2></div></header>
         <div className={styles.queue} aria-live="polite">
           <article><span><Wallet size={18} /></span><div><strong>Connect a wallet</strong><small>Use an installed EVM wallet to establish your account.</small></div>{connected ? <Check size={16} /> : <LockKeyhole size={16} />}</article>
-          <article><span><BadgeCheck size={18} /></span><div><strong>Verify Broker ownership</strong><small>The official collection contract must report at least one NFT.</small></div>{ownershipVerified ? <Check size={16} /> : <LockKeyhole size={16} />}</article>
+          <article><span><BadgeCheck size={18} /></span><div><strong>Verify Broker ownership</strong><small>The Robinhood Chain collection contract must report at least one NFT.</small></div>{ownershipVerified ? <Check size={16} /> : <LockKeyhole size={16} />}</article>
           <article><span><FileCheck2 size={18} /></span><div><strong>Listing tools launch</strong><small>Item listing will return after the production workflow is ready.</small></div><LockKeyhole size={16} /></article>
         </div>
       </section>
@@ -179,11 +180,11 @@ export function BrokerDashboard() {
         <div className={styles.contractPortfolio}>
           <span><BadgeCheck size={21} /></span>
           <strong>{contractBalanceKnown ? `${balance} Broker${balance === 1 ? "" : "s"} in this wallet` : "Collection balance unavailable"}</strong>
-          <p>{verificationConfigured ? "The collection contract exposes the wallet balance. Token IDs, tiers, and artwork will appear after the ownership index is connected." : "The official collection contract has not been published yet. No NFT ownership is inferred."}</p>
+          <p>{verificationConfigured ? "The collection contract exposes the wallet balance. Token IDs, tiers, and artwork will appear after the ownership index is connected." : "The Robinhood Chain collection contract has not been published yet. No NFT ownership is inferred."}</p>
         </div>
-        <dl className={styles.portfolioFacts}><div><dt>Wallet</dt><dd>{shortAddress(address)}</dd></div><div><dt>Network</dt><dd>{verificationConfigured ? correctChain ? targetChain.chainName : "Unsupported" : "TBA"}</dd></div><div><dt>Broker access</dt><dd>{accessReady ? "Active" : "Inactive"}</dd></div><div><dt>Platform fee</dt><dd>0% for Broker listings</dd></div></dl>
-        <Link className={styles.portfolioLink} href="/launchpad">View mint status <ArrowUpRight size={15} /></Link>
-        <small className={styles.disclaimer}>Ownership verification will activate only after the official collection contract is configured.</small>
+        <dl className={styles.portfolioFacts}><div><dt>Wallet</dt><dd>{shortAddress(address)}</dd></div><div><dt>Network</dt><dd>{verificationConfigured ? correctChain ? targetChain.chainName : "Unsupported" : "Robinhood Chain"}</dd></div><div><dt>Broker access</dt><dd>{accessReady ? "Active" : "Inactive"}</dd></div><div><dt>Platform fee</dt><dd>0% for Broker listings</dd></div></dl>
+        <Link className={styles.portfolioLink} href="/launchpad">View Robinhood Chain mint status <ArrowUpRight size={15} /></Link>
+        <small className={styles.disclaimer}>Ownership verification will activate only after the Robinhood Chain collection contract is configured.</small>
       </aside>
 
       <section className={`${styles.panel} ${styles.listings}`} aria-labelledby="listings-title">

@@ -71,7 +71,7 @@ export function WalletAccountPanel({ compact = false, className = "" }: WalletAc
         <section className={`${styles.panel} ${styles.connectState} ${className}`}>
           <span className={styles.eyebrow}><Fingerprint size={13} /> Wallet access</span>
           <h2 className={styles.panelTitle}>Connect your wallet</h2>
-          <p>Connect an installed EVM wallet to verify ownership when the official collection contract is live.</p>
+          <p>Connect an installed EVM wallet to verify ownership when the Robinhood Chain collection contract is live.</p>
           <div className={styles.actionRow}>
             <button className={styles.connectButton} type="button" onClick={() => setModalOpen(true)}>
               <Wallet size={15} /> Connect wallet
@@ -125,7 +125,7 @@ export function WalletAccountPanel({ compact = false, className = "" }: WalletAc
             <span className={styles.statusCardLabel}><Shield size={12} /> Network</span>
             <strong className={isCorrectChain ? styles.statusGood : styles.statusMuted}>
               {!chainConfigured
-                ? "Any EVM network"
+                ? "Robinhood Chain activation pending"
                 : isCorrectChain
                   ? targetChain.chainName
                   : `Switch to ${targetChain.chainName}`}
@@ -150,7 +150,7 @@ export function WalletAccountPanel({ compact = false, className = "" }: WalletAc
         <p className={styles.panelNote}>
           {chainConfigured && collectionAddress
             ? "The collection balance is read from the configured contract; it does not identify a selected token. Access uses a gas-free wallet signature, and production actions must recheck ownership."
-            : "Broker ownership verification is waiting for the official network and collection contract configuration."}
+            : "Broker ownership verification is waiting for the Robinhood Chain collection contract configuration."}
         </p>
 
         {error || ownership.error ? (

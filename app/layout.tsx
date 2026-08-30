@@ -18,21 +18,23 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(origin),
     title: { default: "Stickxit", template: "%s | Stickxit" },
-    description: "Turn what you own into ad space with Stickxit and Isekai Brokers.",
+    description: "Turn what you own into ad space with Stickxit. The Isekai Brokers Genesis collection is planned to mint on Robinhood Chain.",
     applicationName: "Stickxit",
-    keywords: ["Stickxit", "Isekai Brokers", "physical advertising", "advertising marketplace"],
+    keywords: ["Stickxit", "Isekai Brokers", "Robinhood Chain", "physical advertising", "advertising marketplace"],
     openGraph: {
       type: "website",
       siteName: "Stickxit",
       title: "Stickxit | Turn What You Own Into Ad Space",
-      description: "Activate Isekai Broker access, list real-world ad spots, and build measurable physical campaigns.",
+      description: "Explore Stickxit utility and the Isekai Brokers Genesis collection planned to mint on Robinhood Chain.",
       url: origin,
       images: [{ url: socialImage, width: 1200, height: 630, alt: "Stickxit physical advertising marketplace powered by Isekai Brokers" }],
     },
     twitter: {
       card: "summary_large_image",
+      site: "@isekaibrokers",
+      creator: "@isekaibrokers",
       title: "Stickxit | Turn What You Own Into Ad Space",
-      description: "A distributed physical advertising marketplace powered by Isekai Brokers.",
+      description: "A distributed physical advertising marketplace powered by Isekai Brokers. The Genesis collection is planned to mint on Robinhood Chain.",
       images: [socialImage],
     },
   };

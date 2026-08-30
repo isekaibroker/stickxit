@@ -67,7 +67,7 @@ export function WalletGate({ children, requireLicense = false, className = "" }:
   } else if (isConnected && requireLicense && (!chainConfigured || !collectionAddress)) {
     icon = <Fingerprint size={25} />;
     title = "Broker access is not live";
-    copy = "Ownership verification will activate after the official network and collection contract are published.";
+    copy = "Ownership verification will activate after the Robinhood Chain collection contract is published.";
     action = (
       <Link className={styles.primaryButton} href="/launchpad">
         View mint status

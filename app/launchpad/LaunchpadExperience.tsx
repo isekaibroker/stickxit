@@ -33,24 +33,27 @@ export function LaunchpadExperience() {
       <section className={styles.hero} aria-labelledby="launchpad-title">
         <div className={styles.heroCopy}>
           <span className={styles.kicker}>
-            <CircleDashed size={14} aria-hidden="true" /> Isekai Brokers Genesis
+            <CircleDashed size={14} aria-hidden="true" /> Isekai Brokers Genesis on Robinhood Chain
           </span>
           <h1 id="launchpad-title">
-            Launch mint. <em>TBA.</em>
+            Launching on <em>Robinhood Chain.</em>
           </h1>
           <p className={styles.lede}>
-            The Isekai Brokers Genesis mint is not open yet. The official date,
-            network, contract address, price, and eligibility rules will be
-            published here after they are confirmed.
+            Robinhood Chain mainnet is live. The Isekai Brokers Genesis mint remains
+            closed, and the launch date, price, contract address, and allowlist
+            details are TBA.
           </p>
 
           <div className={styles.heroActions}>
             <span className={styles.disabledMint} aria-disabled="true">
-              <CalendarClock size={16} aria-hidden="true" /> Launch Mint: TBA
+              <CalendarClock size={16} aria-hidden="true" /> Robinhood Chain Mint: TBA
             </span>
             <Link className={styles.collectionLink} href="/isekai-brokers">
               Explore the collection <ArrowRight size={16} aria-hidden="true" />
             </Link>
+            <a className={styles.collectionLink} href="https://x.com/isekaibrokers" target="_blank" rel="noopener noreferrer">
+              Follow launch updates on X <ArrowRight size={16} aria-hidden="true" />
+            </a>
           </div>
 
           <div className={styles.walletState} role="status">
@@ -59,6 +62,10 @@ export function LaunchpadExperience() {
               Minting is disabled until the official launch. No wallet action,
               transaction, reservation, or payment is available on this page.
             </span>
+          </div>
+          <div className={styles.walletState} role="note">
+            <ShieldCheck size={15} aria-hidden="true" />
+            <span>Isekai Brokers is independent and is not affiliated with, endorsed by, or sponsored by Robinhood.</span>
           </div>
         </div>
 
@@ -100,11 +107,12 @@ export function LaunchpadExperience() {
       <section className={styles.readiness} aria-labelledby="readiness-title">
         <div className={styles.readinessIntro}>
           <span className={styles.sectionKicker}>Launch status</span>
-          <h2 id="readiness-title">Mint details are TBA.</h2>
+          <h2 id="readiness-title">Robinhood Chain confirmed. Mint details are TBA.</h2>
           <p>
-            This launchpad will activate only when the mint configuration and
-            official collection contract are ready. Until then, it remains an
-            information page with no mint action.
+            The network is confirmed and its mainnet is live. This launchpad will
+            activate only when the mint configuration and official collection
+            contract are ready. Until then, it remains an information page with
+            no mint action.
           </p>
         </div>
         <dl className={styles.readinessGrid}>
@@ -126,7 +134,7 @@ export function LaunchpadExperience() {
           </div>
           <div>
             <dt>Network</dt>
-            <dd>TBA</dd>
+            <dd>Robinhood Chain</dd>
           </div>
           <div>
             <dt>Contract address</dt>
