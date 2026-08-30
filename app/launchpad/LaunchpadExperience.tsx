@@ -1,23 +1,21 @@
-"use client";
-
 import Image from "next/image";
 import Link from "@/components/AppLink";
 import {
   ArrowLeft,
   ArrowRight,
   BadgeCheck,
+  CalendarClock,
   CircleDashed,
-  CheckCircle2,
   Clock3,
   Layers3,
   ShieldCheck,
   Sparkles,
-  Wallet,
 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { LOCAL_DEMO_ADDRESS, WalletConnectModal, useWallet } from "@/components/wallet";
-import { brokerUtilityPolicies, formatItemAllowance, type BrokerUtilityTier } from "@/lib/broker-utility";
-import { createRecordId, getSavedLocalBrokers, onRecordsChanged, saveLocalBroker, type SavedLocalBroker } from "@/lib/app-storage";
+import {
+  brokerUtilityPolicies,
+  formatItemAllowance,
+  type BrokerUtilityTier,
+} from "@/lib/broker-utility";
 import styles from "./launchpad.module.css";
 
 const utilityTones: Record<BrokerUtilityTier, "green" | "cyan" | "purple" | "orange" | "gold"> = {
@@ -30,92 +28,36 @@ const utilityTones: Record<BrokerUtilityTier, "green" | "cyan" | "purple" | "ora
 };
 
 export function LaunchpadExperience() {
-  const [walletModalOpen, setWalletModalOpen] = useState(false);
-  const [selectedTier, setSelectedTier] = useState<BrokerUtilityTier>("Commun Human");
-  const [localMint, setLocalMint] = useState<SavedLocalBroker | null>(null);
-  const [savedBrokerCount, setSavedBrokerCount] = useState(0);
-  const {
-    isConnected,
-    shortAddress,
-    walletName,
-    chainConfigured,
-    targetChain,
-    address,
-    startLocalSession,
-    isLocalSession,
-  } = useWallet();
-  const activeOwner = address ?? LOCAL_DEMO_ADDRESS;
-
-  useEffect(() => {
-    const refresh = () => setSavedBrokerCount(getSavedLocalBrokers(activeOwner).length);
-    const timer = window.setTimeout(refresh, 0);
-    const unsubscribe = onRecordsChanged(refresh);
-    return () => {
-      window.clearTimeout(timer);
-      unsubscribe();
-    };
-  }, [activeOwner]);
-
-  async function createDemoBroker() {
-    const owner = activeOwner;
-    if (!isConnected) await startLocalSession();
-    const existing = getSavedLocalBrokers(owner);
-    const record: SavedLocalBroker = {
-      id: createRecordId("demo_broker"),
-      owner,
-      tokenNumber: existing.length + 1,
-      tier: selectedTier,
-      artwork: ["/isekai/0001.png", "/isekai/0002.png", "/isekai/0010.png"][existing.length % 3],
-      createdAt: new Date().toISOString(),
-      simulation: true,
-    };
-    saveLocalBroker(record);
-    setLocalMint(record);
-    setSavedBrokerCount(existing.length + 1);
-  }
-
   return (
     <>
       <section className={styles.hero} aria-labelledby="launchpad-title">
         <div className={styles.heroCopy}>
           <span className={styles.kicker}>
-            <CircleDashed size={14} aria-hidden="true" /> Genesis mint launchpad
+            <CircleDashed size={14} aria-hidden="true" /> Isekai Brokers Genesis
           </span>
           <h1 id="launchpad-title">
-            Build your <em>local Broker.</em>
+            Launch mint. <em>TBA.</em>
           </h1>
           <p className={styles.lede}>
-            Try the complete Broker flow locally now. The demo mint creates a
-            browser-only Broker record; it is not an NFT, blockchain transaction,
-            reservation, or payment.
+            The Isekai Brokers Genesis mint is not open yet. The official date,
+            network, contract address, price, and eligibility rules will be
+            published here after they are confirmed.
           </p>
 
           <div className={styles.heroActions}>
-            <button className={styles.connectButton} type="button" onClick={() => void createDemoBroker()}>
-              <Sparkles size={16} aria-hidden="true" /> {savedBrokerCount ? "Create another demo Broker" : "Create demo Broker"}
-            </button>
-            {!isConnected && <button className={styles.collectionLink} type="button" onClick={() => setWalletModalOpen(true)}><Wallet size={16} aria-hidden="true" /> Wallet options</button>}
+            <span className={styles.disabledMint} aria-disabled="true">
+              <CalendarClock size={16} aria-hidden="true" /> Launch Mint — TBA
+            </span>
             <Link className={styles.collectionLink} href="/isekai-brokers">
               Explore the collection <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
 
-          <label className={styles.demoTier}>Demo utility tier
-            <select value={selectedTier} onChange={(event) => setSelectedTier(event.target.value as BrokerUtilityTier)}>
-              {brokerUtilityPolicies.map((policy) => <option value={policy.tier} key={policy.tier}>{policy.label} / {policy.spotsPerItem} spots</option>)}
-            </select>
-          </label>
-
-          {localMint && <div className={styles.mintSuccess} role="status"><CheckCircle2 size={18} /><span><strong>Demo Broker #{String(localMint.tokenNumber).padStart(4, "0")} created</strong>{localMint.tier} / {savedBrokerCount} Broker{savedBrokerCount === 1 ? "" : "s"} saved in this browser</span><Link href="/broker">View portfolio</Link></div>}
-
-          <div className={styles.walletState} aria-live="polite">
+          <div className={styles.walletState} role="status">
             <ShieldCheck size={15} aria-hidden="true" />
             <span>
-              {isLocalSession
-                ? "Local demo active. Listings, campaigns, QR destinations, and demo Brokers persist in this browser."
-                : isConnected
-                  ? `${walletName ?? "Wallet"} connected as ${shortAddress}. A demo mint still remains browser-only.`
-                  : "Use the local demo without an extension, or open wallet options for connection testing."}
+              Minting is disabled until the official launch. No wallet action,
+              transaction, reservation, or payment is available on this page.
             </span>
           </div>
         </div>
@@ -129,7 +71,7 @@ export function LaunchpadExperience() {
               height={320}
               priority
             />
-            <span>Broker preview</span>
+            <span>Collection preview</span>
           </div>
           <div className={`${styles.brokerCard} ${styles.cardTwo}`}>
             <Image
@@ -149,7 +91,7 @@ export function LaunchpadExperience() {
               height={320}
               priority
             />
-            <span>Stickxit license</span>
+            <span>Stickxit utility</span>
           </div>
           <div className={styles.portal} aria-hidden="true" />
         </div>
@@ -158,10 +100,11 @@ export function LaunchpadExperience() {
       <section className={styles.readiness} aria-labelledby="readiness-title">
         <div className={styles.readinessIntro}>
           <span className={styles.sectionKicker}>Launch status</span>
-          <h2 id="readiness-title">Only confirmed details are shown.</h2>
+          <h2 id="readiness-title">Mint details are TBA.</h2>
           <p>
-            Mint price, chain, contract address, opening date, and allowlist
-            rules will appear here only after they are finalized.
+            This launchpad will activate only when the mint configuration and
+            official collection contract are ready. Until then, it remains an
+            information page with no mint action.
           </p>
         </div>
         <dl className={styles.readinessGrid}>
@@ -171,23 +114,27 @@ export function LaunchpadExperience() {
           </div>
           <div>
             <dt>Mint status</dt>
-            <dd className={styles.pending}>Not open</dd>
+            <dd className={styles.pending}>Not live</dd>
           </div>
           <div>
             <dt>Mint price</dt>
-            <dd>Not published</dd>
+            <dd>TBA</dd>
           </div>
           <div>
-            <dt>Opening date</dt>
-            <dd>Not published</dd>
+            <dt>Launch date</dt>
+            <dd>TBA</dd>
           </div>
           <div>
-            <dt>Mint network</dt>
-            <dd>{chainConfigured ? targetChain.chainName : "Not published"}</dd>
+            <dt>Network</dt>
+            <dd>TBA</dd>
           </div>
           <div>
-            <dt>Contract</dt>
-            <dd>Not published</dd>
+            <dt>Contract address</dt>
+            <dd>TBA</dd>
+          </div>
+          <div>
+            <dt>Allowlist</dt>
+            <dd>TBA</dd>
           </div>
         </dl>
       </section>
@@ -229,7 +176,7 @@ export function LaunchpadExperience() {
 
       <section className={styles.nextStep}>
         <div>
-          <span className={styles.sectionKicker}>While the portal is closed</span>
+          <span className={styles.sectionKicker}>Before launch</span>
           <h2>Meet the Brokers before mint.</h2>
           <p>
             Browse the public collection preview and learn how each Broker tier
@@ -240,12 +187,6 @@ export function LaunchpadExperience() {
           <ArrowLeft size={16} aria-hidden="true" /> Back to Isekai Brokers
         </Link>
       </section>
-
-      <WalletConnectModal
-        open={walletModalOpen}
-        onClose={() => setWalletModalOpen(false)}
-        title="Connect for launch readiness"
-      />
     </>
   );
 }

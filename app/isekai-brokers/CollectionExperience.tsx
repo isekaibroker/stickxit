@@ -24,7 +24,7 @@ export function CollectionExperience() {
           <h1>Own the license<br /><em>behind Stickxit.</em></h1>
           <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primary} href="/launchpad">Become a Broker <ArrowRight size={17} /></Link>
+            <Link className={styles.primary} href="/launchpad">Launch Mint — TBA <ArrowRight size={17} /></Link>
             <a className={styles.secondary} href="#utility">Explore NFT utility</a>
           </div>
           <p className={styles.custodyNote}><span /> Your NFT stays in your wallet—access never requires transferring or approving it.</p>
@@ -99,7 +99,7 @@ export function CollectionExperience() {
                 <li><Check size={14} /> Pay 0% platform fees on eligible Broker listings</li>
                 <li><Check size={14} /> Qualify for the holder allocation when eligibility rules are met</li>
               </ul>
-              <Link className={styles.stakeButton} href="/launchpad">Become a Broker <ArrowRight size={17} /></Link>
+              <Link className={styles.stakeButton} href="/launchpad">View mint status <ArrowRight size={17} /></Link>
               <a className={styles.termsLink} href="#holder-allocation">Review holder allocation details</a>
             </div>
           </aside>

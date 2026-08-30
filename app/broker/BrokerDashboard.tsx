@@ -181,7 +181,7 @@ export function BrokerDashboard() {
             ))}
           </div>
         ) : (
-          <div className={styles.emptyPortfolio}><Layers3 size={24} /><strong>No local Brokers yet</strong><p>Create browser-local Broker records from the mint launchpad. Every one will appear here.</p><Link href="/launchpad">Create a Broker <ArrowUpRight size={14} /></Link></div>
+          <div className={styles.emptyPortfolio}><Layers3 size={24} /><strong>Broker mint not live</strong><p>Broker access will appear here after the Genesis mint opens and ownership can be verified.</p><Link href="/launchpad">View mint status <ArrowUpRight size={14} /></Link></div>
         ) : (
           <div className={styles.contractPortfolio}>
             <span><BadgeCheck size={21} /></span>
@@ -199,8 +199,8 @@ export function BrokerDashboard() {
         </div>
 
         <dl className={styles.portfolioFacts}><div><dt>Wallet</dt><dd>{shortAddress(address)}</dd></div><div><dt>Network</dt><dd>{previewMode ? "Local preview" : correctChain ? targetChain.chainName : "Unsupported"}</dd></div><div><dt>Access record</dt><dd>{licenseActive ? "Saved on this device" : "Inactive"}</dd></div><div><dt>Platform fee</dt><dd>0% for Broker listings</dd></div></dl>
-        <Link className={styles.portfolioLink} href={previewMode ? "/launchpad" : "/isekai-brokers"}>{previewMode ? "Add another local Broker" : "View collection access"} <ArrowUpRight size={15} /></Link>
-        <small className={styles.disclaimer}>{previewMode ? "Local Broker records are browser-only simulations and do not verify NFT ownership." : "The displayed count comes from the configured collection contract balance. No token identity or metadata is assumed."}</small>
+        <Link className={styles.portfolioLink} href={previewMode ? "/launchpad" : "/isekai-brokers"}>{previewMode ? "View mint status" : "View collection access"} <ArrowUpRight size={15} /></Link>
+        <small className={styles.disclaimer}>{previewMode ? "Broker ownership verification will activate after the official collection contract is published." : "The displayed count comes from the configured collection contract balance. No token identity or metadata is assumed."}</small>
       </aside>
 
       <section className={`${styles.panel} ${styles.listings}`} aria-labelledby="listings-title">

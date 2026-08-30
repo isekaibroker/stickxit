@@ -157,6 +157,23 @@ test("primary navigation no longer exposes the removed Advertise route", async (
   assert.doesNotMatch(primaryNav, /href="\/advertise(?:[?/#][^"]*)?"/i);
 });
 
+test("launchpad is a non-transactional TBA page with no local demo mint", async () => {
+  const response = await render("/launchpad");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /Launch Mint (?:—|&mdash;|&#x2014;) TBA/i);
+  assert.match(html, /Mint details are TBA/i);
+  assert.doesNotMatch(html, /Create (?:another )?demo Broker|Demo utility tier|Build your local Broker|browser-only Broker record|Wallet options/i);
+
+  const primaryNav = html.match(/<nav[^>]*class="[^"]*nav-links[^"]*"[^>]*>[\s\S]*?<\/nav>/i)?.[0];
+  assert.ok(primaryNav, "primary navigation should be present in server-rendered HTML");
+  assert.match(primaryNav, /href="\/launchpad"[^>]*>Launch Mint (?:—|&mdash;|&#x2014;) TBA<\/a>/i);
+
+  const source = await readFile(new URL("../app/launchpad/LaunchpadExperience.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /saveLocalBroker|createDemoBroker|startLocalSession|WalletConnectModal|useWallet/);
+});
+
 test("legacy Advertise route redirects to Marketplace", async () => {
   const response = await render("/advertise");
   assert.ok([301, 302, 303, 307, 308].includes(response.status), `/advertise should redirect, received ${response.status}`);

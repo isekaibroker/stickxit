@@ -80,7 +80,7 @@ export default function Home() {
             <p className="hero-lede">Activate Isekai Broker access, list your everyday item, and let brands request sticker placements that people can actually see.</p>
             <div className="hero-actions">
               <Link className="button button-primary" href="/marketplace">Explore marketplace <span>↗</span></Link>
-              <Link className="button button-secondary" href="/launchpad">Become a Broker</Link>
+              <Link className="button button-secondary" href="/launchpad">Launch Mint — TBA</Link>
             </div>
             <p className="demo-note"><span /> Interactive sample — hover or focus a spot</p>
           </div>
@@ -154,7 +154,7 @@ export default function Home() {
           <span className="section-kicker">The founding network</span>
           <h2>Own it. Stick it. <em>Earn it.</em></h2>
           <p>Turn the objects you already use into a new kind of physical media inventory.</p>
-          <div><Link className="button button-primary" href="/launchpad">Become a Broker <ArrowRight size={17} /></Link><Link className="button button-secondary" href="/marketplace">Explore marketplace</Link></div>
+          <div><Link className="button button-primary" href="/launchpad">View mint status <ArrowRight size={17} /></Link><Link className="button button-secondary" href="/marketplace">Explore marketplace</Link></div>
         </section>
       </main>
       <SiteFooter />

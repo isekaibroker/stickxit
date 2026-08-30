@@ -5,9 +5,9 @@ import { LaunchpadExperience } from "./LaunchpadExperience";
 import styles from "./launchpad.module.css";
 
 export const metadata: Metadata = {
-  title: "Isekai Brokers Mint Launchpad",
+  title: "Launch Mint — TBA | Isekai Brokers",
   description:
-    "Follow the Isekai Brokers Genesis mint and review its published Stickxit utility. Minting is not open yet.",
+    "The Isekai Brokers Genesis mint is not open. Date, price, network, contract, and allowlist details are TBA.",
 };
 
 export default function LaunchpadPage() {
