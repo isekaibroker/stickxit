@@ -104,23 +104,28 @@ test("marketplace ships a realistic photo for every example surface", async () =
   }
 });
 
-test("marketplace examples display Isekai portrait stickers without polluting the campaign editor", async () => {
-  const stickerAssets = ["0001", "0002", "0010", "0016", "0339", "1366", "0003", "0490", "0985", "0028", "0753", "0183", "0319", "1347", "0034", "0412"];
-  for (const token of stickerAssets) {
-    const file = new URL(`../public/marketplace/stickers/${token}.webp`, import.meta.url);
-    assert.ok((await stat(file)).size > 4_000, `${token}.webp should contain an optimized Isekai sticker portrait`);
+test("marketplace examples use surface-projected sticker photos without polluting the campaign editor", async () => {
+  const projectedAssets = ["silver-laptop.webp", "gaming-pc.webp", "graphite-sedan.webp", "cordless-drill.webp", "street-skateboard.webp", "rider-helmet.webp"];
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  for (const asset of projectedAssets) {
+    const file = new URL(`../public/marketplace/stickered/${asset}`, import.meta.url);
+    assert.ok((await stat(file)).size > 20_000, `${asset} should contain a baked physical-sticker composite`);
+    assert.match(css, new RegExp(`/marketplace/stickered/${asset.replace(".", "\\.")}`));
   }
 
   const marketplaceResponse = await render("/marketplace");
   assert.equal(marketplaceResponse.status, 200);
   const marketplaceHtml = await marketplaceResponse.text();
-  assert.equal((marketplaceHtml.match(/data-example-sticker="true"/g) ?? []).length, 16);
+  assert.equal((marketplaceHtml.match(/data-example-stickered="true"/g) ?? []).length, 6);
   assert.match(marketplaceHtml, /Cordless Drill/i);
   assert.doesNotMatch(marketplaceHtml, /Pro Toolbox/i);
 
   const campaignResponse = await render("/campaigns/new?item=cordless-drill-calgary&spot=A");
   assert.equal(campaignResponse.status, 200);
-  assert.doesNotMatch(await campaignResponse.text(), /data-example-sticker="true"/i);
+  const campaignHtml = await campaignResponse.text();
+  assert.doesNotMatch(campaignHtml, /data-example-stickered="true"|product-photo-stickered/i);
+  const campaignMockupSource = await readFile(new URL("../app/advertise/InteractivePlacementMockup.tsx", import.meta.url), "utf8");
+  assert.match(campaignMockupSource, /showExampleStickers=\{false\}/);
 });
 
 test("primary navigation no longer exposes the removed Advertise route", async () => {
