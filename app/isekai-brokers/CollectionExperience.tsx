@@ -22,7 +22,7 @@ export function CollectionExperience() {
         <div>
           <p className={styles.kicker}><Sparkles size={14} /> Isekai Brokers · Genesis on Robinhood Chain</p>
           <h1>Own the license<br /><em>behind Stickxit.</em></h1>
-          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation. The Genesis collection is planned to mint on Robinhood Chain.</p>
+          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. The expanded collection includes 6,666 distinct Brokers planned to mint on Robinhood Chain. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
           <div className={styles.heroActions}>
             <Link className={styles.primary} href="/launchpad">Mint on Robinhood Chain <ArrowRight size={17} /></Link>
             <a className={styles.secondary} href="#utility">Explore NFT utility</a>
@@ -37,10 +37,30 @@ export function CollectionExperience() {
       </section>
 
       <section className={styles.stats} aria-label="Collection utility statistics">
-        <div><strong>4,444</strong><span>Genesis Brokers</span></div>
+        <div><strong>6,666</strong><span>Genesis Brokers</span></div>
         <div><strong>3 to 10</strong><span>Sticker spots per item</span></div>
         <div><strong>0%</strong><span>Fee on eligible Broker listings</span></div>
         <div><strong>20%</strong><span>Platform fees allocated to eligible holders</span></div>
+      </section>
+
+      <section className={styles.expansion} aria-labelledby="expansion-title">
+        <div className={styles.expansionPanel}>
+          <div className={styles.sectionHead}>
+            <div><p className={styles.kicker}>Expanded Genesis</p><h2 id="expansion-title">6,666 Brokers. One collection.</h2></div>
+            <p className={styles.utilityIntro}>The original 4,444 Brokers are joined by 2,222 new characters, creating one expanded collection with a clearly defined supply.</p>
+          </div>
+
+          <div className={styles.allocationGrid} aria-label="Isekai Brokers collection allocation">
+            <article className={styles.allocationCard}><span>Original collection</span><strong>4,444</strong><p>The original Isekai Brokers remain part of the complete collection.</p></article>
+            <article className={styles.allocationCard}><span>Commun humans</span><strong>1,000</strong><p>Distinct new human characters with clothing, suits, styling, and identities not used by the original collection.</p></article>
+            <article className={styles.allocationCard}><span>Animal characters</span><strong>900</strong><p>Different animal Brokers with varied species, clothing, expressions, and roles.</p></article>
+            <article className={styles.allocationCard}><span>Rare</span><strong>200</strong><p>Distinct Rare Brokers created for the expanded collection.</p></article>
+            <article className={styles.allocationCard}><span>Ultra-Rare</span><strong>100</strong><p>Distinct Ultra-Rare Brokers with elevated visual treatments.</p></article>
+            <article className={styles.allocationCard}><span>Legendary</span><strong>22</strong><p>One-of-one Legendary characters at the top of the collection.</p></article>
+          </div>
+
+          <p className={styles.randomizationNote}><strong>Randomized final order.</strong> The 2,222 new Brokers will be mixed with the original 4,444 before final token assignment so related character types are not intentionally grouped together.</p>
+        </div>
       </section>
 
       <section className={styles.utility} id="utility" aria-labelledby="utility-title">
@@ -65,7 +85,7 @@ export function CollectionExperience() {
 
       <section className={styles.collection} id="collection" aria-labelledby="collection-title">
         <div className={styles.sectionHead}>
-          <div><p className={styles.kicker}>The Genesis collection</p><h2 id="collection-title">Meet the Isekai Brokers</h2></div>
+          <div><p className={styles.kicker}>The 6,666 collection</p><h2 id="collection-title">Meet the Isekai Brokers</h2></div>
           <p className={styles.utilityIntro}>Distinct characters. One shared role: powering the people who host real-world advertising space on Stickxit.</p>
         </div>
 

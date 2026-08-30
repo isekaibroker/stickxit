@@ -21,7 +21,7 @@ type PublicBrokerRow = readonly [
 ];
 
 // These records are a deterministic, metadata-backed public sample from the
-// final 4,444-token collection. Ultra-Rare and Legendary tokens are excluded.
+// public collection preview. Ultra-Rare and Legendary tokens are excluded.
 const galleryRows = [
   ["0183", "Terracotta Horizon Bars", "Bunny Broker 3920", "technical fabric business jacket", "Not Assigned", "Commun"],
   ["0319", "Pearl Terminal", "High Ponytail Broker", "Business Suit", "Female", "Commun"],

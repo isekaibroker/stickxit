@@ -39,9 +39,9 @@ export function LaunchpadExperience() {
             Launching on <em>Robinhood Chain.</em>
           </h1>
           <p className={styles.lede}>
-            Robinhood Chain mainnet is live. The Isekai Brokers Genesis mint remains
-            closed, and the launch date, price, contract address, and allowlist
-            details are TBA.
+            Robinhood Chain mainnet is live. The expanded collection includes
+            6,666 Isekai Brokers. The mint remains closed, and the launch date,
+            price, contract address, and allowlist details are TBA.
           </p>
 
           <div className={styles.heroActions}>
@@ -88,7 +88,7 @@ export function LaunchpadExperience() {
               height={320}
               priority
             />
-            <span>4,444 Genesis</span>
+            <span>6,666 Brokers</span>
           </div>
           <div className={`${styles.brokerCard} ${styles.cardThree}`}>
             <Image
@@ -111,14 +111,15 @@ export function LaunchpadExperience() {
           <p>
             The network is confirmed and its mainnet is live. This launchpad will
             activate only when the mint configuration and official collection
-            contract are ready. Until then, it remains an information page with
-            no mint action.
+            contract are ready. The collection now combines the original 4,444
+            Brokers with 2,222 new Brokers. Until launch, this remains an
+            information page with no mint action.
           </p>
         </div>
         <dl className={styles.readinessGrid}>
           <div>
             <dt>Collection size</dt>
-            <dd>4,444</dd>
+            <dd>6,666</dd>
           </div>
           <div>
             <dt>Mint status</dt>
