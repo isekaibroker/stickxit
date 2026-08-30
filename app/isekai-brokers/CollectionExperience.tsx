@@ -22,7 +22,7 @@ export function CollectionExperience() {
         <div>
           <p className={styles.kicker}><Sparkles size={14} /> Isekai Brokers · Genesis on Robinhood Chain</p>
           <h1>Own the license<br /><em>behind Stickxit.</em></h1>
-          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. The original Genesis collection has a fixed and final supply of 4,444 distinct Brokers planned to mint on Robinhood Chain. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
+          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. The collection has a supply of 4,444 distinct Brokers planned to mint on Robinhood Chain. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
           <div className={styles.heroActions}>
             <Link className={styles.primary} href="/launchpad">Mint on Robinhood Chain <ArrowRight size={17} /></Link>
             <a className={styles.secondary} href="#utility">Explore NFT utility</a>
@@ -46,20 +46,18 @@ export function CollectionExperience() {
       <section className={styles.expansion} aria-labelledby="genesis-title">
         <div className={styles.expansionPanel}>
           <div className={styles.sectionHead}>
-            <div><p className={styles.kicker}>Original Genesis</p><h2 id="genesis-title">4,444 Brokers. One collection.</h2></div>
-            <p className={styles.utilityIntro}>Isekai Brokers is one original Genesis collection with a fixed and final supply of 4,444 unique anime broker characters.</p>
+            <div><p className={styles.kicker}>Genesis utility</p><h2 id="genesis-title">4,444 Brokers. Built for Stickxit.</h2></div>
+            <p className={styles.utilityIntro}>Each Isekai Broker is designed to unlock tier-based host access for listing real-world advertising surfaces, mapping sticker spots, and managing placements through Stickxit.</p>
           </div>
 
-          <div className={styles.allocationGrid} aria-label="Isekai Brokers Genesis collection details">
-            <article className={styles.allocationCard}><span>Original collection</span><strong>4,444</strong><p>The complete Genesis collection is defined as 4,444 Isekai Brokers.</p></article>
-            <article className={styles.allocationCard}><span>Final supply</span><strong>4,444</strong><p>The planned Genesis supply is fixed at 4,444 Brokers.</p></article>
-            <article className={styles.allocationCard}><span>Characters</span><strong>Unique</strong><p>Every Broker has its own character identity, clothing, background, and designated traits.</p></article>
-            <article className={styles.allocationCard}><span>Metadata</span><strong>5 traits</strong><p>Background, Character, Clothing Type, Gender, and Rarity define every Broker.</p></article>
-            <article className={styles.allocationCard}><span>Token order</span><strong>Randomized</strong><p>Related character types are not intentionally grouped beside each other.</p></article>
-            <article className={styles.allocationCard}><span>Utility</span><strong>Stickxit</strong><p>Each Broker is designed to activate a real marketplace role for its holder.</p></article>
-          </div>
-
-          <p className={styles.randomizationNote}><strong>Original and final supply: 4,444.</strong> Isekai Brokers begins and ends as one fixed Genesis collection. Final token order is randomized so related character types are not intentionally grouped together.</p>
+          <ul className={styles.allocationGrid} aria-label="Isekai Brokers supply and utility">
+            <li className={styles.allocationCard}><h3>Supply</h3><p className={styles.allocationValue}>4,444</p><p className={styles.allocationDescription}>The Isekai Brokers Genesis collection includes 4,444 utility NFTs.</p></li>
+            <li className={styles.allocationCard}><h3>Host access</h3><p className={styles.allocationValue}>Broker HQ</p><p className={styles.allocationDescription}>Connect the holding wallet to unlock eligible listing, placement, campaign, and performance tools.</p></li>
+            <li className={styles.allocationCard}><h3>Item allowance</h3><p className={styles.allocationValue}>By tier</p><p className={styles.allocationDescription}>Each Broker tier determines how many approved physical items its holder can list.</p></li>
+            <li className={styles.allocationCard}><h3>Placement capacity</h3><p className={styles.allocationValue}>3 to 10</p><p className={styles.allocationDescription}>Each approved item supports a tier-based number of mapped sticker spots.</p></li>
+            <li className={styles.allocationCard}><h3>Eligible listing fee</h3><p className={styles.allocationValue}>0%</p><p className={styles.allocationDescription}>Broker-enabled listings within the tier allowance have no Stickxit platform fee.</p></li>
+            <li className={styles.allocationCard}><h3>Holder allocation</h3><p className={styles.allocationValue}>20%</p><p className={styles.allocationDescription}>Twenty percent of platform fees is reserved for eligible holders under the published <a href="#holder-allocation">Holder Rewards Terms</a>.</p></li>
+          </ul>
         </div>
       </section>
 

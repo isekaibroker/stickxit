@@ -82,17 +82,20 @@ test("public Broker gallery is limited to eighteen approved rarity-free controls
   assert.doesNotMatch(html, /local demo|local workspace|local preview|browser-only simulation/i);
 });
 
-test("public collection is one original and final Genesis supply of 4,444", async () => {
+test("public collection presents one supply figure and concrete Stickxit utility", async () => {
   const response = await render("/isekai-brokers");
   assert.equal(response.status, 200);
   const html = await response.text();
 
   assert.match(html, /<strong>4,444<\/strong><span>Genesis Brokers<\/span>/i);
-  assert.match(html, /Original Genesis/i);
-  assert.match(html, /one original Genesis collection with a fixed and final supply of 4,444/i);
-  assert.match(html, /<span>Original collection<\/span>\s*<strong>4,444<\/strong>/i);
-  assert.match(html, /<span>Final supply<\/span>\s*<strong>4,444<\/strong>/i);
-  assert.match(html, /Original and final supply: 4,444/i);
+  assert.match(html, /4,444 Brokers\. Built for Stickxit\./i);
+  assert.match(html, /<h3>Supply<\/h3>\s*<p[^>]*>4,444<\/p>/i);
+  assert.match(html, /<h3>Host access<\/h3>\s*<p[^>]*>Broker HQ<\/p>/i);
+  assert.match(html, /<h3>Item allowance<\/h3>\s*<p[^>]*>By tier<\/p>/i);
+  assert.match(html, /<h3>Placement capacity<\/h3>\s*<p[^>]*>3 to 10<\/p>/i);
+  assert.match(html, /<h3>Eligible listing fee<\/h3>\s*<p[^>]*>0%<\/p>/i);
+  assert.match(html, /<h3>Holder allocation<\/h3>\s*<p[^>]*>20%<\/p>/i);
+  assert.doesNotMatch(html, /Original collection|Final supply|Original and final supply|Token order|Randomized|fixed and final supply/i);
   assert.doesNotMatch(html, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
 
   const homepageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
@@ -100,7 +103,8 @@ test("public collection is one original and final Genesis supply of 4,444", asyn
   const collectionSource = await readFile(new URL("../app/isekai-brokers/CollectionExperience.tsx", import.meta.url), "utf8");
   const publicSupplySource = `${homepageSource}\n${launchpadSource}\n${collectionSource}`;
   assert.doesNotMatch(publicSupplySource, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
-  assert.match(publicSupplySource, /original Genesis collection/i);
+  assert.match(collectionSource, /collection has a supply of 4,444/i);
+  assert.doesNotMatch(collectionSource, /Original collection|Final supply|Original and final supply|Token order|Randomized|fixed and final supply/i);
   assert.match(publicSupplySource, /fixed and final supply of 4,444/i);
 });
 
