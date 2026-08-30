@@ -6,7 +6,7 @@ import styles from "./broker.module.css";
 
 export const metadata: Metadata = {
   title: "Broker HQ",
-  description: "The wallet-gated Stickxit Broker workspace with clear contract verification and local preview modes.",
+  description: "The wallet-gated Stickxit Broker workspace with transparent collection and access verification.",
 };
 
 export default function BrokerPage() {

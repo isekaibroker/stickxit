@@ -5,30 +5,31 @@ import type {
 } from "./types";
 import { normalizeAddress } from "./erc721";
 
-const STORAGE_PREFIX = "stickxit:broker-license:v1";
+const STORAGE_PREFIX = "stickxit:broker-license:v2";
 
 export function getLicenseStorageKey(address: string, chainId: number): string {
   return `${STORAGE_PREFIX}:${chainId}:${normalizeAddress(address)}`;
 }
 
-export function createLicenseMessage(address: string, chainId: number): string {
+export function createLicenseMessage(address: string, chainId: number, collectionAddress: string): string {
   const now = new Date().toISOString();
   const origin = typeof window === "undefined" ? "unknown" : window.location.origin;
   const nonce = globalThis.crypto?.randomUUID?.()
     ?? `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
   return [
-    "Stickxit Local Preview Access",
+    "Stickxit Broker Access",
     "",
-    "Authorize this wallet for device-only Stickxit preview features.",
+    "Authorize this wallet for Stickxit Broker features.",
     `Origin: ${origin}`,
     `Wallet: ${normalizeAddress(address)}`,
     `Chain ID: ${chainId}`,
+    `Collection: ${normalizeAddress(collectionAddress)}`,
     `Issued at: ${now}`,
     `Nonce: ${nonce}`,
     "",
-    "This signature is stored only in this browser. It is not server authentication.",
-    "It does not submit a transaction, transfer funds, verify a selected token, or stake an NFT.",
+    "This signature does not submit a transaction, transfer funds, or stake an NFT.",
+    "Production actions will recheck ownership independently.",
   ].join("\n");
 }
 
@@ -42,12 +43,13 @@ export async function signLicenseActivation(
   address: string,
   chainId: number,
   options: {
-    ownershipVerified: boolean | null;
-    collectionAddress: string | null;
+    ownershipVerified: true;
+    collectionAddress: string;
   },
 ): Promise<LicenseActivation> {
   const normalizedAddress = normalizeAddress(address);
-  const message = createLicenseMessage(normalizedAddress, chainId);
+  const normalizedCollection = normalizeAddress(options.collectionAddress);
+  const message = createLicenseMessage(normalizedAddress, chainId, normalizedCollection);
   const signature = await provider.request<unknown>({
     method: "personal_sign",
     params: [utf8ToHex(message), normalizedAddress],
@@ -58,16 +60,14 @@ export async function signLicenseActivation(
   }
 
   const activation: LicenseActivation = {
-    version: 1,
+    version: 2,
     address: normalizedAddress,
     chainId,
     signature: signature as HexString,
     message,
     signedAt: new Date().toISOString(),
     ownershipVerified: options.ownershipVerified,
-    collectionAddress: options.collectionAddress
-      ? normalizeAddress(options.collectionAddress)
-      : null,
+    collectionAddress: normalizedCollection,
   };
 
   window.localStorage.setItem(
@@ -81,6 +81,7 @@ export async function signLicenseActivation(
 export function readLicenseActivation(
   address: string,
   chainId: number,
+  collectionAddress: string,
 ): LicenseActivation | null {
   try {
     const raw = window.localStorage.getItem(
@@ -90,9 +91,11 @@ export function readLicenseActivation(
 
     const parsed = JSON.parse(raw) as Partial<LicenseActivation>;
     if (
-      parsed.version !== 1
+      parsed.version !== 2
       || parsed.chainId !== chainId
       || parsed.address !== normalizeAddress(address)
+      || parsed.ownershipVerified !== true
+      || parsed.collectionAddress !== normalizeAddress(collectionAddress)
       || typeof parsed.signature !== "string"
       || typeof parsed.message !== "string"
       || typeof parsed.signedAt !== "string"

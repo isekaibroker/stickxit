@@ -19,7 +19,6 @@ const navItems = [
   { href: "/marketplace", label: "Marketplace" },
   { href: "/isekai-brokers", label: "Isekai Brokers" },
   { href: "/launchpad", label: "Launch Mint: TBA" },
-  { href: "/create-listing", label: "List a spot" },
   { href: "/broker", label: "Broker HQ" },
 ];
 
@@ -29,7 +28,7 @@ export function SiteHeader() {
   const [accountOpen, setAccountOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const { isConnected, isLocalSession, shortAddress, status } = useWallet();
+  const { isConnected, shortAddress, status } = useWallet();
 
   useEffect(() => {
     if (!accountOpen) return;
@@ -41,7 +40,7 @@ export function SiteHeader() {
   }, [accountOpen]);
 
   const restoring = status === "discovering" || status === "restoring";
-  const walletConnected = isConnected && !isLocalSession;
+  const walletConnected = isConnected;
 
   return (
     <header className="topbar">

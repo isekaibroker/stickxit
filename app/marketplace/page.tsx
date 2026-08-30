@@ -15,14 +15,14 @@ export default function MarketplacePage() {
       <SiteHeader />
       <main className={styles.main}>
         <header className={styles.hero}>
-          <p className={styles.eyebrow}><span /> Local marketplace</p>
+          <p className={styles.eyebrow}><span /> Placement marketplace</p>
           <div className={styles.heroRow}>
             <div>
               <h1>Find your next<br /><em>real-world spot.</em></h1>
-              <p>Choose a surface, select its exact sticker area, and begin your campaign directly. Your locally published listings appear here automatically.</p>
+              <p>Choose a surface, select its exact sticker area, and build a wallet-linked campaign draft.</p>
             </div>
             <div className={styles.stat} aria-label="Marketplace summary">
-              <strong>6</strong><span>built-in surfaces</span><small>Plus your local listings</small>
+              <strong>6</strong><span>example surfaces</span><small>Live host inventory opens after launch</small>
             </div>
           </div>
         </header>

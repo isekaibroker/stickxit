@@ -1,7 +1,6 @@
 export {
   WalletProvider,
   useWallet,
-  LOCAL_DEMO_ADDRESS,
   type WalletContextValue,
 } from "./WalletProvider";
 export {

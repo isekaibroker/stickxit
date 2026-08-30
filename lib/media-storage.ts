@@ -1,6 +1,6 @@
 "use client";
 
-const DATABASE_NAME = "stickxit-local-media";
+const DATABASE_NAME = "stickxit-draft-media";
 const STORE_NAME = "assets";
 const DATABASE_VERSION = 1;
 
@@ -16,7 +16,7 @@ export type LocalMediaAsset = {
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     if (typeof indexedDB === "undefined") {
-      reject(new Error("Local media storage is unavailable in this browser."));
+      reject(new Error("Draft media storage is unavailable in this browser."));
       return;
     }
 
@@ -28,7 +28,7 @@ function openDatabase(): Promise<IDBDatabase> {
       }
     });
     request.addEventListener("success", () => resolve(request.result));
-    request.addEventListener("error", () => reject(request.error ?? new Error("Local media storage could not be opened.")));
+    request.addEventListener("error", () => reject(request.error ?? new Error("Draft media storage could not be opened.")));
   });
 }
 
@@ -44,11 +44,11 @@ async function runTransaction<T>(
     transaction.addEventListener("complete", () => database.close());
     transaction.addEventListener("abort", () => {
       database.close();
-      reject(transaction.error ?? new Error("The local media operation was cancelled."));
+      reject(transaction.error ?? new Error("The draft media operation was cancelled."));
     });
     transaction.addEventListener("error", () => {
       database.close();
-      reject(transaction.error ?? new Error("The local media operation failed."));
+      reject(transaction.error ?? new Error("The draft media operation failed."));
     });
   });
 }

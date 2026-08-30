@@ -77,14 +77,14 @@ export interface OwnershipState {
 }
 
 export interface LicenseActivation {
-  version: 1;
+  version: 2;
   address: HexString;
   chainId: number;
   signature: HexString;
   message: string;
   signedAt: string;
-  ownershipVerified: boolean | null;
-  collectionAddress: HexString | null;
+  ownershipVerified: true;
+  collectionAddress: HexString;
 }
 
 declare global {

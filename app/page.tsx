@@ -82,7 +82,7 @@ export default function Home() {
               <Link className="button button-primary" href="/marketplace">Explore marketplace <span>↗</span></Link>
               <Link className="button button-secondary" href="/launchpad">Launch Mint: TBA</Link>
             </div>
-            <p className="demo-note"><span /> Interactive sample: hover or focus a spot</p>
+            <p className="sample-note"><span /> Interactive sample: hover or focus a spot</p>
           </div>
           <LaptopPreview />
         </section>

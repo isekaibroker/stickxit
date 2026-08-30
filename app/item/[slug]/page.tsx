@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { listings } from "@/lib/mock-data";
-import { ItemDetail, LocalItemDetail } from "./ItemDetail";
+import { ItemDetail } from "./ItemDetail";
 import styles from "./item.module.css";
 
 type Props = {
@@ -18,12 +18,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const listing = listings.find((item) => item.slug === slug);
-  if (!listing && !slug.startsWith("local-")) notFound();
-  if (!listing) return {
-    title: "Item not found",
-    openGraph: { images: [] },
-    twitter: { images: [] },
-  };
+  if (!listing) notFound();
 
   const title = `${listing.title} placement example`;
   const description = `Choose an advertising region on a ${listing.title} and build the campaign directly from the Stickxit Marketplace.`;
@@ -49,12 +44,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ItemPage({ params, searchParams }: Props) {
   const [{ slug }, { spot }] = await Promise.all([params, searchParams]);
   const listing = listings.find((item) => item.slug === slug);
+  if (!listing) notFound();
 
   return (
     <div className={`site-shell ${styles.shell}`}>
       <SiteHeader />
       <main className={styles.main}>
-        {listing ? <ItemDetail listing={listing} initialSpotId={spot} /> : <LocalItemDetail slug={slug} initialSpotId={spot} />}
+        <ItemDetail listing={listing} initialSpotId={spot} />
       </main>
       <SiteFooter />
     </div>

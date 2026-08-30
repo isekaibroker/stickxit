@@ -37,7 +37,6 @@ test("server-renders primary product routes", async () => {
     "/isekai-brokers",
     "/launchpad",
     "/broker",
-    "/create-listing",
     "/campaigns",
     "/campaigns/new",
     "/campaigns/new?item=macbook-pro-m2-montreal&spot=A",
@@ -47,7 +46,7 @@ test("server-renders primary product routes", async () => {
     "/item/cordless-drill-calgary",
     "/item/street-deck-montreal",
     "/item/rider-helmet-ottawa",
-    "/r/LOCAL1",
+    "/r/TEST01",
   ];
 
   for (const pathname of productRoutes) {
@@ -147,7 +146,7 @@ test("marketplace item clicks open stickered details with a separate Place my NF
   assert.equal(campaignResponse.status, 200);
 });
 
-test("primary navigation no longer exposes the removed Advertise route", async () => {
+test("primary navigation hides removed Advertise and List a spot routes", async () => {
   const response = await render("/marketplace");
   assert.equal(response.status, 200);
 
@@ -155,6 +154,23 @@ test("primary navigation no longer exposes the removed Advertise route", async (
   const primaryNav = html.match(/<nav[^>]*class="[^"]*nav-links[^"]*"[^>]*>[\s\S]*?<\/nav>/i)?.[0];
   assert.ok(primaryNav, "primary navigation should be present in server-rendered HTML");
   assert.doesNotMatch(primaryNav, /href="\/advertise(?:[?/#][^"]*)?"/i);
+  assert.doesNotMatch(primaryNav, /href="\/create-listing(?:[?/#][^"]*)?"/i);
+  assert.doesNotMatch(primaryNav, /List a spot/i);
+});
+
+test("temporarily removed listing route redirects to mint status", async () => {
+  const response = await render("/create-listing");
+  assert.ok([302, 303, 307].includes(response.status), `/create-listing should temporarily redirect, received ${response.status}`);
+  const location = response.headers.get("location");
+  assert.ok(location, "redirect response should include a Location header");
+  assert.equal(new URL(location, "http://localhost").pathname, "/launchpad");
+
+  const routeSource = await readFile(new URL("../app/create-listing/page.tsx", import.meta.url), "utf8");
+  assert.match(routeSource, /redirect\(["']\/launchpad["']\)/);
+  assert.doesNotMatch(routeSource, /ListingWizard/);
+
+  const dashboardSource = await readFile(new URL("../app/broker/BrokerDashboard.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(dashboardSource, /href=["']\/create-listing["']|Create listing|New listing/i);
 });
 
 test("launchpad is a non-transactional TBA page with no local demo mint", async () => {
@@ -183,6 +199,20 @@ test("user-facing source contains no long dash characters", async () => {
       if (!/\.(?:css|ts|tsx)$/i.test(entry)) continue;
       const source = await readFile(new URL(entry.replaceAll("\\", "/"), root), "utf8");
       assert.doesNotMatch(source, longDashPattern, `${directory}${entry} contains a long dash`);
+    }
+  }
+});
+
+test("source contains no browser demo access or fabricated Broker ownership", async () => {
+  const forbidden = /local demo|browser-only demo|browser-only simulation|local preview|local workspace|LOCAL_DEMO|LOCAL_SESSION|startLocalSession|isLocalSession|SavedLocalBroker|getSavedLocalBrokers|saveLocalBroker|0x4444000000000000000000000000000000000001/i;
+  for (const directory of ["../app/", "../components/", "../lib/"]) {
+    const root = new URL(directory, import.meta.url);
+    const entries = await readdir(root, { recursive: true });
+    for (const entry of entries) {
+      if (!/\.(?:ts|tsx)$/i.test(entry)) continue;
+      const source = await readFile(new URL(entry.replaceAll("\\", "/"), root), "utf8");
+      assert.doesNotMatch(source, forbidden, `${directory}${entry} contains a removed demo access path`);
+      assert.doesNotMatch(source, /href=["']\/create-listing(?:[?/#][^"']*)?["']/i, `${directory}${entry} links to the disabled listing route`);
     }
   }
 });

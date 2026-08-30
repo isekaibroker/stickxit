@@ -142,51 +142,6 @@
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
 }
 
-.localOption {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 13px;
-  padding: 15px;
-  border: 1px solid rgb(140 255 0 / 35%);
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgb(140 255 0 / 12%), rgb(138 92 246 / 8%));
-  color: #f7f9f8;
-  text-align: left;
-  cursor: pointer;
-  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
-}
-
-.localOption:hover {
-  border-color: rgb(140 255 0 / 70%);
-  background: linear-gradient(135deg, rgb(140 255 0 / 17%), rgb(138 92 246 / 10%));
-  transform: translateY(-1px);
-}
-
-.localOption:disabled {
-  cursor: wait;
-  opacity: .58;
-}
-
-.walletDivider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #69716e;
-  font-size: 9px;
-  font-weight: 760;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-}
-
-.walletDivider::before,
-.walletDivider::after {
-  height: 1px;
-  flex: 1;
-  background: rgb(255 255 255 / 8%);
-  content: "";
-}
-
 .walletOption:hover {
   border-color: rgb(140 255 0 / 45%);
   background: rgb(140 255 0 / 5%);

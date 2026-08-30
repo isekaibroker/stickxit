@@ -3,7 +3,7 @@ import { RedirectExperience } from "./RedirectExperience";
 
 export const metadata: Metadata = {
   title: "Dynamic campaign link",
-  description: "Resolve a locally created Stickxit campaign destination.",
+  description: "Stickxit dynamic campaign link launch status.",
   robots: { index: false, follow: false },
 };
 

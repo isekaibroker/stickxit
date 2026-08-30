@@ -2,11 +2,9 @@
 
 import Link from "@/components/AppLink";
 import { ArrowLeft, ArrowRight, Image as ImageIcon, Layers3, MapPin, QrCode, ShieldCheck, WalletCards } from "lucide-react";
-import { useMemo, useState, type CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { ProductArt } from "@/components/ProductArt";
 import type { Listing, Spot } from "@/lib/mock-data";
-import { useWallet } from "@/components/wallet";
-import { getSavedListings, savedListingToMarketplaceListing } from "@/lib/app-storage";
 import styles from "./item.module.css";
 
 function formatPhysicalSize(value: string) {
@@ -88,18 +86,6 @@ export function ItemDetail({ listing, initialSpotId }: { listing: Listing; initi
       </div>
     </>
   );
-}
-
-export function LocalItemDetail({ slug, initialSpotId }: { slug: string; initialSpotId?: string }) {
-  const { address } = useWallet();
-  const listing = useMemo(() => {
-    if (!address) return null;
-    const record = getSavedListings(address).find((item) => `local-${item.id}` === slug);
-    return record ? savedListingToMarketplaceListing(record) : null;
-  }, [address, slug]);
-
-  if (listing) return <ItemDetail listing={listing} initialSpotId={initialSpotId} />;
-  return <section className={styles.notFound}><p>Local</p><h1>This listing is not available in the active browser workspace.</h1><Link href="/marketplace">Return to marketplace</Link></section>;
 }
 
 function SpotButton({ spot, selected, onSelect, onInspect }: { spot: Spot; selected: boolean; onSelect: () => void; onInspect: (active: boolean) => void }) {

@@ -32,51 +32,6 @@ import {
 
 const AUTO_CONNECT_KEY = "stickxit:wallet:auto-connect";
 const PREFERRED_WALLET_KEY = "stickxit:wallet:preferred-provider";
-const LOCAL_SESSION_KEY = "stickxit:local-demo:session:v1";
-
-export const LOCAL_DEMO_ADDRESS = "0x4444000000000000000000000000000000000001" as HexString;
-
-function createLocalSignature(value: unknown): HexString {
-  const source = JSON.stringify(value) || "stickxit-local-demo";
-  const encoded = Array.from(new TextEncoder().encode(source), (byte) => byte.toString(16).padStart(2, "0")).join("") || "00";
-  return `0x${encoded.repeat(Math.ceil(128 / encoded.length)).slice(0, 128)}`;
-}
-
-const LOCAL_DEMO_PROVIDER: EIP1193Provider = {
-  async request<T = unknown>({ method, params }: { method: string; params?: readonly unknown[] | Record<string, unknown> }): Promise<T> {
-    let result: unknown;
-    switch (method) {
-      case "eth_accounts":
-      case "eth_requestAccounts":
-        result = [LOCAL_DEMO_ADDRESS];
-        break;
-      case "eth_chainId":
-        result = configuredChain.chainId;
-        break;
-      case "personal_sign":
-        result = createLocalSignature(params);
-        break;
-      case "wallet_switchEthereumChain":
-      case "wallet_addEthereumChain":
-        result = null;
-        break;
-      default:
-        throw new Error(`${method} is unavailable in the local demo session.`);
-    }
-    return result as T;
-  },
-};
-
-const LOCAL_DEMO_WALLET: DiscoveredWallet = {
-  provider: LOCAL_DEMO_PROVIDER,
-  source: "legacy",
-  info: {
-    uuid: "stickxit-local-demo",
-    name: "Stickxit Local Demo",
-    icon: "",
-    rdns: "local.demo.stickxit",
-  },
-};
 
 const INITIAL_OWNERSHIP: OwnershipState = {
   status: chainConfigured && configuredCollectionAddress ? "idle" : "not-configured",
@@ -103,13 +58,11 @@ export interface WalletContextValue {
   hasBroker: boolean;
   nftBalance: number;
   licenseActive: boolean;
-  isLocalSession: boolean;
   targetChain: typeof configuredChain;
   collectionAddress: string | null;
   ownership: OwnershipState;
   license: LicenseActivation | null;
   connect(providerId?: string): Promise<void>;
-  startLocalSession(): Promise<void>;
   disconnect(): void;
   refreshWallets(): void;
   switchToConfiguredChain(): Promise<void>;
@@ -160,7 +113,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [ownership, setOwnership] = useState<OwnershipState>(INITIAL_OWNERSHIP);
   const [license, setLicense] = useState<LicenseActivation | null>(null);
-  const [sessionKind, setSessionKind] = useState<"wallet" | "local" | null>(null);
   const attemptedRestoreIds = useRef(new Set<string>());
   const restoreInFlight = useRef(false);
 
@@ -261,51 +213,18 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
     const normalizedAddress = normalizeAddress(nextAddress);
     setActiveWallet(wallet);
-    setSessionKind("wallet");
     setAddress(normalizedAddress);
     setChainId(nextChain);
-    setLicense(readLicenseActivation(normalizedAddress, nextChain));
+    setLicense(configuredCollectionAddress
+      ? readLicenseActivation(normalizedAddress, nextChain, configuredCollectionAddress)
+      : null);
     setOwnership(INITIAL_OWNERSHIP);
     setError(null);
     setStatus("connected");
-    window.localStorage.removeItem(LOCAL_SESSION_KEY);
     window.localStorage.setItem(AUTO_CONNECT_KEY, "enabled");
     // rdns is used only as a convenience hint, never as a security identity.
     window.localStorage.setItem(PREFERRED_WALLET_KEY, wallet.info.rdns);
   }, []);
-
-  const startLocalSession = useCallback(async () => {
-    setStatus("connecting");
-    setError(null);
-    try {
-      const localChainId = configuredChain.id;
-      const existingLicense = readLicenseActivation(LOCAL_DEMO_ADDRESS, localChainId);
-      const localLicense = existingLicense ?? await signLicenseActivation(
-        LOCAL_DEMO_PROVIDER,
-        LOCAL_DEMO_ADDRESS,
-        localChainId,
-        { ownershipVerified: null, collectionAddress: null },
-      );
-      setActiveWallet(LOCAL_DEMO_WALLET);
-      setSessionKind("local");
-      setAddress(LOCAL_DEMO_ADDRESS);
-      setChainId(localChainId);
-      setOwnership({ status: "owned", balance: BigInt(1), error: null });
-      setLicense(localLicense);
-      window.localStorage.setItem(LOCAL_SESSION_KEY, "enabled");
-      window.localStorage.setItem(AUTO_CONNECT_KEY, "disabled");
-      setStatus("connected");
-    } catch (localError) {
-      setStatus("error");
-      setError(localError instanceof Error ? localError.message : "The local demo session could not be opened.");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (activeWallet || window.localStorage.getItem(LOCAL_SESSION_KEY) !== "enabled") return;
-    const restoreTimer = window.setTimeout(() => void startLocalSession(), 0);
-    return () => window.clearTimeout(restoreTimer);
-  }, [activeWallet, startLocalSession]);
 
   useEffect(() => {
     if (
@@ -364,13 +283,14 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       if (typeof firstAccount === "string" && isEvmAddress(firstAccount)) {
         const normalizedAddress = normalizeAddress(firstAccount);
         setAddress(normalizedAddress);
-        setLicense(chainId === null ? null : readLicenseActivation(normalizedAddress, chainId));
+        setLicense(chainId === null || !configuredCollectionAddress
+          ? null
+          : readLicenseActivation(normalizedAddress, chainId, configuredCollectionAddress));
         setOwnership(INITIAL_OWNERSHIP);
         setError(null);
         setStatus("connected");
       } else {
         setActiveWallet(null);
-        setSessionKind(null);
         setAddress(null);
         setChainId(null);
         setLicense(null);
@@ -382,7 +302,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const nextChain = parseChainId(args[0]);
       if (nextChain) {
         setChainId(nextChain);
-        setLicense(address ? readLicenseActivation(address, nextChain) : null);
+        setLicense(address && configuredCollectionAddress
+          ? readLicenseActivation(address, nextChain, configuredCollectionAddress)
+          : null);
         setOwnership(INITIAL_OWNERSHIP);
         setError(null);
         setStatus("connected");
@@ -390,7 +312,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     };
     const handleDisconnect = () => {
       setActiveWallet(null);
-      setSessionKind(null);
       setAddress(null);
       setChainId(null);
       setLicense(null);
@@ -440,10 +361,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
 
   const disconnect = useCallback(() => {
     window.localStorage.setItem(AUTO_CONNECT_KEY, "disabled");
-    window.localStorage.removeItem(LOCAL_SESSION_KEY);
     attemptedRestoreIds.current.clear();
     setActiveWallet(null);
-    setSessionKind(null);
     setAddress(null);
     setChainId(null);
     setLicense(null);
@@ -453,12 +372,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const switchToConfiguredChain = useCallback(async () => {
-    if (sessionKind === "local") {
-      setChainId(configuredChain.id);
-      setError(null);
-      setStatus("connected");
-      return;
-    }
     if (!chainConfigured) {
       setError("No target chain is configured. Set NEXT_PUBLIC_CHAIN_ID before enabling network switching.");
       setStatus(activeWallet && address ? "connected" : "error");
@@ -521,13 +434,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       setChainId(configuredChain.id);
       setStatus("connected");
     }
-  }, [activeWallet, address, sessionKind]);
+  }, [activeWallet, address]);
 
   const refreshOwnership = useCallback(async (): Promise<bigint | null> => {
-    if (sessionKind === "local") {
-      setOwnership({ status: "owned", balance: BigInt(1), error: null });
-      return BigInt(1);
-    }
     if (!chainConfigured || !configuredCollectionAddress) {
       setOwnership({ status: "not-configured", balance: null, error: null });
       return null;
@@ -567,7 +476,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       setOwnership({ status: "error", balance: null, error: message });
       return null;
     }
-  }, [activeWallet, address, chainId, sessionKind]);
+  }, [activeWallet, address, chainId]);
 
   useEffect(() => {
     if (
@@ -627,22 +536,24 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       return null;
     }
 
-    let ownershipVerified: boolean | null = null;
-    if (sessionKind !== "local" && chainConfigured && configuredCollectionAddress) {
-      const balance = ownership.status === "owned"
-        ? ownership.balance
-        : await refreshOwnership();
-      if (balance === null) {
-        setError("Ownership must be verified before this license can be activated.");
-        setStatus("error");
-        return null;
-      }
-      if (balance <= BigInt(0)) {
-        setError("This wallet does not currently hold an Isekai Broker NFT.");
-        setStatus("error");
-        return null;
-      }
-      ownershipVerified = true;
+    if (!chainConfigured || !configuredCollectionAddress) {
+      setError("Broker access will activate after the official network and collection contract are published.");
+      setStatus("error");
+      return null;
+    }
+
+    const balance = ownership.status === "owned"
+      ? ownership.balance
+      : await refreshOwnership();
+    if (balance === null) {
+      setError("Ownership must be verified before this license can be activated.");
+      setStatus("error");
+      return null;
+    }
+    if (balance <= BigInt(0)) {
+      setError("This wallet does not currently hold an Isekai Broker NFT.");
+      setStatus("error");
+      return null;
     }
 
     setStatus("signing");
@@ -652,7 +563,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         activeWallet.provider,
         address,
         chainId,
-        { ownershipVerified, collectionAddress: configuredCollectionAddress },
+        { ownershipVerified: true, collectionAddress: configuredCollectionAddress },
       );
       setLicense(activation);
       setStatus("connected");
@@ -665,7 +576,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       ));
       return null;
     }
-  }, [activeWallet, address, chainId, ownership.balance, ownership.status, refreshOwnership, sessionKind]);
+  }, [activeWallet, address, chainId, ownership.balance, ownership.status, refreshOwnership]);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -682,20 +593,18 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     status,
     error,
     isConnected: Boolean(activeWallet && address),
-    isCorrectChain: sessionKind === "local" || !chainConfigured || chainId === configuredChain.id,
+    isCorrectChain: !chainConfigured || chainId === configuredChain.id,
     chainConfigured,
     connected: Boolean(activeWallet && address),
-    correctChain: sessionKind === "local" || !chainConfigured || chainId === configuredChain.id,
+    correctChain: !chainConfigured || chainId === configuredChain.id,
     hasBroker: ownership.status === "owned" && (ownership.balance ?? BigInt(0)) > BigInt(0),
     nftBalance: Number(ownership.balance ?? BigInt(0)),
     licenseActive: Boolean(license),
-    isLocalSession: sessionKind === "local",
     targetChain: configuredChain,
     collectionAddress: configuredCollectionAddress,
     ownership,
     license,
     connect,
-    startLocalSession,
     disconnect,
     refreshWallets,
     switchToConfiguredChain,
@@ -713,9 +622,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     error,
     ownership,
     license,
-    sessionKind,
     connect,
-    startLocalSession,
     disconnect,
     refreshWallets,
     switchToConfiguredChain,

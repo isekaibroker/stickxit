@@ -25,10 +25,6 @@ export type Listing = {
   visibility: "High" | "Medium";
   use: string;
   spots: Spot[];
-  local?: boolean;
-  photoMediaId?: string;
-  startingPrice?: number;
-  bookingDuration?: string;
 };
 
 const laptopSpots: Spot[] = [

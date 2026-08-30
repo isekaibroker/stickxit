@@ -20,12 +20,12 @@ export function MarketplacePlacementCard({ listing }: { listing: Listing }) {
         <span className={styles.imageAction}><ArrowUpRight size={14} /> View Spot {spot?.id}</span>
       </Link>
       <div className="listing-card-body">
-        <div className="listing-location"><MapPin size={13} /> {listing.local ? "Local workspace" : "Example"} · {listing.city}, {listing.country}</div>
+        <div className="listing-location"><MapPin size={13} /> Example / {listing.city}, {listing.country}</div>
         <div className="listing-title-row">
           <h3><Link href={detailHref}>{listing.title}</Link></h3>
           <Link className="round-link" href={detailHref} aria-label={`Inspect all spots on ${listing.title}`}><ArrowUpRight size={16} /></Link>
         </div>
-        <div className="listing-meta"><span>{listing.totalSpots} mapped region{listing.totalSpots === 1 ? "" : "s"}</span><span>{listing.local ? "Saved locally" : "Example"}</span></div>
+        <div className="listing-meta"><span>{listing.totalSpots} mapped region{listing.totalSpots === 1 ? "" : "s"}</span><span>Example</span></div>
 
         <label className={styles.cardSpotSelect}>
           <span>Choose sticker spot</span>

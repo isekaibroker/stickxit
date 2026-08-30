@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "@/components/AppLink";
 import { Fingerprint, LoaderCircle, Radio, Wallet } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { WalletConnectModal } from "./WalletConnectModal";
@@ -20,31 +21,33 @@ export function WalletGate({ children, requireLicense = false, className = "" }:
     chainConfigured,
     collectionAddress,
     targetChain,
+    ownership,
     license,
     status,
     error,
     switchToConfiguredChain,
     activateLicense,
-    startLocalSession,
   } = useWallet();
 
-  if (isConnected && isCorrectChain && (!requireLicense || license)) {
+  const verifiedAccess = Boolean(
+    chainConfigured
+    && collectionAddress
+    && ownership.status === "owned"
+    && license,
+  );
+
+  if (isConnected && isCorrectChain && (!requireLicense || verifiedAccess)) {
     return <>{children}</>;
   }
 
   const restoring = status === "restoring" || status === "discovering";
   let icon = <Wallet size={25} />;
   let title = "Connect your wallet";
-  let copy = "Open the local demo to use every workspace without an extension, blockchain, or backend.";
+  let copy = "Connect an installed EVM wallet to continue.";
   let action = (
-    <div className={styles.gateActions}>
-      <button className={styles.primaryButton} type="button" onClick={() => void startLocalSession()}>
-        <Fingerprint size={14} /> Enter local demo
-      </button>
-      <button className={styles.secondaryButton} type="button" onClick={() => setModalOpen(true)}>
-        <Wallet size={14} /> Use wallet
-      </button>
-    </div>
+    <button className={styles.primaryButton} type="button" onClick={() => setModalOpen(true)}>
+      <Wallet size={14} /> Connect wallet
+    </button>
   );
 
   if (restoring) {
@@ -61,18 +64,27 @@ export function WalletGate({ children, requireLicense = false, className = "" }:
         <Radio size={14} /> Switch network
       </button>
     );
-  } else if (isConnected && requireLicense && !license) {
+  } else if (isConnected && requireLicense && (!chainConfigured || !collectionAddress)) {
     icon = <Fingerprint size={25} />;
-    title = chainConfigured && collectionAddress
-      ? "Activate local Broker access"
-      : "Enable local preview access";
-    copy = chainConfigured && collectionAddress
-      ? "After the collection balance check, sign a gas-free message stored only on this device. This is not server authentication or on-chain staking."
-      : "Sign a gas-free message for device-only preview access. This is not server authentication, ownership verification, or on-chain staking.";
+    title = "Broker access is not live";
+    copy = "Ownership verification will activate after the official network and collection contract are published.";
     action = (
-      <button className={styles.primaryButton} type="button" onClick={() => void activateLicense()}>
-        <Fingerprint size={14} /> {chainConfigured && collectionAddress ? "Activate local access" : "Enable local preview"}
-      </button>
+      <Link className={styles.primaryButton} href="/launchpad">
+        View mint status
+      </Link>
+    );
+  } else if (isConnected && requireLicense && !verifiedAccess) {
+    icon = <Fingerprint size={25} />;
+    title = ownership.status === "not-owned" ? "Isekai Broker required" : "Activate Broker access";
+    copy = ownership.status === "not-owned"
+      ? "This wallet does not currently hold an Isekai Broker NFT."
+      : "Verify the collection balance, then sign a gas-free access message. This does not create an on-chain transaction.";
+    action = (
+      ownership.status === "not-owned"
+        ? <Link className={styles.primaryButton} href="/launchpad">View mint status</Link>
+        : <button className={styles.primaryButton} type="button" onClick={() => void activateLicense()}>
+            <Fingerprint size={14} /> Activate Broker access
+          </button>
     );
   }
 

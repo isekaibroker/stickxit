@@ -31,7 +31,6 @@ export function WalletConnectModal({
     status,
     error,
     isConnected,
-    isLocalSession,
     walletName,
     shortAddress,
     targetChain,
@@ -52,10 +51,10 @@ export function WalletConnectModal({
   }, [onClose, open]);
 
   useEffect(() => {
-    if (open && isConnected && !isLocalSession) onClose();
-  }, [isConnected, isLocalSession, onClose, open]);
+    if (open && isConnected) onClose();
+  }, [isConnected, onClose, open]);
 
-  if (!open || (isConnected && !isLocalSession)) return null;
+  if (!open || isConnected) return null;
 
   const busy = ["connecting", "restoring", "switching-chain", "signing"].includes(status);
 
@@ -111,7 +110,7 @@ export function WalletConnectModal({
           </div>
         ) : null}
 
-        {isConnected && !isLocalSession ? (
+        {isConnected ? (
           <div className={styles.noticeBox}>
             <ShieldCheck size={16} />
             <span>Connected with {walletName}: {shortAddress}</span>
