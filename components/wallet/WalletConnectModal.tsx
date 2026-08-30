@@ -3,7 +3,6 @@
 import {
   ArrowRight,
   LoaderCircle,
-  MonitorPlay,
   LockKeyhole,
   RefreshCw,
   ShieldCheck,
@@ -32,12 +31,12 @@ export function WalletConnectModal({
     status,
     error,
     isConnected,
+    isLocalSession,
     walletName,
     shortAddress,
     targetChain,
     chainConfigured,
     connect,
-    startLocalSession,
     refreshWallets,
     clearError,
   } = useWallet();
@@ -53,10 +52,10 @@ export function WalletConnectModal({
   }, [onClose, open]);
 
   useEffect(() => {
-    if (open && isConnected) onClose();
-  }, [isConnected, onClose, open]);
+    if (open && isConnected && !isLocalSession) onClose();
+  }, [isConnected, isLocalSession, onClose, open]);
 
-  if (!open || isConnected) return null;
+  if (!open || (isConnected && !isLocalSession)) return null;
 
   const busy = ["connecting", "restoring", "switching-chain", "signing"].includes(status);
 
@@ -79,7 +78,7 @@ export function WalletConnectModal({
             <span className={styles.eyebrow}><ShieldCheck size={13} /> Secure connection</span>
             <h2 className={styles.modalTitle} id={titleId}>{title}</h2>
             <p className={styles.modalSubtitle}>
-              Open the complete local workspace now, or connect an installed wallet.
+              Choose an installed EVM wallet to verify Isekai Broker ownership and access Stickxit.
             </p>
           </div>
           <button
@@ -112,7 +111,7 @@ export function WalletConnectModal({
           </div>
         ) : null}
 
-        {isConnected ? (
+        {isConnected && !isLocalSession ? (
           <div className={styles.noticeBox}>
             <ShieldCheck size={16} />
             <span>Connected with {walletName}: {shortAddress}</span>
@@ -120,20 +119,6 @@ export function WalletConnectModal({
         ) : null}
 
         <div className={styles.walletList} aria-live="polite">
-          <button
-            className={styles.localOption}
-            type="button"
-            disabled={busy}
-            onClick={() => void startLocalSession()}
-          >
-            <span className={styles.walletGlyph} aria-hidden="true"><MonitorPlay size={19} /></span>
-            <span className={styles.walletText}>
-              <strong>Use the local demo workspace</strong>
-              <span>No extension, blockchain, signature prompt, or payment required</span>
-            </span>
-            {busy ? <LoaderCircle className={styles.spinner} size={18} /> : <ArrowRight className={styles.walletArrow} size={17} />}
-          </button>
-          <div className={styles.walletDivider}><span>or use a browser wallet</span></div>
           {wallets.length ? wallets.map((wallet) => (
             <button
               className={styles.walletOption}
@@ -155,7 +140,7 @@ export function WalletConnectModal({
             <div className={styles.emptyWallets}>
               <Wallet size={30} />
               <strong>No browser wallet detected</strong>
-              <p>No extension is required for the local demo. Install or unlock an EVM-compatible wallet only if you want to test wallet connection.</p>
+              <p>Install or unlock an EVM-compatible browser wallet, then scan again.</p>
               <button className={styles.secondaryButton} type="button" onClick={refreshWallets}>
                 <RefreshCw size={14} /> Scan again
               </button>
@@ -165,7 +150,7 @@ export function WalletConnectModal({
 
         <footer className={styles.modalFooter}>
           <LockKeyhole size={15} />
-          Local demo records stay in this browser. Wallet connection never asks for a seed phrase.
+          Stickxit never receives your seed phrase. Connecting does not create a transaction.
         </footer>
       </section>
     </div>

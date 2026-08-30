@@ -40,6 +40,7 @@ export function SiteHeader() {
   }, [accountOpen]);
 
   const restoring = status === "discovering" || status === "restoring";
+  const walletConnected = isConnected && !isLocalSession;
 
   return (
     <header className="topbar">
@@ -57,16 +58,16 @@ export function SiteHeader() {
       <div className="header-actions">
         <div className="header-wallet" ref={accountRef}>
           <button
-            className={`wallet-button ${isConnected ? "connected" : ""}`}
+            className={`wallet-button ${walletConnected ? "connected" : ""}`}
             type="button"
-            aria-expanded={isConnected ? accountOpen : walletModalOpen}
-            onClick={() => isConnected ? setAccountOpen((open) => !open) : setWalletModalOpen(true)}
+            aria-expanded={walletConnected ? accountOpen : walletModalOpen}
+            onClick={() => walletConnected ? setAccountOpen((open) => !open) : setWalletModalOpen(true)}
           >
             <Wallet size={15} aria-hidden="true" />
-            {restoring ? "Checking access" : isConnected ? isLocalSession ? "Local demo" : shortAddress : "Open workspace"}
-            {isConnected ? <ChevronDown size={13} aria-hidden="true" /> : null}
+            {restoring ? "Checking access" : walletConnected ? shortAddress : "Connect wallet"}
+            {walletConnected ? <ChevronDown size={13} aria-hidden="true" /> : null}
           </button>
-          {isConnected && accountOpen ? (
+          {walletConnected && accountOpen ? (
             <div className="header-wallet-popover">
               <WalletAccountPanel compact />
             </div>

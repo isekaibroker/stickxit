@@ -40,7 +40,7 @@ export function CollectionExperience() {
         <div><strong>4,444</strong><span>Genesis Brokers</span></div>
         <div><strong>3–10</strong><span>Sticker spots per item</span></div>
         <div><strong>0%</strong><span>Fee on eligible Broker listings</span></div>
-        <div><strong>20%</strong><span>Platform fees allocated to holders</span></div>
+        <div><strong>20%</strong><span>Platform fees allocated to eligible holders</span></div>
       </section>
 
       <section className={styles.utility} id="utility" aria-labelledby="utility-title">
