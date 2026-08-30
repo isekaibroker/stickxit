@@ -70,7 +70,7 @@ export function BrokerDashboard() {
   const localCampaigns = address ? savedCampaigns.filter((campaign) => campaign.owner.toLowerCase() === address.toLowerCase()) : [];
   const localBrokers = address ? savedBrokers.filter((broker) => broker.owner.toLowerCase() === address.toLowerCase()) : [];
   const contractBalanceKnown = !previewMode && ownership.balance !== null && ["owned", "not-owned"].includes(ownership.status);
-  const totalBrokerCount: number | string = previewMode ? localBrokers.length : contractBalanceKnown ? balance : "—";
+  const totalBrokerCount: number | string = previewMode ? localBrokers.length : contractBalanceKnown ? balance : "N/A";
   const localCapacity = localBrokers.reduce((summary, broker) => {
     const policy = brokerUtilityByTier[broker.tier as BrokerUtilityTier];
     if (!policy) return summary;

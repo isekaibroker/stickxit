@@ -21,7 +21,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { brokers, listings } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
-  title: { absolute: "Stickxit — Turn what you own into ad space" },
+  title: { absolute: "Stickxit | Turn what you own into ad space" },
   description: "A marketplace for real-world sticker placements, powered by Isekai Brokers.",
 };
 
@@ -80,9 +80,9 @@ export default function Home() {
             <p className="hero-lede">Activate Isekai Broker access, list your everyday item, and let brands request sticker placements that people can actually see.</p>
             <div className="hero-actions">
               <Link className="button button-primary" href="/marketplace">Explore marketplace <span>↗</span></Link>
-              <Link className="button button-secondary" href="/launchpad">Launch Mint — TBA</Link>
+              <Link className="button button-secondary" href="/launchpad">Launch Mint: TBA</Link>
             </div>
-            <p className="demo-note"><span /> Interactive sample — hover or focus a spot</p>
+            <p className="demo-note"><span /> Interactive sample: hover or focus a spot</p>
           </div>
           <LaptopPreview />
         </section>
@@ -115,7 +115,7 @@ export default function Home() {
             <p>Isekai Brokers are the utility access licenses of Stickxit. Ownership unlocks host tools, listing capacity, zero-fee eligible Broker listings, and participation in the allocation of 20% of platform fees to eligible holders.</p>
             <ul>
               <li><Check size={15} /> Activate Broker access</li>
-              <li><Check size={15} /> Map 3–10 spots per item</li>
+              <li><Check size={15} /> Map 3 to 10 spots per item</li>
               <li><Check size={15} /> List with no platform fee</li>
               <li><Check size={15} /> Qualify for the 20% holder allocation</li>
             </ul>

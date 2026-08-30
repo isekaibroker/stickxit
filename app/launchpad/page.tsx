@@ -5,7 +5,7 @@ import { LaunchpadExperience } from "./LaunchpadExperience";
 import styles from "./launchpad.module.css";
 
 export const metadata: Metadata = {
-  title: "Launch Mint — TBA | Isekai Brokers",
+  title: "Launch Mint: TBA | Isekai Brokers",
   description:
     "The Isekai Brokers Genesis mint is not open. Date, price, network, contract, and allowlist details are TBA.",
 };

@@ -24,10 +24,10 @@ export function CollectionExperience() {
           <h1>Own the license<br /><em>behind Stickxit.</em></h1>
           <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
           <div className={styles.heroActions}>
-            <Link className={styles.primary} href="/launchpad">Launch Mint — TBA <ArrowRight size={17} /></Link>
+            <Link className={styles.primary} href="/launchpad">Launch Mint: TBA <ArrowRight size={17} /></Link>
             <a className={styles.secondary} href="#utility">Explore NFT utility</a>
           </div>
-          <p className={styles.custodyNote}><span /> Your NFT stays in your wallet—access never requires transferring or approving it.</p>
+          <p className={styles.custodyNote}><span /> Your NFT stays in your wallet. Access never requires transferring or approving it.</p>
         </div>
         <div className={styles.heroCard}>
           <Image src="/isekai/gallery/0889.png" alt="Golden ram chancellor Isekai Broker artwork" width={1000} height={1000} priority />
@@ -38,7 +38,7 @@ export function CollectionExperience() {
 
       <section className={styles.stats} aria-label="Collection utility statistics">
         <div><strong>4,444</strong><span>Genesis Brokers</span></div>
-        <div><strong>3–10</strong><span>Sticker spots per item</span></div>
+        <div><strong>3 to 10</strong><span>Sticker spots per item</span></div>
         <div><strong>0%</strong><span>Fee on eligible Broker listings</span></div>
         <div><strong>20%</strong><span>Platform fees allocated to eligible holders</span></div>
       </section>
@@ -50,8 +50,8 @@ export function CollectionExperience() {
         </div>
         <div className={styles.utilityGrid}>
           <article className={styles.utilityCard}><span>Broker HQ access</span><strong>Verify<small> ownership</small></strong><p>Connect the holding wallet to access listing, placement, campaign, and performance tools.</p></article>
-          <article className={styles.utilityCard}><span>Real inventory</span><strong>1–2<small> items</small></strong><p>List approved physical items and map realistic sticker-safe regions for advertisers.</p></article>
-          <article className={styles.utilityCard}><span>License capacity</span><strong>3–10<small> spots / item</small></strong><p>Each Broker defines how many items and sticker placements its holder can operate.</p></article>
+          <article className={styles.utilityCard}><span>Real inventory</span><strong>1 to 2<small> items</small></strong><p>List approved physical items and map realistic sticker-safe regions for advertisers.</p></article>
+          <article className={styles.utilityCard}><span>License capacity</span><strong>3 to 10<small> spots / item</small></strong><p>Each Broker defines how many items and sticker placements its holder can operate.</p></article>
           <article className={styles.utilityCard}><span>Holder allocation</span><strong>20%<small> of platform fees</small></strong><p>Twenty percent of platform fees collected by Stickxit is allocated to eligible Isekai Broker holders.</p></article>
         </div>
         <article className={styles.feeDisclosure} id="holder-allocation">

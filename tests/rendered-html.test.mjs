@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile, stat } from "node:fs/promises";
+import { readFile, readdir, stat } from "node:fs/promises";
 import test from "node:test";
 
 async function render(pathname = "/") {
@@ -162,16 +162,29 @@ test("launchpad is a non-transactional TBA page with no local demo mint", async 
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /Launch Mint (?:—|&mdash;|&#x2014;) TBA/i);
+  assert.match(html, /Launch Mint: TBA/i);
   assert.match(html, /Mint details are TBA/i);
   assert.doesNotMatch(html, /Create (?:another )?demo Broker|Demo utility tier|Build your local Broker|browser-only Broker record|Wallet options/i);
 
   const primaryNav = html.match(/<nav[^>]*class="[^"]*nav-links[^"]*"[^>]*>[\s\S]*?<\/nav>/i)?.[0];
   assert.ok(primaryNav, "primary navigation should be present in server-rendered HTML");
-  assert.match(primaryNav, /href="\/launchpad"[^>]*>Launch Mint (?:—|&mdash;|&#x2014;) TBA<\/a>/i);
+  assert.match(primaryNav, /href="\/launchpad"[^>]*>Launch Mint: TBA<\/a>/i);
 
   const source = await readFile(new URL("../app/launchpad/LaunchpadExperience.tsx", import.meta.url), "utf8");
   assert.doesNotMatch(source, /saveLocalBroker|createDemoBroker|startLocalSession|WalletConnectModal|useWallet/);
+});
+
+test("user-facing source contains no long dash characters", async () => {
+  const longDashPattern = new RegExp(`[${String.fromCodePoint(8211)}${String.fromCodePoint(8212)}]`, "u");
+  for (const directory of ["../app/", "../components/", "../lib/"]) {
+    const root = new URL(directory, import.meta.url);
+    const entries = await readdir(root, { recursive: true });
+    for (const entry of entries) {
+      if (!/\.(?:css|ts|tsx)$/i.test(entry)) continue;
+      const source = await readFile(new URL(entry.replaceAll("\\", "/"), root), "utf8");
+      assert.doesNotMatch(source, longDashPattern, `${directory}${entry} contains a long dash`);
+    }
+  }
 });
 
 test("legacy Advertise route redirects to Marketplace", async () => {

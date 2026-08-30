@@ -12,7 +12,7 @@ export function SiteFooter() {
         <Link href="/marketplace">Marketplace</Link>
         <Link href="/isekai-brokers">Isekai Brokers</Link>
         <Link href="/broker">Broker HQ</Link>
-        <Link href="/launchpad">Launch Mint — TBA</Link>
+        <Link href="/launchpad">Launch Mint: TBA</Link>
       </nav>
       <small>© 2026 Stickxit. Pre-launch experience; examples are clearly labeled.</small>
     </footer>

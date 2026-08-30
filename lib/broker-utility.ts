@@ -20,7 +20,7 @@ export type BrokerUtilityPolicy = {
 export const brokerUtilityPolicies: BrokerUtilityPolicy[] = [
   {
     tier: "Commun Human",
-    label: "Commun — Human",
+    label: "Commun: Human",
     audience: "Human Brokers",
     spotsPerItem: 3,
     maxItems: 1,
@@ -29,7 +29,7 @@ export const brokerUtilityPolicies: BrokerUtilityPolicy[] = [
   },
   {
     tier: "Commun Creature",
-    label: "Commun — Creature",
+    label: "Commun: Creature",
     audience: "Frogs, dragons, bunnies, goats, aliens and other creatures",
     spotsPerItem: 4,
     maxItems: 2,

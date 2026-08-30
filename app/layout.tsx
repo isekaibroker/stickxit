@@ -24,14 +24,14 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       siteName: "Stickxit",
-      title: "Stickxit — Turn What You Own Into Ad Space",
+      title: "Stickxit | Turn What You Own Into Ad Space",
       description: "Activate Isekai Broker access, list real-world ad spots, and build measurable physical campaigns.",
       url: origin,
       images: [{ url: socialImage, width: 1200, height: 630, alt: "Stickxit physical advertising marketplace powered by Isekai Brokers" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Stickxit — Turn What You Own Into Ad Space",
+      title: "Stickxit | Turn What You Own Into Ad Space",
       description: "A distributed physical advertising marketplace powered by Isekai Brokers.",
       images: [socialImage],
     },

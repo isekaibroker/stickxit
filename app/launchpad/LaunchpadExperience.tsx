@@ -46,7 +46,7 @@ export function LaunchpadExperience() {
 
           <div className={styles.heroActions}>
             <span className={styles.disabledMint} aria-disabled="true">
-              <CalendarClock size={16} aria-hidden="true" /> Launch Mint — TBA
+              <CalendarClock size={16} aria-hidden="true" /> Launch Mint: TBA
             </span>
             <Link className={styles.collectionLink} href="/isekai-brokers">
               Explore the collection <ArrowRight size={16} aria-hidden="true" />
