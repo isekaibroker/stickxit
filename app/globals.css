@@ -174,7 +174,7 @@ button { font: inherit; }
 .product-photo-helmet::before { background-image: url("/marketplace/rider-helmet.webp"); }
 .product-photo-laptop.product-photo-stickered::before { background-image: url("/marketplace/stickered/silver-laptop.webp"); }
 .product-photo-pc.product-photo-stickered::before { background-image: url("/marketplace/stickered/gaming-pc.webp"); }
-.product-photo-car.product-photo-stickered::before { background-image: url("/marketplace/stickered/graphite-sedan.webp"); }
+.product-photo-car.product-photo-stickered::before { background-image: url("/marketplace/stickered/graphite-sedan-v2.webp"); }
 .product-photo-drill.product-photo-stickered::before { background-image: url("/marketplace/stickered/cordless-drill.webp"); }
 .product-photo-skateboard.product-photo-stickered::before { background-image: url("/marketplace/stickered/street-skateboard.webp"); }
 .product-photo-helmet.product-photo-stickered::before { background-image: url("/marketplace/stickered/rider-helmet.webp"); }

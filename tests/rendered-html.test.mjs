@@ -105,7 +105,7 @@ test("marketplace ships a realistic photo for every example surface", async () =
 });
 
 test("marketplace examples use surface-projected sticker photos without polluting the campaign editor", async () => {
-  const projectedAssets = ["silver-laptop.webp", "gaming-pc.webp", "graphite-sedan.webp", "cordless-drill.webp", "street-skateboard.webp", "rider-helmet.webp"];
+  const projectedAssets = ["silver-laptop.webp", "gaming-pc.webp", "graphite-sedan-v2.webp", "cordless-drill.webp", "street-skateboard.webp", "rider-helmet.webp"];
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
   for (const asset of projectedAssets) {
     const file = new URL(`../public/marketplace/stickered/${asset}`, import.meta.url);
@@ -126,6 +126,25 @@ test("marketplace examples use surface-projected sticker photos without pollutin
   assert.doesNotMatch(campaignHtml, /data-example-stickered="true"|product-photo-stickered/i);
   const campaignMockupSource = await readFile(new URL("../app/advertise/InteractivePlacementMockup.tsx", import.meta.url), "utf8");
   assert.match(campaignMockupSource, /showExampleStickers=\{false\}/);
+});
+
+test("marketplace item clicks open stickered details with a separate Place my NFT path", async () => {
+  const marketplaceResponse = await render("/marketplace");
+  assert.equal(marketplaceResponse.status, 200);
+  const marketplaceHtml = await marketplaceResponse.text();
+  assert.match(marketplaceHtml, /href="\/item\/bmw-330i-montreal\?spot=A"/i);
+  assert.match(marketplaceHtml, /Place my NFT on this spot/i);
+
+  const detailResponse = await render("/item/bmw-330i-montreal?spot=B");
+  assert.equal(detailResponse.status, 200);
+  const detailHtml = await detailResponse.text();
+  assert.match(detailHtml, /data-example-stickered="true"/i);
+  assert.match(detailHtml, /product-photo-car[^"']*product-photo-stickered/i);
+  assert.match(detailHtml, /Place my NFT/i);
+  assert.match(detailHtml, /href="\/campaigns\/new\?item=bmw-330i-montreal(?:&amp;|&)spot=B(?:&amp;|&)template=upload(?:&amp;|&)source=item-detail"/i);
+
+  const campaignResponse = await render("/campaigns/new?item=bmw-330i-montreal&spot=B&template=upload&source=item-detail");
+  assert.equal(campaignResponse.status, 200);
 });
 
 test("primary navigation no longer exposes the removed Advertise route", async () => {

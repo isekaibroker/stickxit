@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "@/components/AppLink";
-import { ArrowLeft, Image as ImageIcon, Layers3, MapPin, QrCode, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Image as ImageIcon, Layers3, MapPin, QrCode, ShieldCheck, WalletCards } from "lucide-react";
 import { useMemo, useState, type CSSProperties } from "react";
 import { ProductArt } from "@/components/ProductArt";
 import type { Listing, Spot } from "@/lib/mock-data";
@@ -24,6 +24,9 @@ export function ItemDetail({ listing, initialSpotId }: { listing: Listing; initi
   const [inspectedId, setInspectedId] = useState<string | null>(null);
   const selected = listing.spots.find((spot) => spot.id === selectedId) ?? listing.spots[0];
   const inspected = listing.spots.find((spot) => spot.id === inspectedId) ?? selected;
+  const placeNftHref = selected
+    ? `/campaigns/new?item=${encodeURIComponent(listing.slug)}&spot=${encodeURIComponent(selected.id)}&template=upload&source=item-detail`
+    : "";
 
   return (
     <>
@@ -31,7 +34,7 @@ export function ItemDetail({ listing, initialSpotId }: { listing: Listing; initi
       <div className={styles.layout}>
         <section aria-labelledby="item-title">
           <div className={styles.visual}>
-            <ProductArt listing={listing} large />
+            <ProductArt listing={listing} large showExampleStickers />
             <div className={styles.overlay} aria-label="Selectable advertising spots">
               {listing.spots.map((spot) => <SpotButton key={spot.id} spot={spot} selected={spot.id === selected?.id} onSelect={() => setSelectedId(spot.id)} onInspect={(active) => setInspectedId(active ? spot.id : null)} />)}
             </div>
@@ -58,6 +61,17 @@ export function ItemDetail({ listing, initialSpotId }: { listing: Listing; initi
             {selected ? <Link className={styles.buy} href={`/campaigns/new?item=${encodeURIComponent(listing.slug)}&spot=${encodeURIComponent(selected.id)}`}>Create campaign for this spot <span>→</span></Link> : <button className={styles.buy} disabled>No mapped region</button>}
             <p className={styles.safe}><ShieldCheck size={14} /> No booking or payment is created from this preview.</p>
           </div>
+
+          <section className={styles.nftPlacement} aria-labelledby="place-my-nft-title">
+            <div className={styles.nftPlacementIcon}><WalletCards size={21} /></div>
+            <div className={styles.nftPlacementCopy}>
+              <small>NFT creative</small>
+              <h2 id="place-my-nft-title">Place my NFT</h2>
+              <p>Use NFT artwork you own as a vinyl sticker in the selected host-approved region. The campaign editor lets you upload and fit the artwork precisely.</p>
+            </div>
+            {selected ? <Link className={styles.nftPlacementButton} href={placeNftHref}>Place my NFT in Spot {selected.id}<ArrowRight size={16} /></Link> : <button className={styles.nftPlacementButton} disabled>No mapped region</button>}
+            <span className={styles.nftPlacementSafe}><ShieldCheck size={13} /> Your NFT stays in your wallet. No transfer or approval is requested.</span>
+          </section>
         </aside>
       </div>
 
