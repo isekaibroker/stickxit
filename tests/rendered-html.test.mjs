@@ -29,8 +29,8 @@ test("server-renders the Stickxit product homepage", async () => {
   assert.match(html, /name="twitter:creator" content="@isekaibrokers"/i);
   assert.match(html, /Turn what you own into ad space/i);
   assert.match(html, /Isekai Brokers/i);
-  assert.match(html, /6,666 Isekai Brokers/i);
-  assert.doesNotMatch(html, /<strong>4,444<\/strong><small>Isekai Brokers<\/small>/i);
+  assert.match(html, /4,444 Isekai Brokers/i);
+  assert.doesNotMatch(html, /<strong>(?:5,555|6,666)<\/strong><small>Isekai Brokers<\/small>/i);
   assert.match(html, /Robinhood Chain/i);
   assert.match(html, /href="https:\/\/x\.com\/isekaibrokers"/i);
   assert.match(html, /Explore marketplace/i);
@@ -82,26 +82,26 @@ test("public Broker gallery is limited to eighteen approved rarity-free controls
   assert.doesNotMatch(html, /local demo|local workspace|local preview|browser-only simulation/i);
 });
 
-test("public collection is one original and final Genesis supply of 6,666", async () => {
+test("public collection is one original and final Genesis supply of 4,444", async () => {
   const response = await render("/isekai-brokers");
   assert.equal(response.status, 200);
   const html = await response.text();
 
-  assert.match(html, /<strong>6,666<\/strong><span>Genesis Brokers<\/span>/i);
+  assert.match(html, /<strong>4,444<\/strong><span>Genesis Brokers<\/span>/i);
   assert.match(html, /Original Genesis/i);
-  assert.match(html, /one original Genesis collection with a fixed and final supply of 6,666/i);
-  assert.match(html, /<span>Original collection<\/span>\s*<strong>6,666<\/strong>/i);
-  assert.match(html, /<span>Final supply<\/span>\s*<strong>6,666<\/strong>/i);
-  assert.match(html, /Original and final supply: 6,666/i);
-  assert.doesNotMatch(html, /4,444|2,222|joined by|expanded Genesis|expanded collection/i);
+  assert.match(html, /one original Genesis collection with a fixed and final supply of 4,444/i);
+  assert.match(html, /<span>Original collection<\/span>\s*<strong>4,444<\/strong>/i);
+  assert.match(html, /<span>Final supply<\/span>\s*<strong>4,444<\/strong>/i);
+  assert.match(html, /Original and final supply: 4,444/i);
+  assert.doesNotMatch(html, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
 
   const homepageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const launchpadSource = await readFile(new URL("../app/launchpad/LaunchpadExperience.tsx", import.meta.url), "utf8");
   const collectionSource = await readFile(new URL("../app/isekai-brokers/CollectionExperience.tsx", import.meta.url), "utf8");
   const publicSupplySource = `${homepageSource}\n${launchpadSource}\n${collectionSource}`;
-  assert.doesNotMatch(publicSupplySource, /4,444|2,222|joined by|expanded Genesis|expanded collection/i);
+  assert.doesNotMatch(publicSupplySource, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
   assert.match(publicSupplySource, /original Genesis collection/i);
-  assert.match(publicSupplySource, /fixed and final supply of 6,666/i);
+  assert.match(publicSupplySource, /fixed and final supply of 4,444/i);
 });
 
 test("marketplace exposes the advertiser campaign entry point", async () => {
@@ -209,9 +209,9 @@ test("launchpad is a non-transactional TBA page with no local demo mint", async 
   assert.match(html, /Robinhood Chain Mint: TBA/i);
   assert.match(html, /Robinhood Chain mainnet is live/i);
   assert.match(html, /Robinhood Chain confirmed\. Mint details are TBA/i);
-  assert.match(html, /<dt>Collection size<\/dt>\s*<dd>6,666<\/dd>/i);
-  assert.match(html, /one original Genesis collection\s*with a fixed and final supply of 6,666/i);
-  assert.doesNotMatch(html, /4,444|2,222|joined by|expanded Genesis|expanded collection/i);
+  assert.match(html, /<dt>Collection size<\/dt>\s*<dd>4,444<\/dd>/i);
+  assert.match(html, /one original Genesis collection\s*with a fixed and final supply of 4,444/i);
+  assert.doesNotMatch(html, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
   assert.match(html, /Isekai Brokers is independent and is not affiliated with, endorsed by, or sponsored by Robinhood/i);
   assert.match(html, /href="https:\/\/x\.com\/isekaibrokers"/i);
   assert.match(html, /<dt>Network<\/dt>\s*<dd>Robinhood Chain<\/dd>/i);

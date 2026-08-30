@@ -6,7 +6,7 @@ import styles from "./isekai.module.css";
 
 export const metadata: Metadata = {
   title: "Isekai Brokers",
-  description: "Explore the original 6,666 Isekai Brokers Genesis utility NFT collection planned to mint on Robinhood Chain. Mint date, price, contract, and allowlist details remain TBA.",
+  description: "Explore the original 4,444 Isekai Brokers Genesis utility NFT collection planned to mint on Robinhood Chain. Mint date, price, contract, and allowlist details remain TBA.",
 };
 
 export default function IsekaiBrokersPage() {
