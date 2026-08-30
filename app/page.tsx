@@ -112,7 +112,7 @@ export default function Home() {
           <div className="broker-story-copy">
             <span className="section-kicker purple">Genesis membership</span>
             <h2>Your Broker is<br />your <em>license.</em></h2>
-            <p>The expanded 6,666 Isekai Brokers collection provides the utility access licenses of Stickxit. Ownership unlocks host tools, listing capacity, zero-fee eligible Broker listings, and participation in the allocation of 20% of platform fees to eligible holders.</p>
+            <p>The original 6,666 Isekai Brokers Genesis collection provides the utility access licenses of Stickxit. Ownership unlocks host tools, listing capacity, zero-fee eligible Broker listings, and participation in the allocation of 20% of platform fees to eligible holders.</p>
             <ul>
               <li><Check size={15} /> Activate Broker access</li>
               <li><Check size={15} /> Map 3 to 10 spots per item</li>

@@ -7,7 +7,7 @@ import styles from "./launchpad.module.css";
 export const metadata: Metadata = {
   title: "Mint on Robinhood Chain | Isekai Brokers",
   description:
-    "The expanded 6,666 Isekai Brokers collection is planned to mint on Robinhood Chain. The mint is not open, and the date, price, contract address, and allowlist details remain TBA.",
+    "The original 6,666 Isekai Brokers Genesis collection is planned to mint on Robinhood Chain. The mint is not open, and the date, price, contract address, and allowlist details remain TBA.",
 };
 
 export default function LaunchpadPage() {

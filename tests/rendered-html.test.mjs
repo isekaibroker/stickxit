@@ -82,32 +82,26 @@ test("public Broker gallery is limited to eighteen approved rarity-free controls
   assert.doesNotMatch(html, /local demo|local workspace|local preview|browser-only simulation/i);
 });
 
-test("public collection supply is 6,666 with the exact 2,222 expansion allocation", async () => {
+test("public collection is one original and final Genesis supply of 6,666", async () => {
   const response = await render("/isekai-brokers");
   assert.equal(response.status, 200);
   const html = await response.text();
 
   assert.match(html, /<strong>6,666<\/strong><span>Genesis Brokers<\/span>/i);
-  assert.match(html, /original 4,444 Brokers are joined by 2,222 new characters/i);
-  for (const [label, supply] of [
-    ["Commun humans", "1,000"],
-    ["Animal characters", "900"],
-    ["Rare", "200"],
-    ["Ultra-Rare", "100"],
-    ["Legendary", "22"],
-  ]) {
-    assert.match(html, new RegExp(`<span>${label}</span>\\s*<strong>${supply}</strong>`, "i"));
-  }
-  assert.match(html, /Randomized final order/i);
-  assert.match(html, /mixed with the original 4,444 before final token assignment/i);
-  assert.doesNotMatch(html, /<strong>4,444<\/strong><span>Genesis Brokers<\/span>/i);
+  assert.match(html, /Original Genesis/i);
+  assert.match(html, /one original Genesis collection with a fixed and final supply of 6,666/i);
+  assert.match(html, /<span>Original collection<\/span>\s*<strong>6,666<\/strong>/i);
+  assert.match(html, /<span>Final supply<\/span>\s*<strong>6,666<\/strong>/i);
+  assert.match(html, /Original and final supply: 6,666/i);
+  assert.doesNotMatch(html, /4,444|2,222|joined by|expanded Genesis|expanded collection/i);
 
   const homepageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const launchpadSource = await readFile(new URL("../app/launchpad/LaunchpadExperience.tsx", import.meta.url), "utf8");
   const collectionSource = await readFile(new URL("../app/isekai-brokers/CollectionExperience.tsx", import.meta.url), "utf8");
-  assert.doesNotMatch(homepageSource, /<strong>4,444<\/strong><small>Isekai Brokers<\/small>/i);
-  assert.doesNotMatch(launchpadSource, /<dd>4,444<\/dd>|<span>4,444 Genesis<\/span>/i);
-  assert.doesNotMatch(collectionSource, /<strong>4,444<\/strong><span>Genesis Brokers<\/span>/i);
+  const publicSupplySource = `${homepageSource}\n${launchpadSource}\n${collectionSource}`;
+  assert.doesNotMatch(publicSupplySource, /4,444|2,222|joined by|expanded Genesis|expanded collection/i);
+  assert.match(publicSupplySource, /original Genesis collection/i);
+  assert.match(publicSupplySource, /fixed and final supply of 6,666/i);
 });
 
 test("marketplace exposes the advertiser campaign entry point", async () => {
@@ -216,7 +210,8 @@ test("launchpad is a non-transactional TBA page with no local demo mint", async 
   assert.match(html, /Robinhood Chain mainnet is live/i);
   assert.match(html, /Robinhood Chain confirmed\. Mint details are TBA/i);
   assert.match(html, /<dt>Collection size<\/dt>\s*<dd>6,666<\/dd>/i);
-  assert.match(html, /original 4,444\s*Brokers with 2,222 new Brokers/i);
+  assert.match(html, /one original Genesis collection\s*with a fixed and final supply of 6,666/i);
+  assert.doesNotMatch(html, /4,444|2,222|joined by|expanded Genesis|expanded collection/i);
   assert.match(html, /Isekai Brokers is independent and is not affiliated with, endorsed by, or sponsored by Robinhood/i);
   assert.match(html, /href="https:\/\/x\.com\/isekaibrokers"/i);
   assert.match(html, /<dt>Network<\/dt>\s*<dd>Robinhood Chain<\/dd>/i);

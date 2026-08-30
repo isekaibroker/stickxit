@@ -39,8 +39,8 @@ export function LaunchpadExperience() {
             Launching on <em>Robinhood Chain.</em>
           </h1>
           <p className={styles.lede}>
-            Robinhood Chain mainnet is live. The expanded collection includes
-            6,666 Isekai Brokers. The mint remains closed, and the launch date,
+            Robinhood Chain mainnet is live. The original Genesis collection has
+            a fixed and final supply of 6,666 Isekai Brokers. The mint remains closed, and the launch date,
             price, contract address, and allowlist details are TBA.
           </p>
 
@@ -111,8 +111,8 @@ export function LaunchpadExperience() {
           <p>
             The network is confirmed and its mainnet is live. This launchpad will
             activate only when the mint configuration and official collection
-            contract are ready. The collection now combines the original 4,444
-            Brokers with 2,222 new Brokers. Until launch, this remains an
+            contract are ready. Isekai Brokers is one original Genesis collection
+            with a fixed and final supply of 6,666. Until launch, this remains an
             information page with no mint action.
           </p>
         </div>
