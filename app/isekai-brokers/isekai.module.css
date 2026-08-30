@@ -10,7 +10,7 @@
 .primary { background: var(--green); color: #071000; }.secondary { border: 1px solid #34383e; background: #141618; }
 .demo,.simulation { color: #72777e; font: 11px/1.5 var(--font-geist-mono), monospace; }.demo { margin-top: 22px; }.demo span { display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: var(--green); }
 .heroCard { width: min(440px, 100%); justify-self: center; position: relative; border: 1px solid #34383e; border-radius: 28px; padding: 13px; background: linear-gradient(145deg,#1b1d20,#0c0d0f); transform: rotate(2deg); box-shadow: 0 35px 90px rgba(0,0,0,.48); }
-.heroCard img { display: block; width: 100%; border-radius: 19px; }
+.heroCard img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 19px; }
 .heroCardMeta { display: grid; gap: 4px; padding: 17px 9px 8px; }.heroCardMeta strong { font-size: 20px; }.heroCardMeta small { color: var(--muted); }
 .floatBadge { position: absolute; right: -34px; top: 16%; display: flex; align-items: center; gap: 10px; padding: 12px 15px; border: 1px solid rgba(140,255,0,.35); border-radius: 12px; color: var(--green); background: rgba(10,12,12,.92); box-shadow: 0 18px 40px rgba(0,0,0,.4); }.floatBadge span { display: grid; color: white; font-size: 12px; }.floatBadge small { color: var(--green); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
 .stats { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--line); border-radius: 16px; background: #101214; }.stats div { display: grid; gap: 5px; padding: 24px 30px; border-right: 1px solid var(--line); }.stats div:last-child { border: 0; }.stats strong { font-size: 27px; }.stats span { color: var(--muted); font-size: 12px; }
