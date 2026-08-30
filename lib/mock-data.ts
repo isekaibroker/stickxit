@@ -50,8 +50,8 @@ const pcSpots: Spot[] = [
 const carSpots: Spot[] = [
   { id: "A", name: "Front door panel", x: .23, y: .56, width: .17, height: .12, physicalSize: '14 × 8"', surface: "Painted exterior door", description: "Low-tack automotive vinyl on the flat painted section below the window line.", rotation: 1 },
   { id: "B", name: "Rear door panel", x: .41, y: .55, width: .15, height: .12, physicalSize: '12 × 8"', surface: "Painted exterior door", description: "A removable door decal kept clear of the handle, glass, and panel gaps.", rotation: 1 },
-  { id: "C", name: "Lower rear quarter", x: .56, y: .61, width: .09, height: .07, physicalSize: '7 × 4"', surface: "Painted rear quarter", description: "A compact automotive-vinyl zone below the tail lamp, clear of the wheel arch and panel gaps.", rotation: 1 },
-  { id: "D", name: "Rear bumper band", x: .72, y: .70, width: .16, height: .07, physicalSize: '10 × 3"', surface: "Smooth painted bumper", description: "A narrow removable-vinyl band clear of lights, exhaust, sensors, and plate areas.", rotation: -1 },
+  { id: "C", name: "Lower rear quarter", x: .69, y: .53, width: .11, height: .07, physicalSize: '7 × 4"', surface: "Painted rear quarter", description: "A compact automotive-vinyl zone below the tail lamp, clear of the wheel arch and panel gaps.", rotation: 1 },
+  { id: "D", name: "Rear bumper band", x: .82, y: .62, width: .12, height: .07, physicalSize: '10 × 3"', surface: "Smooth painted bumper", description: "A narrow removable-vinyl band clear of lights, exhaust, sensors, and plate areas.", rotation: -1 },
 ];
 
 const toolboxSpots: Spot[] = [
@@ -62,9 +62,9 @@ const toolboxSpots: Spot[] = [
 ];
 
 const skateboardSpots: Spot[] = [
-  { id: "A", name: "Underside nose", x: .77, y: .31, width: .11, height: .08, physicalSize: '3 × 2"', surface: "Smooth deck underside", description: "A small decal on the smooth underside; the textured grip deck is intentionally excluded.", rotation: 13 },
-  { id: "B", name: "Underside center", x: .74, y: .45, width: .11, height: .08, physicalSize: '3 × 2"', surface: "Smooth deck underside", description: "A central underside placement clear of the truck, wheels, and deck edges.", rotation: 13 },
-  { id: "C", name: "Underside tail", x: .68, y: .77, width: .11, height: .08, physicalSize: '3 × 2"', surface: "Smooth deck underside", description: "A tail-side decal with enough clearance for wear and wheel movement.", rotation: 13 },
+  { id: "A", name: "Underside nose", x: .78, y: .27, width: .12, height: .08, physicalSize: '3 × 2"', surface: "Smooth deck underside", description: "A small decal on the smooth underside; the textured grip deck is intentionally excluded.", rotation: -25 },
+  { id: "B", name: "Underside center", x: .48, y: .46, width: .13, height: .08, physicalSize: '3 × 2"', surface: "Smooth deck underside", description: "A central underside placement clear of the truck, wheels, and deck edges.", rotation: -25 },
+  { id: "C", name: "Underside tail", x: .23, y: .70, width: .12, height: .08, physicalSize: '3 × 2"', surface: "Smooth deck underside", description: "A tail-side decal with enough clearance for wear and wheel movement.", rotation: -25 },
 ];
 
 const helmetSpots: Spot[] = [

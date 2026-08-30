@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
 async function render(pathname = "/") {
@@ -83,6 +84,24 @@ test("marketplace exposes the advertiser campaign entry point", async () => {
   const html = await response.text();
   assert.match(html, /href="\/campaigns(?:\/new)?(?:\?[^"]*)?"/i);
   assert.match(html, /advertis|campaign/i);
+});
+
+test("marketplace ships a realistic photo for every example surface", async () => {
+  const assets = [
+    "silver-laptop.webp",
+    "gaming-pc.webp",
+    "graphite-sedan.webp",
+    "pro-toolbox.webp",
+    "street-skateboard.webp",
+    "rider-helmet.webp",
+  ];
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  for (const asset of assets) {
+    const file = new URL(`../public/marketplace/${asset}`, import.meta.url);
+    assert.ok((await stat(file)).size > 20_000, `${asset} should contain an optimized product photo`);
+    assert.match(css, new RegExp(`/marketplace/${asset.replace(".", "\\.")}`));
+  }
 });
 
 test("primary navigation no longer exposes the removed Advertise route", async () => {
