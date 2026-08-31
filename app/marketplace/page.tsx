@@ -7,6 +7,7 @@ import styles from "./marketplace.module.css";
 export const metadata: Metadata = {
   title: "Advertising Marketplace",
   description: "Choose a real-world surface and exact sticker spot, then start a Stickxit campaign directly from the marketplace.",
+  alternates: { canonical: "/marketplace" },
 };
 
 export default function MarketplacePage() {

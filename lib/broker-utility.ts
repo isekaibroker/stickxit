@@ -68,7 +68,7 @@ export const brokerUtilityPolicies: BrokerUtilityPolicy[] = [
   {
     tier: "Legendary",
     label: "Legendary",
-    audience: "The 15 Legendary Brokers",
+    audience: "The 45 Legendary Brokers",
     spotsPerItem: 10,
     maxItems: null,
     platformFee: 0,
@@ -85,8 +85,11 @@ export function isBrokerUtilityTier(value: string | undefined): value is BrokerU
   return Boolean(value && value in brokerUtilityByTier);
 }
 
-export function resolveBrokerUtilityTier(value: string | undefined): BrokerUtilityTier {
-  return isBrokerUtilityTier(value) ? value : "Commun Human";
+export function resolveBrokerUtilityTier(value: string | undefined): BrokerUtilityTier | null {
+  // Final NFT metadata exposes a single `Commun` rarity. Human-versus-creature
+  // utility cannot be inferred safely until the official token utility map is
+  // published, so unknown values must not inherit the human allowance.
+  return isBrokerUtilityTier(value) ? value : null;
 }
 
 /**

@@ -16,6 +16,7 @@ import {
   formatItemAllowance,
   type BrokerUtilityTier,
 } from "@/lib/broker-utility";
+import { collectionDetails } from "@/lib/collection-details";
 import styles from "./launchpad.module.css";
 
 const utilityTones: Record<BrokerUtilityTier, "green" | "cyan" | "purple" | "orange" | "gold"> = {
@@ -39,8 +40,8 @@ export function LaunchpadExperience() {
             Launching on <em>Robinhood Chain.</em>
           </h1>
           <p className={styles.lede}>
-            Robinhood Chain mainnet is live. The original Genesis collection has
-            a fixed and final supply of 4,444 Isekai Brokers. The mint remains closed, and the launch date,
+            Robinhood Chain mainnet is live. The Genesis collection has
+            a fixed supply of {collectionDetails.supplyLabel} Isekai Brokers. The mint remains closed, and the launch date,
             price, contract address, and allowlist details are TBA.
           </p>
 
@@ -72,7 +73,7 @@ export function LaunchpadExperience() {
         <div className={styles.preview} aria-label="Isekai Brokers collection preview">
           <div className={`${styles.brokerCard} ${styles.cardOne}`}>
             <Image
-              src="/isekai/0001.png"
+              src="/isekai/0219.png"
               alt="Anime human Isekai Broker collection preview"
               width={320}
               height={320}
@@ -82,17 +83,17 @@ export function LaunchpadExperience() {
           </div>
           <div className={`${styles.brokerCard} ${styles.cardTwo}`}>
             <Image
-              src="/isekai/0002.png"
+              src="/isekai/3057.png"
               alt="Anime frog Isekai Broker collection preview"
               width={320}
               height={320}
               priority
             />
-            <span>4,444 Brokers</span>
+            <span>{collectionDetails.supplyLabel} Brokers</span>
           </div>
           <div className={`${styles.brokerCard} ${styles.cardThree}`}>
             <Image
-              src="/isekai/0010.png"
+              src="/isekai/3678.png"
               alt="Anime creature Isekai Broker collection preview"
               width={320}
               height={320}
@@ -111,15 +112,15 @@ export function LaunchpadExperience() {
           <p>
             The network is confirmed and its mainnet is live. This launchpad will
             activate only when the mint configuration and official collection
-            contract are ready. Isekai Brokers is one original Genesis collection
-            with a fixed and final supply of 4,444. Until launch, this remains an
+            contract are ready. Isekai Brokers is one Genesis collection
+            with a fixed supply of {collectionDetails.supplyLabel}. Until launch, this remains an
             information page with no mint action.
           </p>
         </div>
         <dl className={styles.readinessGrid}>
           <div>
             <dt>Collection size</dt>
-            <dd>4,444</dd>
+            <dd>{collectionDetails.supplyLabel}</dd>
           </div>
           <div>
             <dt>Mint status</dt>
@@ -144,6 +145,10 @@ export function LaunchpadExperience() {
           <div>
             <dt>Allowlist</dt>
             <dd>TBA</dd>
+          </div>
+          <div>
+            <dt>Collection data</dt>
+            <dd>Finalized</dd>
           </div>
         </dl>
       </section>
@@ -176,9 +181,9 @@ export function LaunchpadExperience() {
         <div className={styles.policyNote}>
           <Clock3 size={18} aria-hidden="true" />
           <p>
-            Semi-Rare currently uses a six-spot launch allocation. Its final confirmation,
-            plus the item allowances for Ultra-Rare and Legendary Brokers, will be
-            published before minting opens.
+            Commun Human and Commun Creature assignments require the official token utility map.
+            Semi-Rare currently uses a six-spot launch allocation. Final utility assignments
+            and item allowances will be published before minting opens.
           </p>
         </div>
       </section>

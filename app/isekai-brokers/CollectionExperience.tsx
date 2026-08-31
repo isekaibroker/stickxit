@@ -4,6 +4,7 @@ import Link from "@/components/AppLink";
 import Image from "next/image";
 import { ArrowRight, BadgeCheck, Check, ShieldCheck, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { collectionDetails, collectionRarityBreakdown } from "@/lib/collection-details";
 import { publicBrokerGallery, type PublicBrokerGalleryItem } from "@/lib/public-broker-gallery";
 import styles from "./isekai.module.css";
 
@@ -22,7 +23,7 @@ export function CollectionExperience() {
         <div>
           <p className={styles.kicker}><Sparkles size={14} /> Isekai Brokers · Genesis on Robinhood Chain</p>
           <h1>Own the license<br /><em>behind Stickxit.</em></h1>
-          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. The collection has a supply of 4,444 distinct Brokers planned to mint on Robinhood Chain. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
+          <p className={styles.lede}>Isekai Brokers are utility NFTs for the Stickxit marketplace. The collection has a supply of {collectionDetails.supplyLabel} distinct Brokers planned to mint on Robinhood Chain. Hold a Broker to unlock host tools, list real-world advertising surfaces, manage sticker placements, and qualify for the holder fee allocation.</p>
           <div className={styles.heroActions}>
             <Link className={styles.primary} href="/launchpad">Mint on Robinhood Chain <ArrowRight size={17} /></Link>
             <a className={styles.secondary} href="#utility">Explore NFT utility</a>
@@ -30,14 +31,14 @@ export function CollectionExperience() {
           <p className={styles.custodyNote}><span /> Your NFT stays in your wallet. Access never requires transferring or approving it.</p>
         </div>
         <div className={styles.heroCard}>
-          <Image src="/isekai/gallery/0889.png" alt="Golden ram chancellor Isekai Broker artwork" width={1000} height={1000} priority />
-          <div className={styles.heroCardMeta}><strong>Broker #0889</strong><small>Golden ram chancellor</small></div>
+          <Image src="/isekai/gallery/2390.png" alt="Golden ram chancellor Isekai Broker artwork" width={1000} height={1000} priority />
+          <div className={styles.heroCardMeta}><strong>Broker #2390</strong><small>Golden ram chancellor</small></div>
           <div className={styles.floatBadge}><ShieldCheck size={18} /><span><small>Utility</small>Broker License</span></div>
         </div>
       </section>
 
       <section className={styles.stats} aria-label="Collection utility statistics">
-        <div><strong>4,444</strong><span>Genesis Brokers</span></div>
+        <div><strong>{collectionDetails.supplyLabel}</strong><span>Genesis Brokers</span></div>
         <div><strong>3 to 10</strong><span>Sticker spots per item</span></div>
         <div><strong>0%</strong><span>Fee on eligible Broker listings</span></div>
         <div><strong>20%</strong><span>Platform fees allocated to eligible holders</span></div>
@@ -46,18 +47,34 @@ export function CollectionExperience() {
       <section className={styles.expansion} aria-labelledby="genesis-title">
         <div className={styles.expansionPanel}>
           <div className={styles.sectionHead}>
-            <div><p className={styles.kicker}>Genesis utility</p><h2 id="genesis-title">4,444 Brokers. Built for Stickxit.</h2></div>
+            <div><p className={styles.kicker}>Genesis utility</p><h2 id="genesis-title">{collectionDetails.supplyLabel} Brokers. Built for Stickxit.</h2></div>
             <p className={styles.utilityIntro}>Each Isekai Broker is designed to unlock tier-based host access for listing real-world advertising surfaces, mapping sticker spots, and managing placements through Stickxit.</p>
           </div>
 
           <ul className={styles.allocationGrid} aria-label="Isekai Brokers supply and utility">
-            <li className={styles.allocationCard}><h3>Supply</h3><p className={styles.allocationValue}>4,444</p><p className={styles.allocationDescription}>The Isekai Brokers Genesis collection includes 4,444 utility NFTs.</p></li>
+            <li className={styles.allocationCard}><h3>Supply</h3><p className={styles.allocationValue}>{collectionDetails.supplyLabel}</p><p className={styles.allocationDescription}>The Isekai Brokers Genesis collection includes {collectionDetails.supplyLabel} utility NFTs.</p></li>
             <li className={styles.allocationCard}><h3>Host access</h3><p className={styles.allocationValue}>Broker HQ</p><p className={styles.allocationDescription}>Connect the holding wallet to unlock eligible listing, placement, campaign, and performance tools.</p></li>
             <li className={styles.allocationCard}><h3>Item allowance</h3><p className={styles.allocationValue}>By tier</p><p className={styles.allocationDescription}>Each Broker tier determines how many approved physical items its holder can list.</p></li>
             <li className={styles.allocationCard}><h3>Placement capacity</h3><p className={styles.allocationValue}>3 to 10</p><p className={styles.allocationDescription}>Each approved item supports a tier-based number of mapped sticker spots.</p></li>
             <li className={styles.allocationCard}><h3>Eligible listing fee</h3><p className={styles.allocationValue}>0%</p><p className={styles.allocationDescription}>Broker-enabled listings within the tier allowance have no Stickxit platform fee.</p></li>
             <li className={styles.allocationCard}><h3>Holder allocation</h3><p className={styles.allocationValue}>20%</p><p className={styles.allocationDescription}>Twenty percent of platform fees is reserved for eligible holders under the published <a href="#holder-allocation">Holder Rewards Terms</a>.</p></li>
           </ul>
+        </div>
+      </section>
+
+      <section className={styles.composition} aria-labelledby="composition-title">
+        <div className={styles.sectionHead}>
+          <div><p className={styles.kicker}>Collection composition</p><h2 id="composition-title">Every rarity. Fully accounted for.</h2></div>
+          <p className={styles.utilityIntro}>The finalized metadata contains five rarity tiers totaling exactly {collectionDetails.supplyLabel} Brokers.</p>
+        </div>
+        <div className={styles.rarityGrid}>
+          {collectionRarityBreakdown.map((tier) => (
+            <article className={styles.rarityCard} key={tier.rarity}>
+              <span>{tier.rarity}</span>
+              <strong>{tier.countLabel}</strong>
+              <small>{tier.shareLabel} of the collection</small>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -83,7 +100,7 @@ export function CollectionExperience() {
 
       <section className={styles.collection} id="collection" aria-labelledby="collection-title">
         <div className={styles.sectionHead}>
-          <div><p className={styles.kicker}>The 4,444 collection</p><h2 id="collection-title">Meet the Isekai Brokers</h2></div>
+          <div><p className={styles.kicker}>The {collectionDetails.supplyLabel} collection</p><h2 id="collection-title">Meet the Isekai Brokers</h2></div>
           <p className={styles.utilityIntro}>Distinct characters. One shared role: powering the people who host real-world advertising space on Stickxit.</p>
         </div>
 

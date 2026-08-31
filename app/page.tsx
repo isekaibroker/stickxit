@@ -18,11 +18,13 @@ import { ListingCard } from "@/components/ListingCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { collectionDetails } from "@/lib/collection-details";
 import { brokers, listings } from "@/lib/mock-data";
 
 export const metadata: Metadata = {
   title: { absolute: "Stickxit | Turn what you own into ad space" },
-  description: "A marketplace for real-world sticker placements, powered by the 4,444 Isekai Brokers collection planned to mint on Robinhood Chain.",
+  description: `A marketplace for real-world sticker placements, powered by the ${collectionDetails.supplyLabel} Isekai Brokers collection planned to mint on Robinhood Chain.`,
+  alternates: { canonical: "/" },
 };
 
 const heroSpots = [
@@ -45,8 +47,8 @@ function LaptopPreview() {
       <div className="laptop-wrap">
         <div className="laptop-lid">
           <div className="lid-glare" /><div className="laptop-camera" />
-          <div className="isekai-sticker sticker-frog"><Image src="/isekai/0002.png" alt="Isekai Broker frog portrait sticker" width={180} height={180} priority /></div>
-          <div className="isekai-sticker sticker-broker"><Image src="/isekai/0001.png" alt="Isekai Broker portrait sticker" width={180} height={180} priority /></div>
+          <div className="isekai-sticker sticker-frog"><Image src="/isekai/3057.png" alt="Isekai Broker frog portrait sticker" width={180} height={180} priority /></div>
+          <div className="isekai-sticker sticker-broker"><Image src="/isekai/0219.png" alt="Isekai Broker portrait sticker" width={180} height={180} priority /></div>
           <div className="qr-sticker" aria-hidden="true"><span className="qr-grid" /><b>SCAN<br />THIS SPOT</b></div>
           <div className="stickxit-sticker"><span className="mini-mark">:)</span> STICKXIT</div>
           {heroSpots.map((spot) => (
@@ -77,7 +79,7 @@ export default function Home() {
           <div className="hero-copy">
             <div className="eyebrow"><span /> Physical media, reimagined</div>
             <h1 id="hero-title">Turn anything<br />you own into<br /><em>ad space.</em></h1>
-            <p className="hero-lede">Activate Isekai Broker access, list your everyday item, and let brands request sticker placements that people can actually see. All 4,444 Brokers are planned to mint on Robinhood Chain.</p>
+            <p className="hero-lede">Activate Isekai Broker access, list your everyday item, and let brands request sticker placements that people can actually see. All {collectionDetails.supplyLabel} Brokers are planned to mint on Robinhood Chain.</p>
             <div className="hero-actions">
               <Link className="button button-primary" href="/marketplace">Explore marketplace <span>↗</span></Link>
               <Link className="button button-secondary" href="/launchpad">Robinhood Chain Mint</Link>
@@ -88,7 +90,7 @@ export default function Home() {
         </section>
 
         <section className="metric-strip" aria-label="Stickxit launch facts">
-          <div><span>01</span><strong>4,444</strong><small>Isekai Brokers</small></div>
+          <div><span>01</span><strong>{collectionDetails.supplyLabel}</strong><small>Isekai Brokers</small></div>
           <div><span>02</span><strong>0%</strong><small>Broker platform fee</small></div>
           <div><span>03</span><strong>6</strong><small>Example surfaces</small></div>
           <div><span>04</span><strong>20%</strong><small>Holder fee allocation</small></div>
@@ -112,7 +114,7 @@ export default function Home() {
           <div className="broker-story-copy">
             <span className="section-kicker purple">Genesis membership</span>
             <h2>Your Broker is<br />your <em>license.</em></h2>
-            <p>The original 4,444 Isekai Brokers Genesis collection provides the utility access licenses of Stickxit. Ownership unlocks host tools, listing capacity, zero-fee eligible Broker listings, and participation in the allocation of 20% of platform fees to eligible holders.</p>
+            <p>The {collectionDetails.supplyLabel} Isekai Brokers Genesis collection provides the utility access licenses of Stickxit. Ownership unlocks host tools, listing capacity, zero-fee eligible Broker listings, and participation in the allocation of 20% of platform fees to eligible holders.</p>
             <ul>
               <li><Check size={15} /> Activate Broker access</li>
               <li><Check size={15} /> Map 3 to 10 spots per item</li>

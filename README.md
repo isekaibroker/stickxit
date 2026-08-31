@@ -2,6 +2,18 @@
 
 Stickxit is a pre-launch physical advertising marketplace powered by Isekai Brokers. Advertisers choose a real-world surface, select a designated sticker region, fit their artwork, and authorize a campaign draft with an EVM wallet.
 
+## Finalized collection snapshot
+
+The website uses one shared collection configuration for the finalized 5,555-item set:
+
+- 4,800 Commun
+- 368 Semi-Rare
+- 210 Rare
+- 132 Ultra-Rare
+- 45 Legendary
+
+The bundled public previews use their final token IDs after the deterministic collection shuffle. Mint date, price, contract address, allowlist, hosted metadata URI, and OpenSea collection URL remain TBA until verified launch values are available.
+
 ## Current product scope
 
 - EIP-6963 wallet discovery with an EIP-1193 injected-wallet fallback

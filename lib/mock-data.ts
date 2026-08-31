@@ -21,6 +21,7 @@ export type Listing = {
   country: string;
   category: "Laptop" | "PC" | "Car" | "Toolbox" | "Drill" | "Skateboard" | "Helmet";
   visual: "laptop" | "pc" | "car" | "toolbox" | "drill" | "skateboard" | "helmet";
+  image: string;
   totalSpots: number;
   visibility: "High" | "Medium";
   use: string;
@@ -70,12 +71,12 @@ const helmetSpots: Spot[] = [
 ];
 
 export const listings: Listing[] = [
-  { slug: "macbook-pro-m2-montreal", title: "Silver Laptop", city: "Montreal", country: "CA", category: "Laptop", visual: "laptop", totalSpots: laptopSpots.length, visibility: "High", use: "Work, school, cafés", spots: laptopSpots },
-  { slug: "custom-gaming-pc-toronto", title: "Custom Gaming PC", city: "Toronto", country: "CA", category: "PC", visual: "pc", totalSpots: pcSpots.length, visibility: "High", use: "Gaming events, streams", spots: pcSpots },
-  { slug: "bmw-330i-montreal", title: "Graphite Sedan", city: "Montreal", country: "CA", category: "Car", visual: "car", totalSpots: carSpots.length, visibility: "High", use: "City driving, commuting", spots: carSpots },
-  { slug: "cordless-drill-calgary", title: "Cordless Drill", city: "Calgary", country: "CA", category: "Drill", visual: "drill", totalSpots: drillSpots.length, visibility: "Medium", use: "Job sites, service calls", spots: drillSpots },
-  { slug: "street-deck-montreal", title: "Street Skateboard", city: "Montreal", country: "CA", category: "Skateboard", visual: "skateboard", totalSpots: skateboardSpots.length, visibility: "Medium", use: "Campus, skate parks", spots: skateboardSpots },
-  { slug: "rider-helmet-ottawa", title: "Rider Helmet", city: "Ottawa", country: "CA", category: "Helmet", visual: "helmet", totalSpots: helmetSpots.length, visibility: "High", use: "Daily rides, meetups", spots: helmetSpots },
+  { slug: "macbook-pro-m2-montreal", title: "Silver Laptop", city: "Montreal", country: "CA", category: "Laptop", visual: "laptop", image: "/marketplace/silver-laptop.webp", totalSpots: laptopSpots.length, visibility: "High", use: "Work, school, cafés", spots: laptopSpots },
+  { slug: "custom-gaming-pc-toronto", title: "Custom Gaming PC", city: "Toronto", country: "CA", category: "PC", visual: "pc", image: "/marketplace/gaming-pc.webp", totalSpots: pcSpots.length, visibility: "High", use: "Gaming events, streams", spots: pcSpots },
+  { slug: "bmw-330i-montreal", title: "Graphite Sedan", city: "Montreal", country: "CA", category: "Car", visual: "car", image: "/marketplace/graphite-sedan.webp", totalSpots: carSpots.length, visibility: "High", use: "City driving, commuting", spots: carSpots },
+  { slug: "cordless-drill-calgary", title: "Cordless Drill", city: "Calgary", country: "CA", category: "Drill", visual: "drill", image: "/marketplace/cordless-drill.webp", totalSpots: drillSpots.length, visibility: "Medium", use: "Job sites, service calls", spots: drillSpots },
+  { slug: "street-deck-montreal", title: "Street Skateboard", city: "Montreal", country: "CA", category: "Skateboard", visual: "skateboard", image: "/marketplace/street-skateboard.webp", totalSpots: skateboardSpots.length, visibility: "Medium", use: "Campus, skate parks", spots: skateboardSpots },
+  { slug: "rider-helmet-ottawa", title: "Rider Helmet", city: "Ottawa", country: "CA", category: "Helmet", visual: "helmet", image: "/marketplace/rider-helmet.webp", totalSpots: helmetSpots.length, visibility: "High", use: "Daily rides, meetups", spots: helmetSpots },
 ];
 
 export type Broker = {
@@ -84,20 +85,19 @@ export type Broker = {
   image: string;
   rarity: "Commun" | "Semi-Rare" | "Rare" | "Ultra-Rare" | "Legendary";
   character: string;
-  status: "Available" | "Staked";
 };
 
 export const brokers: Broker[] = [
-  { token: "0001", name: "Broker #0001", image: "/isekai/0001.png", rarity: "Commun", character: "Auburn Waves Broker", status: "Available" },
-  { token: "0002", name: "Broker #0002", image: "/isekai/0002.png", rarity: "Commun", character: "Frog Broker", status: "Available" },
-  { token: "0003", name: "Broker #0003", image: "/isekai/0003.png", rarity: "Commun", character: "Hijab Broker", status: "Available" },
-  { token: "0010", name: "Broker #0010", image: "/isekai/0010.png", rarity: "Commun", character: "Bunny Broker", status: "Available" },
-  { token: "0016", name: "Broker #0016", image: "/isekai/0016.png", rarity: "Semi-Rare", character: "Origami Broker", status: "Available" },
-  { token: "0028", name: "Broker #0028", image: "/isekai/0028.png", rarity: "Semi-Rare", character: "Gorilla Broker", status: "Available" },
-  { token: "0034", name: "Broker #0034", image: "/isekai/0034.png", rarity: "Rare", character: "Moon-Elf Broker", status: "Staked" },
-  { token: "0040", name: "Broker #0040", image: "/isekai/0040.png", rarity: "Legendary", character: "Rosegold Chevalier", status: "Available" },
-  { token: "0243", name: "Broker #0243", image: "/isekai/0243.png", rarity: "Ultra-Rare", character: "Plasma Android", status: "Available" },
-  { token: "0339", name: "Broker #0339", image: "/isekai/0339.png", rarity: "Rare", character: "Crystal Golem", status: "Available" },
-  { token: "0524", name: "Broker #0524", image: "/isekai/0524.png", rarity: "Ultra-Rare", character: "Hydrothermal Shark", status: "Available" },
-  { token: "2033", name: "Broker #2033", image: "/isekai/2033.png", rarity: "Legendary", character: "Copper Dragon Knight", status: "Available" },
+  { token: "0219", name: "Broker #0219", image: "/isekai/0219.png", rarity: "Commun", character: "Auburn Waves Broker" },
+  { token: "3057", name: "Broker #3057", image: "/isekai/3057.png", rarity: "Commun", character: "Frog Broker 4098" },
+  { token: "1639", name: "Broker #1639", image: "/isekai/1639.png", rarity: "Commun", character: "Hijab Broker" },
+  { token: "3678", name: "Broker #3678", image: "/isekai/3678.png", rarity: "Commun", character: "Bunny Broker 3916" },
+  { token: "3011", name: "Broker #3011", image: "/isekai/3011.png", rarity: "Semi-Rare", character: "Adult origami-paper person" },
+  { token: "2919", name: "Broker #2919", image: "/isekai/2919.png", rarity: "Semi-Rare", character: "Gorilla Broker #087" },
+  { token: "3281", name: "Broker #3281", image: "/isekai/3281.png", rarity: "Rare", character: "Moon-elf queen" },
+  { token: "4991", name: "Broker #4991", image: "/isekai/4991.png", rarity: "Legendary", character: "Rosegold Chevalier" },
+  { token: "5340", name: "Broker #5340", image: "/isekai/5340.png", rarity: "Ultra-Rare", character: "Black woman plasma-android executive" },
+  { token: "3204", name: "Broker #3204", image: "/isekai/3204.png", rarity: "Rare", character: "Aquamarine crystal-golem monarch" },
+  { token: "5376", name: "Broker #5376", image: "/isekai/5376.png", rarity: "Ultra-Rare", character: "Hydrothermal shark admiral" },
+  { token: "2306", name: "Broker #2306", image: "/isekai/2306.png", rarity: "Legendary", character: "Copper Dragon Knight" },
 ];

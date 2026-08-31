@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { collectionDetails } from "@/lib/collection-details";
 import { CollectionExperience } from "./CollectionExperience";
 import styles from "./isekai.module.css";
 
 export const metadata: Metadata = {
   title: "Isekai Brokers",
-  description: "Explore the original 4,444 Isekai Brokers Genesis utility NFT collection planned to mint on Robinhood Chain. Mint date, price, contract, and allowlist details remain TBA.",
+  description: `Explore the ${collectionDetails.supplyLabel} Isekai Brokers Genesis utility NFT collection planned to mint on Robinhood Chain. Mint date, price, contract, and allowlist details remain TBA.`,
+  alternates: { canonical: "/isekai-brokers" },
 };
 
 export default function IsekaiBrokersPage() {

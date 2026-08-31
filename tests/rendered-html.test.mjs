@@ -23,17 +23,21 @@ test("server-renders the Stickxit product homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Stickxit[^<]*<\/title>/i);
-  assert.match(html, /property="og:image" content="http:\/\/localhost:3000\/og\.png"/i);
+  assert.match(html, /property="og:image" content="http:\/\/localhost:3000\/og-5555\.png"/i);
   assert.match(html, /name="twitter:card" content="summary_large_image"/i);
   assert.match(html, /name="twitter:site" content="@isekaibrokers"/i);
   assert.match(html, /name="twitter:creator" content="@isekaibrokers"/i);
   assert.match(html, /Turn what you own into ad space/i);
   assert.match(html, /Isekai Brokers/i);
-  assert.match(html, /4,444 Isekai Brokers/i);
-  assert.doesNotMatch(html, /<strong>(?:5,555|6,666)<\/strong><small>Isekai Brokers<\/small>/i);
+  assert.match(html, /5,555 Isekai Brokers/i);
+  assert.match(html, /<strong>5,555<\/strong><small>Isekai Brokers<\/small>/i);
+  assert.doesNotMatch(html, /<strong>(?:4,444|6,666)<\/strong><small>Isekai Brokers<\/small>/i);
   assert.match(html, /Robinhood Chain/i);
   assert.match(html, /href="https:\/\/x\.com\/isekaibrokers"/i);
   assert.match(html, /Explore marketplace/i);
+  assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+  assert.equal(response.headers.get("x-frame-options"), "DENY");
+  assert.equal(response.headers.get("referrer-policy"), "strict-origin-when-cross-origin");
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/i);
 });
 
@@ -77,9 +81,29 @@ test("public Broker gallery is limited to eighteen approved rarity-free controls
   assert.doesNotMatch(html, /Broker #0308/i);
   assert.doesNotMatch(html, /(?:\/isekai\/gallery\/|%2Fisekai%2Fgallery%2F)0197\.png/i);
   assert.doesNotMatch(html, /(?:\/isekai\/gallery\/|%2Fisekai%2Fgallery%2F)0308\.png/i);
+  assert.match(html, /Broker #2390/i);
+  assert.match(html, /(?:\/isekai\/gallery\/|%2Fisekai%2Fgallery%2F)2390\.png/i);
+  assert.doesNotMatch(html, /Broker #0889/i);
   assert.match(html, /20% of platform fees/i);
   assert.match(html, /holder allocation/i);
   assert.doesNotMatch(html, /local demo|local workspace|local preview|browser-only simulation/i);
+});
+
+test("website previews use finalized shuffled token IDs and optimized assets", async () => {
+  const mainIds = ["0219", "3057", "1639", "3678", "3011", "2919", "3281", "4991", "5340", "3204", "5376", "2306"];
+  const galleryIds = ["0477", "3744", "5521", "3476", "4024", "2141", "5037", "0333", "0809", "2390", "3703", "4380", "3571", "4665", "4672", "2132", "4899", "1161"];
+  for (const id of mainIds) {
+    assert.ok((await stat(new URL(`../public/isekai/${id}.png`, import.meta.url))).size > 100_000, `main preview ${id} should exist`);
+  }
+  for (const id of galleryIds) {
+    assert.ok((await stat(new URL(`../public/isekai/gallery/${id}.png`, import.meta.url))).size > 100_000, `gallery preview ${id} should exist`);
+  }
+
+  const mockSource = await readFile(new URL("../lib/mock-data.ts", import.meta.url), "utf8");
+  const gallerySource = await readFile(new URL("../lib/public-broker-gallery.ts", import.meta.url), "utf8");
+  assert.match(mockSource, /token:\s*["']4991["'][\s\S]*rarity:\s*["']Legendary["'][\s\S]*Rosegold Chevalier/i);
+  assert.match(gallerySource, /["']2390["'][\s\S]*Golden ram chancellor/i);
+  assert.doesNotMatch(`${mockSource}\n${gallerySource}`, /\/isekai\/(?:gallery\/)?(?:0001|0002|0003|0010|0016|0028|0034|0040|0243|0339|0524|2033|0183|0319|0405|0412|0490|0543|0552|0752|0753|0889|0985|1018|1172|1277|1281|1347|1359|1366)\.png/i);
 });
 
 test("public collection presents one supply figure and concrete Stickxit utility", async () => {
@@ -87,25 +111,33 @@ test("public collection presents one supply figure and concrete Stickxit utility
   assert.equal(response.status, 200);
   const html = await response.text();
 
-  assert.match(html, /<strong>4,444<\/strong><span>Genesis Brokers<\/span>/i);
-  assert.match(html, /4,444 Brokers\. Built for Stickxit\./i);
-  assert.match(html, /<h3>Supply<\/h3>\s*<p[^>]*>4,444<\/p>/i);
+  assert.match(html, /<strong>5,555<\/strong><span>Genesis Brokers<\/span>/i);
+  assert.match(html, /5,555(?:<!-- -->)? Brokers\. Built for Stickxit\./i);
+  assert.match(html, /<h3>Supply<\/h3>\s*<p[^>]*>5,555<\/p>/i);
   assert.match(html, /<h3>Host access<\/h3>\s*<p[^>]*>Broker HQ<\/p>/i);
   assert.match(html, /<h3>Item allowance<\/h3>\s*<p[^>]*>By tier<\/p>/i);
   assert.match(html, /<h3>Placement capacity<\/h3>\s*<p[^>]*>3 to 10<\/p>/i);
   assert.match(html, /<h3>Eligible listing fee<\/h3>\s*<p[^>]*>0%<\/p>/i);
   assert.match(html, /<h3>Holder allocation<\/h3>\s*<p[^>]*>20%<\/p>/i);
+  for (const [rarity, count] of [["Commun", "4,800"], ["Semi-Rare", "368"], ["Rare", "210"], ["Ultra-Rare", "132"], ["Legendary", "45"]]) {
+    assert.match(html, new RegExp(`<span>${rarity}</span>\\s*<strong>${count}</strong>`, "i"));
+  }
   assert.doesNotMatch(html, /Original collection|Final supply|Original and final supply|Token order|Randomized|fixed and final supply/i);
-  assert.doesNotMatch(html, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
+  assert.doesNotMatch(html, /1,111|2,222|4,444|6,666|joined by|expanded Genesis|expanded collection/i);
 
   const homepageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const launchpadSource = await readFile(new URL("../app/launchpad/LaunchpadExperience.tsx", import.meta.url), "utf8");
   const collectionSource = await readFile(new URL("../app/isekai-brokers/CollectionExperience.tsx", import.meta.url), "utf8");
   const publicSupplySource = `${homepageSource}\n${launchpadSource}\n${collectionSource}`;
-  assert.doesNotMatch(publicSupplySource, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
-  assert.match(collectionSource, /collection has a supply of 4,444/i);
+  assert.doesNotMatch(publicSupplySource, /1,111|2,222|4,444|6,666|joined by|expanded Genesis|expanded collection/i);
   assert.doesNotMatch(collectionSource, /Original collection|Final supply|Original and final supply|Token order|Randomized|fixed and final supply/i);
-  assert.match(publicSupplySource, /fixed and final supply of 4,444/i);
+
+  const detailsSource = await readFile(new URL("../lib/collection-details.ts", import.meta.url), "utf8");
+  assert.match(detailsSource, /supply:\s*5555/);
+  assert.match(detailsSource, /supplyLabel:\s*["']5,555["']/);
+  for (const [rarity, count] of [["Commun", 4800], ["Semi-Rare", 368], ["Rare", 210], ["Ultra-Rare", 132], ["Legendary", 45]]) {
+    assert.match(detailsSource, new RegExp(`rarity: ["']${rarity}["'], count: ${count}`));
+  }
 });
 
 test("marketplace exposes the advertiser campaign entry point", async () => {
@@ -178,6 +210,35 @@ test("marketplace item clicks open stickered details with a separate Place my NF
   assert.equal(campaignResponse.status, 200);
 });
 
+test("shareable item metadata uses the item's own absolute image", async () => {
+  const response = await render("/item/bmw-330i-montreal");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /<title>Graphite Sedan placement example \| Stickxit<\/title>/i);
+  assert.match(html, /property="og:title" content="Graphite Sedan placement example"/i);
+  assert.match(html, /property="og:image" content="http:\/\/localhost:3000\/marketplace\/graphite-sedan\.webp"/i);
+  assert.match(html, /name="twitter:image" content="http:\/\/localhost:3000\/marketplace\/graphite-sedan\.webp"/i);
+  assert.doesNotMatch(html, /(?:property="og:image"|name="twitter:image") content="[^"]*\/og(?:-5555)?\.png"/i);
+});
+
+test("robots and sitemap expose public routes while protecting private workflows", async () => {
+  const robotsResponse = await render("/robots.txt");
+  assert.equal(robotsResponse.status, 200);
+  const robots = await robotsResponse.text();
+  assert.match(robots, /Allow:\s*\//i);
+  assert.match(robots, /Disallow:\s*\/broker/i);
+  assert.match(robots, /Disallow:\s*\/campaigns/i);
+  assert.match(robots, /Sitemap:\s*https:\/\/stickxit\.com\/sitemap\.xml/i);
+
+  const sitemapResponse = await render("/sitemap.xml");
+  assert.equal(sitemapResponse.status, 200);
+  const sitemap = await sitemapResponse.text();
+  for (const path of ["/marketplace", "/isekai-brokers", "/launchpad", "/item/macbook-pro-m2-montreal"]) {
+    assert.match(sitemap, new RegExp(`https://stickxit\\.com${path.replaceAll("/", "\\/")}`));
+  }
+  assert.doesNotMatch(sitemap, /\/broker|\/campaigns|\/r\//i);
+});
+
 test("primary navigation hides removed Advertise and List a spot routes", async () => {
   const response = await render("/marketplace");
   assert.equal(response.status, 200);
@@ -213,9 +274,11 @@ test("launchpad is a non-transactional TBA page with no local demo mint", async 
   assert.match(html, /Robinhood Chain Mint: TBA/i);
   assert.match(html, /Robinhood Chain mainnet is live/i);
   assert.match(html, /Robinhood Chain confirmed\. Mint details are TBA/i);
-  assert.match(html, /<dt>Collection size<\/dt>\s*<dd>4,444<\/dd>/i);
-  assert.match(html, /one original Genesis collection\s*with a fixed and final supply of 4,444/i);
-  assert.doesNotMatch(html, /1,111|2,222|5,555|6,666|joined by|expanded Genesis|expanded collection/i);
+  assert.match(html, /<dt>Collection size<\/dt>\s*<dd>5,555<\/dd>/i);
+  assert.match(html, /one Genesis collection\s*with a fixed supply of\s*(?:<!-- -->)?5,555(?:<!-- -->)?/i);
+  assert.match(html, /<dt>Collection data<\/dt>\s*<dd>Finalized<\/dd>/i);
+  assert.match(html, /The 45 Legendary Brokers/i);
+  assert.doesNotMatch(html, /1,111|2,222|4,444|6,666|The 15 Legendary Brokers|joined by|expanded Genesis|expanded collection/i);
   assert.match(html, /Isekai Brokers is independent and is not affiliated with, endorsed by, or sponsored by Robinhood/i);
   assert.match(html, /href="https:\/\/x\.com\/isekaibrokers"/i);
   assert.match(html, /<dt>Network<\/dt>\s*<dd>Robinhood Chain<\/dd>/i);

@@ -6,6 +6,8 @@ import { CampaignDashboard } from "./CampaignDashboard";
 export const metadata: Metadata = {
   title: "Campaigns",
   description: "Manage wallet-linked Stickxit campaign drafts and dynamic QR destinations.",
+  alternates: { canonical: "/campaigns" },
+  robots: { index: false, follow: false },
 };
 
 export default function CampaignsPage() {
